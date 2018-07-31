@@ -13,12 +13,13 @@ namespace MyExpenses.DomainTest
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-    using MyExpenses.Application.Modules;
     using MyExpenses.Domain.Interfaces;
     using MyExpenses.Domain.Interfaces.Services;
     using MyExpenses.Domain.Models;
+    using MyExpenses.Domain.Modules;
     using MyExpenses.DomainTest.Properties;
     using MyExpenses.Infrastructure.Context;
+    using MyExpenses.Infrastructure.Modules;
 
     public abstract class DomainTestBase
     {

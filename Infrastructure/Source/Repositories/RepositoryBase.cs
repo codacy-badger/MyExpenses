@@ -10,6 +10,7 @@ namespace MyExpenses.Infrastructure.Repositories
     using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
+    using System.Threading.Tasks;
 
     using Microsoft.EntityFrameworkCore;
 
@@ -45,6 +46,16 @@ namespace MyExpenses.Infrastructure.Repositories
             return set.SingleOrDefault(x => x.Id == id);
         }
 
+        public async Task<TModel> GetByIdAsync(long id, params Expression<Func<TModel, object>>[] includes)
+        {
+            IQueryable<TModel> set = _context.Set<TModel>();
+
+            foreach (var include in includes)
+                set = set.Include(include);
+
+            return await set.FirstOrDefaultAsync(x => x.Id == id);
+        }
+
         public bool Remove(long id)
         {
             TModel model = _context.Set<TModel>().Find(id);
@@ -52,6 +63,15 @@ namespace MyExpenses.Infrastructure.Repositories
                 return false;
 
             return _context.Set<TModel>().Remove(model) != null;
+        }
+
+        public async Task<bool> RemoveAsync(long id)
+        {
+            TModel model = await GetByIdAsync(id);
+            if (model == null)
+                return false;
+
+            return _context.Remove(model) != null;
         }
 
         public TModel Update(TModel model)
@@ -68,6 +88,20 @@ namespace MyExpenses.Infrastructure.Repositories
             return existModel;
         }
 
+        public async Task<TModel> UpdateAsync(TModel model)
+        {
+            if (model == null)
+                return null;
+
+            TModel existModel = await GetByIdAsync(model.Id);
+            if (existModel == null)
+                return null;
+
+            // copy attributes
+            existModel.Copy(model);
+            return existModel;
+        }
+
         public TModel Add(TModel model)
         {
             if (model == null)
@@ -75,6 +109,15 @@ namespace MyExpenses.Infrastructure.Repositories
 
             var newModel = _context.Set<TModel>().Add(model);
             return newModel?.Entity;
+        }
+
+        public async Task<TModel> AddAsync(TModel model)
+        {
+            if (model == null)
+                return null;
+
+            var newModel = await _context.Set<TModel>().AddAsync(model);
+            return newModel.Entity;
         }
     }
 }

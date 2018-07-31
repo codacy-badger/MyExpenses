@@ -13,6 +13,8 @@ namespace MyExpenses.Application.Modules
     using MyExpenses.Application.Interfaces.Adapters;
     using MyExpenses.Application.Interfaces.Services;
     using MyExpenses.Application.Services;
+    using MyExpenses.Domain.Modules;
+    using MyExpenses.Infrastructure.Modules;
 
     public static class ApplicationModule
     {

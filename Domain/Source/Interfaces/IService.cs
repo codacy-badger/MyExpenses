@@ -9,6 +9,7 @@ namespace MyExpenses.Domain.Interfaces
     using System;
     using System.Collections.Generic;
     using System.Linq.Expressions;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// Service interface
@@ -42,6 +43,7 @@ namespace MyExpenses.Domain.Interfaces
         /// <param name="includes">Include expression</param>
         /// <returns></returns>
         TModel GetById(long id, params Expression<Func<TModel, object>>[] includes);
+        Task<TModel> GetByIdAsync(long id, params Expression<Func<TModel, object>>[] includes);
 
         /// <summary>
         /// Remove object
@@ -49,6 +51,7 @@ namespace MyExpenses.Domain.Interfaces
         /// <param name="id">If of the object to remove</param>
         /// <returns>True if could remove and false otherwise</returns>
         bool Remove(long id);
+        Task<bool> RemoveAsync(long id);
 
         /// <summary>
         /// Add an object
@@ -56,6 +59,7 @@ namespace MyExpenses.Domain.Interfaces
         /// <param name="model">Object to add</param>
         /// <returns>Object added</returns>
         TModel Add(TModel model);
+        Task<TModel> AddAsync(TModel model);
 
         /// <summary>
         /// Update an object
@@ -63,5 +67,6 @@ namespace MyExpenses.Domain.Interfaces
         /// <param name="model">Object to update</param>
         /// <returns>Object updated</returns>
         TModel Update(TModel model);
+        Task<TModel> UpdateAsync(TModel model);
     }
 }

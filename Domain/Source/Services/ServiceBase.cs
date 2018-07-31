@@ -9,6 +9,7 @@ namespace MyExpenses.Domain.Services
     using System;
     using System.Collections.Generic;
     using System.Linq.Expressions;
+    using System.Threading.Tasks;
 
     using MyExpenses.Domain.Interfaces;
 
@@ -44,6 +45,26 @@ namespace MyExpenses.Domain.Services
         public virtual bool Remove(long id)
         {
             return _repository.Remove(id);
+        }
+
+        public Task<TModel> GetByIdAsync(long id, params Expression<Func<TModel, object>>[] includes)
+        {
+            return _repository.GetByIdAsync(id, includes);
+        }
+
+        public Task<bool> RemoveAsync(long id)
+        {
+            return _repository.RemoveAsync(id);
+        }
+
+        public Task<TModel> AddAsync(TModel model)
+        {
+            return _repository.AddAsync(model);
+        }
+
+        public Task<TModel> UpdateAsync(TModel model)
+        {
+            return _repository.UpdateAsync(model);
         }
     }
 }

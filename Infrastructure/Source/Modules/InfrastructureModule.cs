@@ -4,7 +4,7 @@
 *   Github: http://github.com/lfmachadodasilva/MyExpenses
 */
 
-namespace MyExpenses.Application.Modules
+namespace MyExpenses.Infrastructure.Modules
 {
     using Microsoft.Extensions.DependencyInjection;
 

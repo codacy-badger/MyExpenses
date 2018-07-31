@@ -4,9 +4,10 @@
 *   Github: http://github.com/lfmachadodasilva/MyExpenses
 */
 
-namespace MyExpenses.Application.Modules
+namespace MyExpenses.Domain.Modules
 {
     using Microsoft.Extensions.DependencyInjection;
+
     using MyExpenses.Domain.Interfaces.Services;
     using MyExpenses.Domain.Services;
 

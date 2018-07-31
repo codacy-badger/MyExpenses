@@ -13,11 +13,11 @@ namespace MyExpenses.InfrastructureTest
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-    using MyExpenses.Application.Modules;
     using MyExpenses.Domain.Interfaces;
     using MyExpenses.Domain.Interfaces.Repositories;
     using MyExpenses.Domain.Models;
     using MyExpenses.Infrastructure.Context;
+    using MyExpenses.Infrastructure.Modules;
     using MyExpenses.InfrastructureTest.Properties;
 
     public abstract class InfrastructureTestBase
