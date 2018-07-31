@@ -14,7 +14,6 @@ namespace MyExpenses.Domain.Services
     using MyExpenses.Domain.Interfaces.Services;
     using MyExpenses.Domain.Models;
     
-
     public class ExpenseService : ServiceBase<Expense>, IExpenseService
     {
         private readonly IExpenseRepository _repository;
@@ -29,14 +28,14 @@ namespace MyExpenses.Domain.Services
         {
             return _repository
                 .Get(x => x.Label, x => x.Payment)
-                .Where(x => x.IsIncoming && x.Data >= startTime && x.Data < endTime);
+                .Where(x => x.IsIncoming && x.Data >= startTime && x.Data <= endTime);
         }
 
         public IEnumerable<Expense> GetAllOutcoming(DateTime startTime, DateTime endTime)
         {
             return _repository
                 .Get(x => x.Label, x => x.Payment)
-                .Where(x => !x.IsIncoming && x.Data >= startTime && x.Data < endTime);
+                .Where(x => !x.IsIncoming && x.Data >= startTime && x.Data <= endTime);
         }
 
         public void RemoveLabelFromExpenses(long labelId)
