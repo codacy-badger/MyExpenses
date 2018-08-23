@@ -1,6 +1,6 @@
 # MyExpenses
 
-Project to control personal expenses written in C#.
+Project to control personal expenses written in C# and dotnet core.
 
 | Status master & dev |
 | ---------     |
