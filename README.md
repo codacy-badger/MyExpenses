@@ -9,3 +9,7 @@ Project to control personal expenses written in C# and dotnet core.
 | [![codecov](https://codecov.io/gh/lfmachadodasilva/MyExpenses/branch/master/graph/badge.svg)](https://codecov.io/gh/lfmachadodasilva/MyExpenses) |
 | [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/lfmachadodasilva/MyExpenses.svg)](http://isitmaintained.com/project/lfmachadodasilva/MyExpenses "Average time to resolve an issue") |
 | [![Percentage of issues still open](http://isitmaintained.com/badge/open/lfmachadodasilva/MyExpenses.svg)](http://isitmaintained.com/project/lfmachadodasilva/MyExpenses "Percentage of issues still open") |
+
+
+
+<img src="http://yuml.me/diagram/scruffy/class/[IModel|Id:long{bg:orange}]], [Expense|Name:string;Date:Date;IsIncoming:bool;Label:Label;Payment:Payment], [Label|Id:long;Name:string], [Payment|Id:long;Name:string], , [IModel]^-.-[Expense], [IModel]^-.-[Label], [IModel]^-.-[Payment], [Expense]1-0..*[Label], [Expense]1-0..*[Payment]"/>
