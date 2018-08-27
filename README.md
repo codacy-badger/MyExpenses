@@ -12,4 +12,4 @@ Project to control personal expenses written in C# and dotnet core.
 
 
 
-<img src="http://yuml.me/diagram/scruffy/class/[IModel|Id:long{bg:orange}]], [Expense|Name:string;Value:float;Date:Date;IsIncoming:bool;Label:Label;Payment:Payment], [Label|Id:long;Name:string], [Payment|Id:long;Name:string], , [IModel]^-.-[Expense], [IModel]^-.-[Label], [IModel]^-.-[Payment], [Expense]1-0..*[Label], [Expense]1-0..*[Payment]"/>
+<img src="http://yuml.me/diagram/scruffy/class/[IModel|Id:long{bg:orange}]], [Expense|Name:string;Value:float;Date:Date;IsIncoming:bool;Label:Label;Payment:Payment], [Label|Id:long;Name:string], [Payment|Id:long;Name:string], , [IModel]^-.-[Expense], [IModel]^-.-[Label], [IModel]^-.-[Payment], [Expense]-[Label], [Expense]-[Payment]"/>
