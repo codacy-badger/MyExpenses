@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MyExpenses.Infrastructure
 {
-    class AutoMapperConfiguration
+    class AutoMapperInfrastructureConfiguration
     {
     }
 }

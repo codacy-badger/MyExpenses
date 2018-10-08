@@ -55,7 +55,7 @@ namespace MyExpenses.Infrastructure.Repositories
             return await set.FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public bool Remove(long id)
+        public bool Remove(Guid id)
         {
             T model = _context.Set<T>().Find(id);
             if (model == null)
