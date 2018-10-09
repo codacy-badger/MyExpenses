@@ -14,13 +14,16 @@ namespace WebApplication
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
-    using WebApplication.Data;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
 
     using MyExpenses.Application;
     using MyExpenses.Domain;
     using MyExpenses.Infrastructure;
+
+    using Newtonsoft.Json;
+
+    using WebApplication.Controllers;
 
     public class Startup
     {
@@ -41,17 +44,23 @@ namespace WebApplication
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddDbContext<ApplicationDbContext>(options =>
+            services.AddDbContext<MyExpensesContext>(options =>
                 options.UseSqlite(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                    Configuration.GetConnectionString("DefaultConnection"),
+                    x => x.MigrationsAssembly("WebApplication")));
             services.AddDefaultIdentity<IdentityUser>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddEntityFrameworkStores<MyExpensesContext>();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services
+                .AddMvc()
+                .AddJsonOptions(opt => opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore)
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             DependencyInjectionDomain.Configure(services);
             DependencyInjectionInfrastructure.Configure(services);
             DependencyInjectionApplication.Configure(services);
+
+            services.AddTransient<LabelsController>();
 
             Mapper.Initialize(
                 cfg =>
@@ -82,7 +91,18 @@ namespace WebApplication
 
             app.UseAuthentication();
 
-            app.UseMvc();
+            app.UseMvc(
+                cfg =>
+                    {
+                        cfg.MapRoute(
+                            "Default",
+                            "/{controller}/{action}/{id?}",
+                            new
+                                {
+                                    Controllers = "App",
+                                    Action = "Index"
+                                });
+                    });
         }
     }
 }
