@@ -6,9 +6,10 @@
 
 namespace MyExpenses.Infrastructure.Repositories
 {
-    using MyExpenses.Infrastructure.Tables;
+    using MyExpenses.Domain.Domains;
+    using MyExpenses.Domain.IoT.Repositories;
 
-    public class PaymentRepository : RepositoryBase<LabelTable>
+    public class PaymentRepository : RepositoryBase<PaymentDomain>, IPaymentRepository
     {
         protected PaymentRepository(MyExpensesContext context)
             : base(context)

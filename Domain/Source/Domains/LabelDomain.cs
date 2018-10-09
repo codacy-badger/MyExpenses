@@ -6,13 +6,16 @@
 
 namespace MyExpenses.Domain.Domains
 {
-    using MyExpenses.Domain.Interfaces;
+    using System.ComponentModel.DataAnnotations.Schema;
 
+    using MyExpenses.Domain.IoT;
+
+    [Table("Label")]
     public class LabelDomain : DomainBase
     {
         public string Name { get; set; }
 
-        public override void Copy(IBaseId baseObj)
+        public override void Copy(IBase baseObj)
         {
             if (baseObj is LabelDomain obj)
             {

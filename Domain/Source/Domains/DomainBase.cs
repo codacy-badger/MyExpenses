@@ -7,12 +7,19 @@
 namespace MyExpenses.Domain.Domains
 {
     using System;
-    using MyExpenses.Domain.Interfaces;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
 
-    public abstract class DomainBase : IBaseId
+    using MyExpenses.Domain.IoT;
+
+    public abstract class DomainBase : IBase
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
 
-        public abstract void Copy(IBaseId baseObj);
+        public DateTime LastUpdate { get; set; }
+
+        public abstract void Copy(IBase baseObj);
     }
 }

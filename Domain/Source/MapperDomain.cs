@@ -10,7 +10,7 @@ namespace MyExpenses.Domain
 
     using MyExpenses.Domain.Domains;
 
-    public class MapperDomain
+    public static class MapperDomain
     {
         public static void Configure()
         {

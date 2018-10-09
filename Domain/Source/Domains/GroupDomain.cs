@@ -6,13 +6,19 @@
 
 namespace MyExpenses.Domain.Domains
 {
-    using MyExpenses.Domain.Interfaces;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations.Schema;
 
+    using MyExpenses.Domain.IoT;    
+
+    [Table("Group")]
     public class GroupDomain : DomainBase
     {
         public string Name { get; set; }
 
-        public override void Copy(IBaseId baseObj)
+        public ICollection<MyUser> Users { get; set; }
+
+        public override void Copy(IBase baseObj)
         {
             if (baseObj is GroupDomain obj)
             {

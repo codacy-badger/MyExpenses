@@ -8,8 +8,6 @@ namespace MyExpenses.Infrastructure
 {
     using Microsoft.EntityFrameworkCore;
 
-    using MyExpenses.Infrastructure.Tables;
-
     public class MyExpensesContext : DbContext
     {
         public MyExpensesContext(DbContextOptions<MyExpensesContext> options)
@@ -17,12 +15,12 @@ namespace MyExpenses.Infrastructure
         {
         }
 
-        public DbSet<LabelTable> Labels { get; set; }
+        public DbSet<MyExpenses.Domain.Domains.LabelDomain> Labels { get; set; }
 
-        public DbSet<ExpenseTable> Expenses { get; set; }
+        public DbSet<MyExpenses.Domain.Domains.ExpenseDomain> Expenses { get; set; }
 
-        public DbSet<PaymentTable> Payments { get; set; }
+        public DbSet<MyExpenses.Domain.Domains.PaymentDomain> Payments { get; set; }
 
-        public DbSet<GroupTable> Groups { get; set; }
+        public DbSet<MyExpenses.Domain.Domains.GroupDomain> Groups { get; set; }
     }
 }

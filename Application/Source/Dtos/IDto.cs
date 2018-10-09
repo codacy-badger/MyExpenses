@@ -4,17 +4,12 @@
 *   Github: http://github.com/lfmachadodasilva/MyExpenses
 */
 
-namespace MyExpenses.Domain.Interfaces
+namespace MyExpenses.Application.Dtos
 {
     using System;
 
-    public interface IBaseId
+    public interface IDto
     {
-        /// <summary>
-        /// Identification key
-        /// </summary>
         Guid Id { get; set; }
-
-        void Copy(IBaseId baseObj);
     }
 }

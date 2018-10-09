@@ -6,44 +6,50 @@
 
 namespace MyExpenses.Domain.Services
 {
-    using MyExpenses.Domain.Interfaces;
-
     using System;
     using System.Linq;
     using System.Linq.Expressions;
     using System.Threading.Tasks;
 
-    public class ServiceBase<T> : IService<T> where T : IBaseId
-    {
-        private readonly IService<T> _repository;
+    using MyExpenses.Domain.IoT;
+    using MyExpenses.Domain.IoT.Repositories;
 
-        protected ServiceBase(IService<T> repository)
+    public class ServiceBase<TDomain> : IService<TDomain> where TDomain : IBase
+    {
+        private readonly IRepository<TDomain> _repository;
+
+        protected ServiceBase(IRepository<TDomain> repository)
         {
             _repository = repository;
         }
 
-        #region non-async
-
-        public virtual IQueryable<T> GetAll(params Expression<Func<T, object>>[] includes)
+        /// <inheritdoc />
+        public virtual IQueryable<TDomain> GetAll(params Expression<Func<TDomain, object>>[] includes)
         {
             return _repository.GetAll(includes);
         }
 
-        public virtual T Add(T model)
+        #region non-async
+
+        /// <inheritdoc />
+        public virtual TDomain Add(TDomain model)
         {
             return _repository.Add(model);
         }
 
-        public virtual T Update(T model)
+        /// <inheritdoc />
+        public virtual TDomain Update(TDomain model)
         {
             return _repository.Update(model);
         }
 
-        public virtual T GetById(Guid id, params Expression<Func<T, object>>[] includes)
+        /// <inheritdoc />
+        public virtual TDomain GetById(Guid id, params Expression<Func<TDomain, object>>[] includes)
         {
             return _repository.GetById(id, includes);
         }
 
+        /// <inheritdoc />
         public virtual bool Remove(Guid id)
         {
             return _repository.Remove(id);
@@ -53,22 +59,26 @@ namespace MyExpenses.Domain.Services
 
         #region async
 
-        public Task<T> GetByIdAsync(Guid id, params Expression<Func<T, object>>[] includes)
+        /// <inheritdoc />
+        public Task<TDomain> GetByIdAsync(Guid id, params Expression<Func<TDomain, object>>[] includes)
         {
             return _repository.GetByIdAsync(id, includes);
         }
 
+        /// <inheritdoc />
         public Task<bool> RemoveAsync(Guid id)
         {
             return _repository.RemoveAsync(id);
         }
 
-        public Task<T> AddAsync(T model)
+        /// <inheritdoc />
+        public Task<TDomain> AddAsync(TDomain model)
         {
             return _repository.AddAsync(model);
         }
 
-        public Task<T> UpdateAsync(T model)
+        /// <inheritdoc />
+        public Task<TDomain> UpdateAsync(TDomain model)
         {
             return _repository.UpdateAsync(model);
         }
