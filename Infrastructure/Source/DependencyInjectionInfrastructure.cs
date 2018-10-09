@@ -8,6 +8,7 @@ namespace MyExpenses.Infrastructure
 {
     using Microsoft.Extensions.DependencyInjection;
 
+    using MyExpenses.Domain.IoT;
     using MyExpenses.Domain.IoT.Repositories;
     using MyExpenses.Infrastructure.Repositories;
 
@@ -15,6 +16,10 @@ namespace MyExpenses.Infrastructure
     {
         public static void Configure(IServiceCollection services)
         {
+            services.AddDbContext<MyExpensesContext>();
+
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
             services.AddScoped<IExpenseRepository, ExpensesRepository>();
             services.AddScoped<IGroupRepository, GroupRepository>();
             services.AddScoped<ILabelRepository, LabelRepository>();

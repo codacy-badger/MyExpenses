@@ -16,7 +16,7 @@ namespace MyExpenses.Domain.Domains
     {
         public string Name { get; set; }
 
-        public ICollection<MyUser> Users { get; set; }
+        //public ICollection<MyUser> Users { get; set; }
 
         public override void Copy(IBase baseObj)
         {

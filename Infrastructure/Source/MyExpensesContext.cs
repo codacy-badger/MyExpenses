@@ -6,21 +6,22 @@
 
 namespace MyExpenses.Infrastructure
 {
+    using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
 
-    public class MyExpensesContext : DbContext
+    public class MyExpensesContext : IdentityDbContext
     {
         public MyExpensesContext(DbContextOptions<MyExpensesContext> options)
             : base(options)
         {
         }
 
-        public DbSet<MyExpenses.Domain.Domains.LabelDomain> Labels { get; set; }
+        public virtual DbSet<MyExpenses.Domain.Domains.LabelDomain> Labels { get; set; }
 
-        public DbSet<MyExpenses.Domain.Domains.ExpenseDomain> Expenses { get; set; }
+        public virtual DbSet<MyExpenses.Domain.Domains.ExpenseDomain> Expenses { get; set; }
 
-        public DbSet<MyExpenses.Domain.Domains.PaymentDomain> Payments { get; set; }
+        public virtual DbSet<MyExpenses.Domain.Domains.PaymentDomain> Payments { get; set; }
 
-        public DbSet<MyExpenses.Domain.Domains.GroupDomain> Groups { get; set; }
+        public virtual DbSet<MyExpenses.Domain.Domains.GroupDomain> Groups { get; set; }
     }
 }
