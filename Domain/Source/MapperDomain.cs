@@ -7,9 +7,10 @@
 namespace MyExpenses.Domain
 {
     using AutoMapper;
-    using MyExpenses.Domains;
 
-    public class AutoMapperDomainConfiguration
+    using MyExpenses.Domain.Domains;
+
+    public class MapperDomain
     {
         public static void Configure()
         {
@@ -20,6 +21,7 @@ namespace MyExpenses.Domain
                     cfg.CreateMap<ExpenseDomain, ExpenseDomain>();
                     cfg.CreateMap<LabelDomain, LabelDomain>();
                     cfg.CreateMap<PaymentDomain, PaymentDomain>();
+                    cfg.CreateMap<GroupDomain, GroupDomain>();
                 });
         }
     }

@@ -15,7 +15,7 @@ namespace MyExpenses.Domain.Interfaces
     /// Service interface
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public interface IService<T> where T : IBaseId
+    public interface IService<T>
     {
         /// <summary>
         /// Get all objects

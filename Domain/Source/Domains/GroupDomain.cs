@@ -8,13 +8,13 @@ namespace MyExpenses.Domain.Domains
 {
     using MyExpenses.Domain.Interfaces;
 
-    public class PaymentDomain : DomainBase
+    public class GroupDomain : DomainBase
     {
         public string Name { get; set; }
 
         public override void Copy(IBaseId baseObj)
         {
-            if (baseObj is PaymentDomain obj)
+            if (baseObj is GroupDomain obj)
             {
                 AutoMapper.Mapper.Map(this, obj);
             }

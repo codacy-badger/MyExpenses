@@ -4,17 +4,18 @@
 *   Github: http://github.com/lfmachadodasilva/MyExpenses
 */
 
-namespace MyExpenses.Domain.Interfaces
+namespace MyExpenses.Infrastructure.Tables
 {
     using System;
 
-    public interface IBaseId
+    public interface ITable
     {
-        /// <summary>
-        /// Identification key
-        /// </summary>
         Guid Id { get; set; }
 
-        void Copy(IBaseId baseObj);
+        string Name { get; set; }
+
+        DateTime LastUpdate { get; set; }
+
+        void Copy(ITable baseObj);
     }
 }

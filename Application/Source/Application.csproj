@@ -25,4 +25,8 @@
     <ProjectReference Include="..\..\Util\Source\Util.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Dtos\" />
+  </ItemGroup>
+
 </Project>

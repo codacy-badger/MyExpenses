@@ -15,8 +15,9 @@ namespace MyExpenses.Infrastructure.Repositories
     using Microsoft.EntityFrameworkCore;
 
     using MyExpenses.Domain.Interfaces;
+    using MyExpenses.Infrastructure.Tables;
 
-    public class RepositoryBase<T> : IService<T> where T : class, IBaseId
+    public class RepositoryBase<T> : IService<T> where T : class, ITable
     {
         private readonly MyExpensesContext _context;
 

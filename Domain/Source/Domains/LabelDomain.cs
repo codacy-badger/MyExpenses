@@ -4,9 +4,8 @@
 *   Github: http://github.com/lfmachadodasilva/MyExpenses
 */
 
-namespace MyExpenses.Domains
+namespace MyExpenses.Domain.Domains
 {
-    using MyExpenses.Domain.Domains;
     using MyExpenses.Domain.Interfaces;
 
     public class LabelDomain : DomainBase

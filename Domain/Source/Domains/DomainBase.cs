@@ -13,6 +13,6 @@ namespace MyExpenses.Domain.Domains
     {
         public Guid Id { get; set; }
 
-        public abstract void Copy(IBaseId obj);
+        public abstract void Copy(IBaseId baseObj);
     }
 }
