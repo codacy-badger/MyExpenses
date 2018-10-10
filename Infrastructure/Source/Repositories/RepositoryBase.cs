@@ -106,6 +106,8 @@ namespace MyExpenses.Infrastructure.Repositories
             if (model == null)
                 return null;
 
+            model.Id = Guid.NewGuid();
+
             var newModel = _context.Set<TTable>().Add(model);
             return newModel?.Entity;
         }
@@ -114,6 +116,8 @@ namespace MyExpenses.Infrastructure.Repositories
         {
             if (model == null)
                 return null;
+
+            model.Id = Guid.NewGuid();
 
             var newModel = await _context.Set<TTable>().AddAsync(model);
             return newModel.Entity;

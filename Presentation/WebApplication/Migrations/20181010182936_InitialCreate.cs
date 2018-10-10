@@ -171,8 +171,8 @@ namespace WebApplication.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     LastUpdate = table.Column<DateTime>(nullable: false),
-                    UserId = table.Column<Guid>(nullable: false),
-                    GroupId = table.Column<Guid>(nullable: true)
+                    GroupId = table.Column<Guid>(nullable: true),
+                    UserId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {

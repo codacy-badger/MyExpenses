@@ -9,7 +9,7 @@ using MyExpenses.Infrastructure;
 namespace WebApplication.Migrations
 {
     [DbContext(typeof(MyExpensesContext))]
-    [Migration("20181010155952_InitialCreate")]
+    [Migration("20181010182936_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
