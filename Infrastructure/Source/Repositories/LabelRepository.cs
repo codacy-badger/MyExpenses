@@ -6,13 +6,13 @@
 
 namespace MyExpenses.Infrastructure.Repositories
 {
-    using MyExpenses.Domain.Interfaces.Repositories;
-    using MyExpenses.Domain.Models;
-    using MyExpenses.Infrastructure.Context;
+    using MyExpenses.Domain.Domains;
+    using MyExpenses.Domain.IoT.Repositories;
 
-    public class LabelRepository : RepositoryBase<Label>, ILabelRepository
+    public class LabelRepository : RepositoryBase<LabelDomain>, ILabelRepository
     {
-        public LabelRepository(MyExpensesContext context) : base(context)
+        public LabelRepository(MyExpensesContext context)
+            : base(context)
         {
         }
     }

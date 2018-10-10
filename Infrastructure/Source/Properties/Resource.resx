@@ -117,25 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ColumnDate" xml:space="preserve">
-    <value>Data</value>
-  </data>
-  <data name="ColumnIncoming" xml:space="preserve">
-    <value>Incoming</value>
-  </data>
-  <data name="ColumnName" xml:space="preserve">
-    <value>Name</value>
-  </data>
-  <data name="ColumnValue" xml:space="preserve">
-    <value>Value</value>
-  </data>
-  <data name="ExpenseTable" xml:space="preserve">
-    <value>Expense</value>
-  </data>
-  <data name="LabelTable" xml:space="preserve">
-    <value>Label</value>
-  </data>
-  <data name="PaymentTable" xml:space="preserve">
-    <value>Payment</value>
-  </data>
 </root>

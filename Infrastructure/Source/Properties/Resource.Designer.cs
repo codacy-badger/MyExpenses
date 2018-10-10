@@ -22,7 +22,7 @@ namespace MyExpenses.Infrastructure.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resource {
+    public class Resource {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace MyExpenses.Infrastructure.Properties {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MyExpenses.Infrastructure.Properties.Resource", typeof(Resource).Assembly);
@@ -51,75 +51,12 @@ namespace MyExpenses.Infrastructure.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
             set {
                 resourceCulture = value;
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Data.
-        /// </summary>
-        internal static string ColumnDate {
-            get {
-                return ResourceManager.GetString("ColumnDate", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Incoming.
-        /// </summary>
-        internal static string ColumnIncoming {
-            get {
-                return ResourceManager.GetString("ColumnIncoming", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Name.
-        /// </summary>
-        internal static string ColumnName {
-            get {
-                return ResourceManager.GetString("ColumnName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Value.
-        /// </summary>
-        internal static string ColumnValue {
-            get {
-                return ResourceManager.GetString("ColumnValue", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Expense.
-        /// </summary>
-        internal static string ExpenseTable {
-            get {
-                return ResourceManager.GetString("ExpenseTable", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Label.
-        /// </summary>
-        internal static string LabelTable {
-            get {
-                return ResourceManager.GetString("LabelTable", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Payment.
-        /// </summary>
-        internal static string PaymentTable {
-            get {
-                return ResourceManager.GetString("PaymentTable", resourceCulture);
             }
         }
     }

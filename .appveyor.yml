@@ -32,7 +32,7 @@ configuration:
 
 # build platform, i.e. x86, x64, Any CPU. This setting is optional
 platform:
-  - x64
+  - Any CPU
 
 before_build:
  - nuget restore

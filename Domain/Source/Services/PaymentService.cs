@@ -3,28 +3,17 @@
 *   Author: Luiz Felipe Machado da Silva
 *   Github: http://github.com/lfmachadodasilva/MyExpenses
 */
-
 namespace MyExpenses.Domain.Services
 {
-    using MyExpenses.Domain.Interfaces.Repositories;
-    using MyExpenses.Domain.Interfaces.Services;
-    using MyExpenses.Domain.Models;
+    using MyExpenses.Domain.Domains;
+    using MyExpenses.Domain.IoT.Repositories;
+    using MyExpenses.Domain.IoT.Services;
 
-    public class PaymentService : ServiceBase<Payment>, IPaymentService
+    public class PaymentService : ServiceBase<PaymentDomain>, IPaymentService
     {
-        private readonly IExpenseService _expenseService;
-
-        public PaymentService(IPaymentRepository repository, IExpenseService expenseService)
+        public PaymentService(IPaymentRepository repository)
             : base(repository)
         {
-            _expenseService = expenseService;
-        }
-
-        public override bool Remove(long id)
-        {
-            _expenseService.RemovePaymentFromExpenses(id);
-
-            return base.Remove(id);
         }
     }
 }

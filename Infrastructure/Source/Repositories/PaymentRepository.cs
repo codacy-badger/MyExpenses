@@ -6,13 +6,13 @@
 
 namespace MyExpenses.Infrastructure.Repositories
 {
-    using MyExpenses.Domain.Interfaces.Repositories;
-    using MyExpenses.Domain.Models;
-    using MyExpenses.Infrastructure.Context;
+    using MyExpenses.Domain.Domains;
+    using MyExpenses.Domain.IoT.Repositories;
 
-    public class PaymentRepository : RepositoryBase<Payment>, IPaymentRepository
+    public class PaymentRepository : RepositoryBase<PaymentDomain>, IPaymentRepository
     {
-        public PaymentRepository(MyExpensesContext context) : base(context)
+        public PaymentRepository(MyExpensesContext context)
+            : base(context)
         {
         }
     }
