@@ -9,7 +9,7 @@ using MyExpenses.Infrastructure;
 namespace WebApplication.Migrations
 {
     [DbContext(typeof(MyExpensesContext))]
-    [Migration("20181010121352_InitialCreate")]
+    [Migration("20181010155952_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -186,6 +186,8 @@ namespace WebApplication.Migrations
 
                     b.Property<DateTime>("ExpenseDate");
 
+                    b.Property<Guid?>("GroupId");
+
                     b.Property<bool>("IsIncoming");
 
                     b.Property<Guid?>("LabelId");
@@ -199,6 +201,8 @@ namespace WebApplication.Migrations
                     b.Property<float>("Value");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("GroupId");
 
                     b.HasIndex("LabelId");
 
@@ -221,16 +225,38 @@ namespace WebApplication.Migrations
                     b.ToTable("Group");
                 });
 
+            modelBuilder.Entity("MyExpenses.Domain.Domains.GroupUser", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<Guid?>("GroupId");
+
+                    b.Property<DateTime>("LastUpdate");
+
+                    b.Property<Guid>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GroupId");
+
+                    b.ToTable("GroupUser");
+                });
+
             modelBuilder.Entity("MyExpenses.Domain.Domains.LabelDomain", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<Guid?>("GroupId");
 
                     b.Property<DateTime>("LastUpdate");
 
                     b.Property<string>("Name");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("GroupId");
 
                     b.ToTable("Label");
                 });
@@ -240,11 +266,15 @@ namespace WebApplication.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<Guid?>("GroupId");
+
                     b.Property<DateTime>("LastUpdate");
 
                     b.Property<string>("Name");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("GroupId");
 
                     b.ToTable("Payment");
                 });
@@ -296,6 +326,10 @@ namespace WebApplication.Migrations
 
             modelBuilder.Entity("MyExpenses.Domain.Domains.ExpenseDomain", b =>
                 {
+                    b.HasOne("MyExpenses.Domain.Domains.GroupDomain", "Group")
+                        .WithMany()
+                        .HasForeignKey("GroupId");
+
                     b.HasOne("MyExpenses.Domain.Domains.LabelDomain", "Label")
                         .WithMany()
                         .HasForeignKey("LabelId");
@@ -303,6 +337,27 @@ namespace WebApplication.Migrations
                     b.HasOne("MyExpenses.Domain.Domains.PaymentDomain", "Payment")
                         .WithMany()
                         .HasForeignKey("PaymentId");
+                });
+
+            modelBuilder.Entity("MyExpenses.Domain.Domains.GroupUser", b =>
+                {
+                    b.HasOne("MyExpenses.Domain.Domains.GroupDomain", "Group")
+                        .WithMany("Users")
+                        .HasForeignKey("GroupId");
+                });
+
+            modelBuilder.Entity("MyExpenses.Domain.Domains.LabelDomain", b =>
+                {
+                    b.HasOne("MyExpenses.Domain.Domains.GroupDomain", "Group")
+                        .WithMany()
+                        .HasForeignKey("GroupId");
+                });
+
+            modelBuilder.Entity("MyExpenses.Domain.Domains.PaymentDomain", b =>
+                {
+                    b.HasOne("MyExpenses.Domain.Domains.GroupDomain", "Group")
+                        .WithMany()
+                        .HasForeignKey("GroupId");
                 });
 #pragma warning restore 612, 618
         }

@@ -9,6 +9,8 @@ namespace MyExpenses.Infrastructure
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
 
+    using MyExpenses.Domain.Domains;
+
     public class MyExpensesContext : IdentityDbContext
     {
         public MyExpensesContext(DbContextOptions<MyExpensesContext> options)

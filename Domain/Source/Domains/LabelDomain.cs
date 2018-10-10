@@ -6,6 +6,7 @@
 
 namespace MyExpenses.Domain.Domains
 {
+    using System;
     using System.ComponentModel.DataAnnotations.Schema;
 
     using MyExpenses.Domain.IoT;
@@ -14,6 +15,8 @@ namespace MyExpenses.Domain.Domains
     public class LabelDomain : DomainBase
     {
         public string Name { get; set; }
+
+        public GroupDomain Group { get; set; }
 
         public override void Copy(IBase baseObj)
         {

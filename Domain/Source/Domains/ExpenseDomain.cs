@@ -26,6 +26,8 @@ namespace MyExpenses.Domain.Domains
 
         public PaymentDomain Payment { get; set; }
 
+        public GroupDomain Group { get; set; }
+
         public override void Copy(IBase baseObj)
         {
             if (baseObj is ExpenseDomain obj)

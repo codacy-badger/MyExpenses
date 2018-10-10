@@ -60,32 +60,6 @@ namespace WebApplication.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Label",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    LastUpdate = table.Column<DateTime>(nullable: false),
-                    Name = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Label", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Payment",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    LastUpdate = table.Column<DateTime>(nullable: false),
-                    Name = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Payment", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -192,6 +166,66 @@ namespace WebApplication.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "GroupUser",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    LastUpdate = table.Column<DateTime>(nullable: false),
+                    UserId = table.Column<Guid>(nullable: false),
+                    GroupId = table.Column<Guid>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GroupUser", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_GroupUser_Group_GroupId",
+                        column: x => x.GroupId,
+                        principalTable: "Group",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Label",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    LastUpdate = table.Column<DateTime>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    GroupId = table.Column<Guid>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Label", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Label_Group_GroupId",
+                        column: x => x.GroupId,
+                        principalTable: "Group",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Payment",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    LastUpdate = table.Column<DateTime>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    GroupId = table.Column<Guid>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Payment", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Payment_Group_GroupId",
+                        column: x => x.GroupId,
+                        principalTable: "Group",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Expense",
                 columns: table => new
                 {
@@ -202,11 +236,18 @@ namespace WebApplication.Migrations
                     ExpenseDate = table.Column<DateTime>(nullable: false),
                     IsIncoming = table.Column<bool>(nullable: false),
                     LabelId = table.Column<Guid>(nullable: true),
-                    PaymentId = table.Column<Guid>(nullable: true)
+                    PaymentId = table.Column<Guid>(nullable: true),
+                    GroupId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Expense", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Expense_Group_GroupId",
+                        column: x => x.GroupId,
+                        principalTable: "Group",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Expense_Label_LabelId",
                         column: x => x.LabelId,
@@ -259,6 +300,11 @@ namespace WebApplication.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_Expense_GroupId",
+                table: "Expense",
+                column: "GroupId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Expense_LabelId",
                 table: "Expense",
                 column: "LabelId");
@@ -267,6 +313,21 @@ namespace WebApplication.Migrations
                 name: "IX_Expense_PaymentId",
                 table: "Expense",
                 column: "PaymentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GroupUser_GroupId",
+                table: "GroupUser",
+                column: "GroupId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Label_GroupId",
+                table: "Label",
+                column: "GroupId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Payment_GroupId",
+                table: "Payment",
+                column: "GroupId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -290,7 +351,7 @@ namespace WebApplication.Migrations
                 name: "Expense");
 
             migrationBuilder.DropTable(
-                name: "Group");
+                name: "GroupUser");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -303,6 +364,9 @@ namespace WebApplication.Migrations
 
             migrationBuilder.DropTable(
                 name: "Payment");
+
+            migrationBuilder.DropTable(
+                name: "Group");
         }
     }
 }
