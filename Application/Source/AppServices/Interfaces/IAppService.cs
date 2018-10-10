@@ -8,7 +8,7 @@ namespace MyExpenses.Application.AppServices.Interfaces
 {
     using System;
     using System.Linq;
-
+    using System.Threading.Tasks;
     using MyExpenses.Application.Dtos;
 
     public interface IAppService<TDto> where TDto : IDto
@@ -25,6 +25,7 @@ namespace MyExpenses.Application.AppServices.Interfaces
         /// <param name="id">Id of the object to be find</param>
         /// <returns></returns>
         TDto GetById(Guid id);
+        Task<TDto> GetByIdAsync(Guid id);
 
         /// <summary>
         /// Remove object
@@ -32,19 +33,22 @@ namespace MyExpenses.Application.AppServices.Interfaces
         /// <param name="id">If of the object to remove</param>
         /// <returns>True if could remove and false otherwise</returns>
         bool Remove(Guid id);
+        Task<bool> RemoveAsync(Guid id);
 
         /// <summary>
         /// Add an object
         /// </summary>
-        /// <param name="model">Object to add</param>
+        /// <param name="obj">Object to add</param>
         /// <returns>Object added</returns>
-        TDto Add(TDto model);
+        TDto Add(TDto obj);
+        Task<TDto> AddAsync(TDto obj);
 
         /// <summary>
         /// Update an object
         /// </summary>
         /// <param name="model">Object toupdate</param>
         /// <returns>Object updated</returns>
-        TDto Update(TDto model);
+        TDto Update(TDto obj);
+        Task<TDto> UpdateAsync(TDto obj);
     }
 }

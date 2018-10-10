@@ -60,7 +60,7 @@ namespace WebApplication
             DependencyInjectionInfrastructure.Configure(services);
             DependencyInjectionApplication.Configure(services);
 
-            services.AddTransient<LabelsController>();
+            services.AddScoped<LabelsController>();
 
             Mapper.Initialize(
                 cfg =>

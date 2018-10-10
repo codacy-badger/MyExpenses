@@ -11,7 +11,7 @@ namespace MyExpenses.Infrastructure.Repositories
 
     public class ExpensesRepository : RepositoryBase<ExpenseDomain>, IExpenseRepository
     {
-        protected ExpensesRepository(MyExpensesContext context)
+        public ExpensesRepository(MyExpensesContext context)
             : base(context)
         {
         }

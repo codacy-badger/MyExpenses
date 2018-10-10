@@ -16,8 +16,6 @@ namespace MyExpenses.Infrastructure
     {
         public static void Configure(IServiceCollection services)
         {
-            services.AddDbContext<MyExpensesContext>();
-
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddScoped<IExpenseRepository, ExpensesRepository>();

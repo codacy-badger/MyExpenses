@@ -11,7 +11,7 @@ namespace MyExpenses.Infrastructure.Repositories
 
     public class LabelRepository : RepositoryBase<LabelDomain>, ILabelRepository
     {
-        protected LabelRepository(MyExpensesContext context)
+        public LabelRepository(MyExpensesContext context)
             : base(context)
         {
         }

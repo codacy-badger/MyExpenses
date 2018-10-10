@@ -11,7 +11,7 @@ namespace MyExpenses.Domain.Services
 
     public class LabelService : ServiceBase<LabelDomain>, ILabelService
     {
-        protected LabelService(ILabelRepository repository)
+        public LabelService(ILabelRepository repository)
             : base(repository)
         {
         }

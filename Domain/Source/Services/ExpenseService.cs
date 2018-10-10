@@ -11,7 +11,7 @@ namespace MyExpenses.Domain.Services
 
     public class ExpenseService : ServiceBase<ExpenseDomain>, IExpenseService
     {
-        protected ExpenseService(IExpenseRepository repository)
+        public ExpenseService(IExpenseRepository repository)
             : base(repository)
         {
         }

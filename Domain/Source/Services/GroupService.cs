@@ -12,7 +12,7 @@ namespace MyExpenses.Domain.Services
 
     public class GroupService : ServiceBase<GroupDomain>, IGroupService
     {
-        protected GroupService(IGroupRepository repository)
+        public GroupService(IGroupRepository repository)
             : base(repository)
         {
         }

@@ -11,7 +11,7 @@ namespace MyExpenses.Infrastructure.Repositories
 
     public class GroupRepository : RepositoryBase<GroupDomain>, IGroupRepository
     {
-        protected GroupRepository(MyExpensesContext context)
+        public GroupRepository(MyExpensesContext context)
             : base(context)
         {
         }

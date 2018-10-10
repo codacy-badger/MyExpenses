@@ -1,26 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿/* 
+*   Project: MyExpenses
+*   Author: Luiz Felipe Machado da Silva
+*   Github: http://github.com/lfmachadodasilva/MyExpenses
+*/
 
 namespace WebApplication.Controllers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
+
     using MyExpenses.Application.AppServices.Interfaces;
     using MyExpenses.Application.Dtos;
-    using MyExpenses.Domain.IoT.Services;
+    using MyExpenses.Domain.IoT.Repositories;
 
     public class LabelsController : Controller
     {
-        //private readonly ILabelAppService _service;
+        private readonly ILabelAppService _service;
 
-        public LabelsController()
+        public LabelsController(ILabelAppService service)
         {
-            //_service = service;
+            _service = service;
 
-            //var a = _service.Get().ToList();
-            //a.ForEach(x => Console.WriteLine(x.Name));
+            var a = _service.Get().ToList();
+            a.ForEach(x => Console.WriteLine(x.Name));
         }
 
         // GET: Labels

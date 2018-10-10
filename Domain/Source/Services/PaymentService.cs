@@ -11,7 +11,7 @@ namespace MyExpenses.Domain.Services
 
     public class PaymentService : ServiceBase<PaymentDomain>, IPaymentService
     {
-        protected PaymentService(IPaymentRepository repository)
+        public PaymentService(IPaymentRepository repository)
             : base(repository)
         {
         }

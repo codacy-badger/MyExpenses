@@ -11,7 +11,7 @@ namespace MyExpenses.Infrastructure.Repositories
 
     public class PaymentRepository : RepositoryBase<PaymentDomain>, IPaymentRepository
     {
-        protected PaymentRepository(MyExpensesContext context)
+        public PaymentRepository(MyExpensesContext context)
             : base(context)
         {
         }

@@ -3,7 +3,6 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <RootNamespace>MyExpenses.Application</RootNamespace>
-    <Platforms>x64</Platforms>
     <DebugType>Full</DebugType>
   </PropertyGroup>
 
