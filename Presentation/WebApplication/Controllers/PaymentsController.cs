@@ -16,22 +16,22 @@ namespace WebApplication.Controllers
     using MyExpenses.Domain.Domains;
     using MyExpenses.Infrastructure;
 
-    public class LabelsController : Controller
+    public class PaymentsController : Controller
     {
         private readonly MyExpensesContext _context;
 
-        public LabelsController(MyExpensesContext context)
+        public PaymentsController(MyExpensesContext context)
         {
             _context = context;
         }
 
-        // GET: Labels
+        // GET: Payments
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Labels.ToListAsync());
+            return View(await _context.Payments.ToListAsync());
         }
 
-        // GET: Labels/Details/5
+        // GET: Payments/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
@@ -39,40 +39,40 @@ namespace WebApplication.Controllers
                 return NotFound();
             }
 
-            var labelDomain = await _context.Labels
+            var paymentDomain = await _context.Payments
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (labelDomain == null)
+            if (paymentDomain == null)
             {
                 return NotFound();
             }
 
-            return View(labelDomain);
+            return View(paymentDomain);
         }
 
-        // GET: Labels/Create
+        // GET: Payments/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Labels/Create
+        // POST: Payments/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,Id,LastUpdate")] LabelDomain labelDomain)
+        public async Task<IActionResult> Create([Bind("Name,Id,LastUpdate")] PaymentDomain paymentDomain)
         {
             if (ModelState.IsValid)
             {
-                labelDomain.Id = Guid.NewGuid();
-                _context.Add(labelDomain);
+                paymentDomain.Id = Guid.NewGuid();
+                _context.Add(paymentDomain);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(labelDomain);
+            return View(paymentDomain);
         }
 
-        // GET: Labels/Edit/5
+        // GET: Payments/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
@@ -80,22 +80,22 @@ namespace WebApplication.Controllers
                 return NotFound();
             }
 
-            var labelDomain = await _context.Labels.FindAsync(id);
-            if (labelDomain == null)
+            var paymentDomain = await _context.Payments.FindAsync(id);
+            if (paymentDomain == null)
             {
                 return NotFound();
             }
-            return View(labelDomain);
+            return View(paymentDomain);
         }
 
-        // POST: Labels/Edit/5
+        // POST: Payments/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Name,Id,LastUpdate")] LabelDomain labelDomain)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Name,Id,LastUpdate")] PaymentDomain paymentDomain)
         {
-            if (id != labelDomain.Id)
+            if (id != paymentDomain.Id)
             {
                 return NotFound();
             }
@@ -104,12 +104,12 @@ namespace WebApplication.Controllers
             {
                 try
                 {
-                    _context.Update(labelDomain);
+                    _context.Update(paymentDomain);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!LabelDomainExists(labelDomain.Id))
+                    if (!PaymentDomainExists(paymentDomain.Id))
                     {
                         return NotFound();
                     }
@@ -120,10 +120,10 @@ namespace WebApplication.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(labelDomain);
+            return View(paymentDomain);
         }
 
-        // GET: Labels/Delete/5
+        // GET: Payments/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
@@ -131,30 +131,30 @@ namespace WebApplication.Controllers
                 return NotFound();
             }
 
-            var labelDomain = await _context.Labels
+            var paymentDomain = await _context.Payments
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (labelDomain == null)
+            if (paymentDomain == null)
             {
                 return NotFound();
             }
 
-            return View(labelDomain);
+            return View(paymentDomain);
         }
 
-        // POST: Labels/Delete/5
+        // POST: Payments/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var labelDomain = await _context.Labels.FindAsync(id);
-            _context.Labels.Remove(labelDomain);
+            var paymentDomain = await _context.Payments.FindAsync(id);
+            _context.Payments.Remove(paymentDomain);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool LabelDomainExists(Guid id)
+        private bool PaymentDomainExists(Guid id)
         {
-            return _context.Labels.Any(e => e.Id == id);
+            return _context.Payments.Any(e => e.Id == id);
         }
     }
 }
