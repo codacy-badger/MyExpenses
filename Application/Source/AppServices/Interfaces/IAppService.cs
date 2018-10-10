@@ -17,7 +17,7 @@ namespace MyExpenses.Application.AppServices.Interfaces
         /// Get all objects
         /// </summary>
         /// <returns>All objects</returns>
-        IQueryable<TDto> Get();
+        IQueryable<TDto> GetAll();
 
         /// <summary>
         /// Get object by Id

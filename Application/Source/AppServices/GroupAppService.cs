@@ -9,12 +9,13 @@ namespace MyExpenses.Application.AppServices
     using MyExpenses.Application.AppServices.Interfaces;
     using MyExpenses.Application.Dtos;
     using MyExpenses.Domain.Domains;
+    using MyExpenses.Domain.IoT;
     using MyExpenses.Domain.IoT.Services;
 
     public class GroupAppService : AppServiceBase<GroupDomain, GroupDto>, IGroupAppService
     {
-        public GroupAppService(IGroupService service)
-            : base(service)
+        public GroupAppService(IGroupService service, IUnitOfWork unitOfWork)
+            : base(service, unitOfWork)
         {
         }
     }

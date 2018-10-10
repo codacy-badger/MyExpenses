@@ -25,7 +25,10 @@ namespace WebApplication.Controllers
         {
             _service = service;
 
-            var a = _service.Get().ToList();
+            var l = new LabelDto { Id = Guid.NewGuid(), Name = "Foca" };
+            _service.Add(l);
+
+            var a = _service.GetAll().ToList();
             a.ForEach(x => Console.WriteLine(x.Name));
         }
 
