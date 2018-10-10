@@ -44,12 +44,13 @@ build_script:
   - dotnet build "Infrastructure/Source" -c %CONFIGURATION% --version-suffix %LABEL%
   - dotnet build "Application/Source" -c %CONFIGURATION% --version-suffix %LABEL%
   
-  - dotnet build "Presentation/WebApplicationMVC" -c %CONFIGURATION% --version-suffix %LABEL%
-  - dotnet build "Presentation/WebApplicationApi" -c %CONFIGURATION% --version-suffix %LABEL%
+  - dotnet build "Presentation/WebApplication" -c %CONFIGURATION% --version-suffix %LABEL%
+  # - dotnet build "Presentation/WebApplicationMVC" -c %CONFIGURATION% --version-suffix %LABEL%
+  # - dotnet build "Presentation/WebApplicationApi" -c %CONFIGURATION% --version-suffix %LABEL%
 
-  - dotnet build "Domain/Test" -c %CONFIGURATION% --version-suffix %LABEL%
-  - dotnet build "Infrastructure/Test" -c %CONFIGURATION% --version-suffix %LABEL%
-  - dotnet build "Application/Test" -c %CONFIGURATION% --version-suffix %LABEL%
+  # - dotnet build "Domain/Test" -c %CONFIGURATION% --version-suffix %LABEL%
+  # - dotnet build "Infrastructure/Test" -c %CONFIGURATION% --version-suffix %LABEL%
+  # - dotnet build "Application/Test" -c %CONFIGURATION% --version-suffix %LABEL%
 
 after_build:
   - dotnet build -c %CONFIGURATION% --version-suffix %LABEL%
@@ -86,23 +87,23 @@ notifications:
 #       tests configuration       #
 #---------------------------------#
 
-# scripts to run before tests
-before_test:
- - choco install opencover.portable
- - choco install codecov
+# # scripts to run before tests
+# before_test:
+#  - choco install opencover.portable
+#  - choco install codecov
 
-# to run your custom scripts instead of automatic tests
-test_script:
-  - dotnet test "Application/Test" -c %CONFIGURATION%
-  - dotnet test "Domain/Test" -c %CONFIGURATION%
-  - dotnet test "Infrastructure/Test" -c %CONFIGURATION%
+# # to run your custom scripts instead of automatic tests
+# test_script:
+#   - dotnet test "Application/Test" -c %CONFIGURATION%
+#   - dotnet test "Domain/Test" -c %CONFIGURATION%
+#   - dotnet test "Infrastructure/Test" -c %CONFIGURATION%
 
-  - OpenCover.Console.exe -register:user -target:"C:/Program Files/dotnet/dotnet.exe" -targetargs:"test /p:DebugType=full Domain/Test" -output:"DomainTestResult.xml" -oldstyle
-  - OpenCover.Console.exe -register:user -target:"C:/Program Files/dotnet/dotnet.exe" -targetargs:"test /p:DebugType=full Infrastructure/Test" -output:"InfrastructureTestResult.xml" -oldstyle
-  - OpenCover.Console.exe -register:user -target:"C:/Program Files/dotnet/dotnet.exe" -targetargs:"test /p:DebugType=full Application/Test" -output:"ApplicationTestResult.xml" -oldstyle
+#   - OpenCover.Console.exe -register:user -target:"C:/Program Files/dotnet/dotnet.exe" -targetargs:"test /p:DebugType=full Domain/Test" -output:"DomainTestResult.xml" -oldstyle
+#   - OpenCover.Console.exe -register:user -target:"C:/Program Files/dotnet/dotnet.exe" -targetargs:"test /p:DebugType=full Infrastructure/Test" -output:"InfrastructureTestResult.xml" -oldstyle
+#   - OpenCover.Console.exe -register:user -target:"C:/Program Files/dotnet/dotnet.exe" -targetargs:"test /p:DebugType=full Application/Test" -output:"ApplicationTestResult.xml" -oldstyle
   
-# scripts to run after tests
-after_test:
- - codecov -f "DomainTestResult.xml" -t 81c4ac46-b5bc-4d0d-8c4f-4de04812e6e3
- - codecov -f "InfrastructureTestResult.xml" -t 81c4ac46-b5bc-4d0d-8c4f-4de04812e6e3
- - codecov -f "ApplicationTestResult.xml" -t 81c4ac46-b5bc-4d0d-8c4f-4de04812e6e3
+# # scripts to run after tests
+# after_test:
+#  - codecov -f "DomainTestResult.xml" -t 81c4ac46-b5bc-4d0d-8c4f-4de04812e6e3
+#  - codecov -f "InfrastructureTestResult.xml" -t 81c4ac46-b5bc-4d0d-8c4f-4de04812e6e3
+#  - codecov -f "ApplicationTestResult.xml" -t 81c4ac46-b5bc-4d0d-8c4f-4de04812e6e3
