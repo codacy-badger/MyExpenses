@@ -1,4 +1,4 @@
-﻿@model ICollection<MyExpenses.Application.Dtos.LabelDto>
+﻿@model IEnumerable<MyExpenses.Application.Dtos.LabelDto>
 
 @{
     ViewData["Title"] = "Index";
@@ -13,8 +13,9 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.First().Name)
+                @Html.DisplayNameFor(model => model.Name)
             </th>
+
             <th></th>
         </tr>
     </thead>

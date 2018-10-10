@@ -23,8 +23,6 @@ namespace WebApplication
 
     using Newtonsoft.Json;
 
-    using WebApplication.Controllers;
-
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -59,8 +57,6 @@ namespace WebApplication
             DependencyInjectionDomain.Configure(services);
             DependencyInjectionInfrastructure.Configure(services);
             DependencyInjectionApplication.Configure(services);
-
-            services.AddScoped<LabelsController>();
 
             Mapper.Initialize(
                 cfg =>

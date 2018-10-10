@@ -7,110 +7,149 @@
 namespace WebApplication.Controllers
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
-
-    using Microsoft.AspNetCore.Http;
+    using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
 
     using MyExpenses.Application.AppServices.Interfaces;
     using MyExpenses.Application.Dtos;
 
     public class LabelsController : Controller
     {
-        private readonly ILabelAppService _service;
+        private readonly ILabelAppService _appService;
 
-        public LabelsController(ILabelAppService service)
+        public LabelsController(ILabelAppService appService)
         {
-            _service = service;
-
-            var l = new LabelDto { Id = Guid.NewGuid(), Name = "Foca" };
-            _service.Add(l);
-
-            var a = _service.GetAll().ToList();
-            a.ForEach(x => Console.WriteLine(x.Name));
+            _appService = appService;
         }
 
         // GET: Labels
-        public ActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var l = new List<LabelDto> { new LabelDto { Id = Guid.NewGuid(), Name = "Foca" } };
-            return View(l);
+            var objs = await _appService.GetAll().ToListAsync();
+            return View(objs);
         }
 
         // GET: Labels/Details/5
-        public ActionResult Details(int id)
+        public async Task<IActionResult> Details(Guid? id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var labelDomain = await _appService.GetByIdAsync(id.Value);
+            if (labelDomain == null)
+            {
+                return NotFound();
+            }
+
+            return View(labelDomain);
         }
 
         // GET: Labels/Create
-        public ActionResult Create()
+        public IActionResult Create()
         {
             return View();
         }
 
         // POST: Labels/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> Create(LabelDto labelDomain)
         {
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add insert logic here
+                labelDomain.Id = Guid.NewGuid();
 
+                await _appService.AddAsync(labelDomain);
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            return View(labelDomain);
         }
 
         // GET: Labels/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<IActionResult> Edit(Guid? id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var labelDomain = await _appService.GetByIdAsync(id.Value);
+            if (labelDomain == null)
+            {
+                return NotFound();
+            }
+            return View(labelDomain);
         }
 
         // POST: Labels/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<IActionResult> Edit(Guid id, LabelDto labelDomain)
         {
-            try
+            if (id != labelDomain.Id)
             {
-                // TODO: Add update logic here
+                return NotFound();
+            }
 
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    await _appService.UpdateAsync(labelDomain);
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!LabelDomainExists(labelDomain.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            return View(labelDomain);
         }
 
         // GET: Labels/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<IActionResult> Delete(Guid? id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var labelDomain = await _appService.GetByIdAsync(id.Value);
+            if (labelDomain == null)
+            {
+                return NotFound();
+            }
+
+            return View(labelDomain);
         }
 
         // POST: Labels/Delete/5
-        [HttpPost]
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            try
-            {
-                // TODO: Add delete logic here
+            await _appService.RemoveAsync(id);
+            return RedirectToAction(nameof(Index));
+        }
 
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+        private bool LabelDomainExists(Guid id)
+        {
+            return _appService.GetAll().Any(e => e.Id == id);
         }
     }
 }
