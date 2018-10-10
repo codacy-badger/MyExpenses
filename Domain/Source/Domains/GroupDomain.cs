@@ -6,7 +6,6 @@
 
 namespace MyExpenses.Domain.Domains
 {
-    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations.Schema;
 

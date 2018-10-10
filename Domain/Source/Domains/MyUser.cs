@@ -7,14 +7,16 @@
 namespace MyExpenses.Domain.Domains
 {
     using System;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     using MyExpenses.Domain.IoT;
 
+    [Table("GroupUser")]
     public class GroupUser : DomainBase
     {
-        public Guid UserId { get; set; }
-
         public GroupDomain Group { get; set; }
+
+        public Guid UserId { get; set; }
 
         public override void Copy(IBase baseObj)
         {

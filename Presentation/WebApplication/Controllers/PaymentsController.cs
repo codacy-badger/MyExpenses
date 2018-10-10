@@ -10,12 +10,15 @@ namespace WebApplication.Controllers
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.EntityFrameworkCore;
     using MyExpenses.Domain.Domains;
     using MyExpenses.Infrastructure;
 
+    [Authorize]
     public class PaymentsController : Controller
     {
         private readonly MyExpensesContext _context;
@@ -60,7 +63,7 @@ namespace WebApplication.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,Id,LastUpdate")] PaymentDomain paymentDomain)
+        public async Task<IActionResult> Create([Bind("Name,Id")] PaymentDomain paymentDomain)
         {
             if (ModelState.IsValid)
             {
@@ -93,7 +96,7 @@ namespace WebApplication.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Name,Id,LastUpdate")] PaymentDomain paymentDomain)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Name,Id")] PaymentDomain paymentDomain)
         {
             if (id != paymentDomain.Id)
             {
