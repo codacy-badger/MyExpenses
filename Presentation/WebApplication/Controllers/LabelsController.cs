@@ -15,7 +15,6 @@ namespace WebApplication.Controllers
 
     using MyExpenses.Application.AppServices.Interfaces;
     using MyExpenses.Application.Dtos;
-    using MyExpenses.Domain.IoT.Repositories;
 
     public class LabelsController : Controller
     {

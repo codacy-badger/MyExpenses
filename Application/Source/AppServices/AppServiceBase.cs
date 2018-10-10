@@ -27,8 +27,7 @@ namespace MyExpenses.Application.AppServices
 
         public virtual IQueryable<TDto> GetAll()
         {
-            var objs = _service.GetAll();
-            return Mapper.Map<IQueryable<TDomain>, IQueryable<TDto>>(objs);
+            return _service.GetAll().Select(x => Mapper.Map<TDomain, TDto>(x));
         }
 
         #region non-async methods
