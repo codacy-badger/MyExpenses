@@ -18,11 +18,11 @@ namespace WebApplication.Models.Groups
         public GroupCreateEditViewModel()
         {
             AvailableUsers = new List<UserViewModel>();
-            SelectedUsers = new List<UserViewModel>();
+            SelectedUsers = new List<GroupUserViewModel>();
             SelectedUsersId = new List<Guid>();
         }
 
-        public GroupCreateEditViewModel(IQueryable<IdentityUser> availables, ICollection<Guid> selected = null)
+        public GroupCreateEditViewModel(IQueryable<IdentityUser> availables, ICollection<GroupUserViewModel> selected = null)
         {
             SetupUsers(availables, selected);
         }
@@ -35,19 +35,19 @@ namespace WebApplication.Models.Groups
 
         public SelectList AvailableUsersSelectList { get; set; }
 
-        public ICollection<UserViewModel> SelectedUsers { get; private set; }
+        public ICollection<GroupUserViewModel> SelectedUsers { get; private set; }
 
         public ICollection<Guid> SelectedUsersId { get; set; }
 
-        private void SetupUsers(IQueryable<IdentityUser> availables, ICollection<Guid> selected = null)
+        private void SetupUsers(IQueryable<IdentityUser> availables, ICollection<GroupUserViewModel> selected = null)
         {
             AvailableUsers = availables.Select(u => new UserViewModel { Id = Guid.Parse(u.Id), UserName = u.UserName }).ToList();
             AvailableUsersSelectList = new SelectList(AvailableUsers, "Id", "UserName");
 
             if (selected != null && selected.Any())
             {
-                SelectedUsers = AvailableUsers.Where(x => selected.Any(y => y == x.Id)).ToList();
-                SelectedUsersId = selected;
+                SelectedUsers = selected;
+                SelectedUsersId = selected.Select(x => x.UserId).ToList();
             }
         }
     }
