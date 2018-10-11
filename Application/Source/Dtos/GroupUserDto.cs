@@ -12,6 +12,8 @@ namespace MyExpenses.Application.Dtos
     {
         public GroupDto Group { get; set; }
 
+        public string UserName { get; set; }
+
         public Guid UserId { get; set; }
     }
 }

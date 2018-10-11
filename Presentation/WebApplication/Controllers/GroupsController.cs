@@ -7,17 +7,21 @@
 namespace WebApplication.Controllers
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
+    using System.Reflection.Emit;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.EntityFrameworkCore;
 
     using MyExpenses.Application.AppServices.Interfaces;
     using MyExpenses.Application.Dtos;
     using MyExpenses.Infrastructure;
+    using MyExpenses.Infrastructure.Properties;
 
     [Authorize]
     public class GroupsController : Controller
@@ -34,9 +38,10 @@ namespace WebApplication.Controllers
         // GET: Groups
         public async Task<IActionResult> Index()
         {
-            var userId = await GetCurrentUserIdAsync();
+            //var user = await _manager.FindByIdAsync(User.Identity.Name);
+            //var userId = Guid.Parse(user.Id);
 
-            var objs = await _service.GetAll().Where(g => g.Users.Any(u => u.Id == userId)).ToListAsync();
+            var objs = await _service.GetAll().ToListAsync(); //.Where(g => g.Users.Any(u => u.Id == userId)).ToListAsync();
             return View(objs);
         }
 
@@ -60,6 +65,7 @@ namespace WebApplication.Controllers
         // GET: Groups/Create
         public IActionResult Create()
         {
+            CreateSelectLists();
             return View();
         }
 
@@ -91,6 +97,11 @@ namespace WebApplication.Controllers
             {
                 return NotFound();
             }
+
+            var users = CreateSelectLists();
+            obj.AllUsers = new List<string>();
+            obj.AllUsers.Add(users.ToList()[1].UserId.ToString());
+
             return View(obj);
         }
 
@@ -163,6 +174,24 @@ namespace WebApplication.Controllers
         {
             var user = await _manager.FindByIdAsync(User.Identity.Name);
             return Guid.Parse(user.Id);
+        }
+
+        private IEnumerable<GroupUserDto> CreateSelectLists()
+        {
+            IEnumerable<GroupUserDto> users = _manager.Users.Select(u => new GroupUserDto { UserId = Guid.Parse(u.Id), UserName = u.UserName });
+            
+            //IEnumerable<Payment> payments = _paymentService.Get();
+
+            //Label[] l = { new Label { Id = -1, Name = string.Empty } };
+            //lables = lables.Concat(l).OrderBy(x => x.Id);
+
+            //Payment[] p = { new Payment { Id = -1, Name = string.Empty } };
+            //payments = payments.Concat(p).OrderBy(x => x.Id);
+
+            ViewData["Users"] = new SelectList(users, "UserId", "UserName");
+            //ViewData[Resource.PaymentsViewData] = new SelectList(payments, "Id", "Name", paymentId);
+
+            return users;
         }
     }
 }
