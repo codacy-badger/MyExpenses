@@ -15,8 +15,9 @@ namespace WebApplication.Models.Groups
             Groups = new List<GroupViewModel>();
         }
 
-        public UserViewModel CurrentUser { get; set; }
-
+        /// <summary>
+        /// Only used to label
+        /// </summary>
         public GroupViewModel GroupLabel { get; set; }
 
         public ICollection<GroupViewModel> Groups { get; set; }

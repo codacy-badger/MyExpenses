@@ -11,6 +11,8 @@ namespace WebApplication.Controllers
     using System.Linq;
     using System.Threading.Tasks;
 
+    using AutoMapper;
+
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
@@ -19,7 +21,6 @@ namespace WebApplication.Controllers
 
     using MyExpenses.Application.AppServices.Interfaces;
     using MyExpenses.Application.Dtos;
-    using MyExpenses.Infrastructure;
 
     using WebApplication.Models;
     using WebApplication.Models.Groups;
@@ -40,16 +41,8 @@ namespace WebApplication.Controllers
         public async Task<IActionResult> Index()
         {
             var userId = await GetCurrentUserIdAsync();
-            var objs = await _service.GetAllWithIncludes().Where(g => g.Users.Any(u => u.UserId == userId)).ToListAsync();
-
-            var viewModel = new GroupsViewModel
-            {
-                Groups = objs.Select(x => new GroupViewModel
-                {
-                    Id = x.Id,
-                    Name = x.Name
-                }).ToList()
-            };
+            var objs = await _service.GetAllWithIncludes(userId).ToListAsync();
+            var viewModel = new GroupsViewModel { Groups = objs.Select(Mapper.Map<GroupDto, GroupViewModel>).ToList() };
 
             return View(viewModel);
         }
@@ -74,9 +67,7 @@ namespace WebApplication.Controllers
         // GET: Groups/Create
         public IActionResult Create()
         {
-            CreateSelectLists();
-
-            var viewModel = new GroupCreateViewModel(_manager.Users);
+            var viewModel = new GroupCreateEditViewModel(_manager.Users);
 
             return View(viewModel);
         }
@@ -86,7 +77,7 @@ namespace WebApplication.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(GroupCreateViewModel obj)
+        public async Task<IActionResult> Create(GroupCreateEditViewModel obj)
         {
             if (ModelState.IsValid)
             {
@@ -116,13 +107,11 @@ namespace WebApplication.Controllers
                 return NotFound();
             }
 
-            var viewModel = new GroupCreateViewModel(_manager.Users, obj.Users.Select(x => x.UserId).ToList())
+            var viewModel = new GroupCreateEditViewModel(_manager.Users, obj.Users.Select(x => x.UserId).ToList())
             {
                 Id = obj.Id,
                 Name = obj.Name
             };
-
-            CreateSelectLists();
 
             return View(viewModel);
         }
@@ -196,12 +185,6 @@ namespace WebApplication.Controllers
         {
             var user = await _manager.FindByNameAsync(User.Identity.Name);
             return Guid.Parse(user.Id);
-        }
-
-        private void CreateSelectLists()
-        {
-            ICollection<UserViewModel> users = _manager.Users.Select(u => new UserViewModel { Id = Guid.Parse(u.Id), UserName = u.UserName }).ToList();
-            ViewData["AllUsers"] = new SelectList(users, "Id", "UserName");
         }
     }
 }

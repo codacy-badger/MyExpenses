@@ -23,6 +23,9 @@ namespace WebApplication
 
     using Newtonsoft.Json;
 
+    using WebApplication.Models;
+    using WebApplication.Properties;
+
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -44,8 +47,8 @@ namespace WebApplication
 
             services.AddDbContext<MyExpensesContext>(options =>
                 options.UseSqlite(
-                    Configuration.GetConnectionString("DefaultConnection"),
-                    x => x.MigrationsAssembly("WebApplication")));
+                    Configuration.GetConnectionString(Resource.ConnectionString),
+                    x => x.MigrationsAssembly(Resource.MigrationsAssembly)));
             services.AddDefaultIdentity<IdentityUser>()
                 .AddEntityFrameworkStores<MyExpensesContext>();
 
@@ -54,17 +57,8 @@ namespace WebApplication
                 .AddJsonOptions(opt => opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore)
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            DependencyInjectionDomain.Configure(services);
-            DependencyInjectionInfrastructure.Configure(services);
-            DependencyInjectionApplication.Configure(services);
-
-            Mapper.Initialize(
-                cfg =>
-                    {
-                        cfg.AddProfile<MapperDomainProfile>();
-                        cfg.AddProfile<MapperInfrastructureProfile>();
-                        cfg.AddProfile<MapperApplicationProfile>();
-                    });
+            ConfigureDependecyInjection(services);
+            ConfigureMapper();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -93,6 +87,25 @@ namespace WebApplication
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+        }
+
+        private void ConfigureDependecyInjection(IServiceCollection services)
+        {
+            DependencyInjectionDomain.Configure(services);
+            DependencyInjectionInfrastructure.Configure(services);
+            DependencyInjectionApplication.Configure(services);
+        }
+
+        private static void ConfigureMapper()
+        {
+            Mapper.Initialize(
+                cfg =>
+                    {
+                        cfg.AddProfile<MapperDomainProfile>();
+                        cfg.AddProfile<MapperInfrastructureProfile>();
+                        cfg.AddProfile<MapperApplicationProfile>();
+                        cfg.AddProfile<MapperProfile>();
+                    });
         }
     }
 }

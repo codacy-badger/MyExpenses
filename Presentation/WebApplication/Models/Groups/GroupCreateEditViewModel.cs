@@ -13,16 +13,16 @@ namespace WebApplication.Models.Groups
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc.Rendering;
 
-    public class GroupCreateViewModel
+    public class GroupCreateEditViewModel
     {
-        public GroupCreateViewModel()
+        public GroupCreateEditViewModel()
         {
             AvailableUsers = new List<UserViewModel>();
             SelectedUsers = new List<UserViewModel>();
             SelectedUsersId = new List<Guid>();
         }
 
-        public GroupCreateViewModel(IQueryable<IdentityUser> availables, ICollection<Guid> selected = null)
+        public GroupCreateEditViewModel(IQueryable<IdentityUser> availables, ICollection<Guid> selected = null)
         {
             SetupUsers(availables, selected);
         }

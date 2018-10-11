@@ -14,7 +14,7 @@ namespace MyExpenses.Application.AppServices.Interfaces
 
     public interface IGroupAppService : IAppService<GroupDto>
     {
-        IQueryable<GroupDto> GetAllWithIncludes();
+        IQueryable<GroupDto> GetAllWithIncludes(Guid userId);
 
         Task<GroupDto> GetByIdWithIncludeAsync(Guid id);
     }

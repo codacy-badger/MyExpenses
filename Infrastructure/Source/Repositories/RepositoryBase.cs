@@ -70,7 +70,7 @@ namespace MyExpenses.Infrastructure.Repositories
             if (model == null)
                 return false;
 
-            return _context.Remove(model) != null;
+            return _context.Set<TTable>().Remove(model) != null;
         }
 
         public TTable Update(TTable model)
