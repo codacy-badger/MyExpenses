@@ -21,6 +21,7 @@ namespace WebApplication.Controllers
     using MyExpenses.Application.Dtos;
     using MyExpenses.Infrastructure;
 
+    using WebApplication.Models;
     using WebApplication.Models.Groups;
 
     [Authorize]
@@ -39,7 +40,6 @@ namespace WebApplication.Controllers
         public async Task<IActionResult> Index()
         {
             var userId = await GetCurrentUserIdAsync();
-            var t = _service.GetAllWithIncludes().ToList();
             var objs = await _service.GetAllWithIncludes().Where(g => g.Users.Any(u => u.UserId == userId)).ToListAsync();
 
             var viewModel = new GroupsViewModel
@@ -75,10 +75,10 @@ namespace WebApplication.Controllers
         public IActionResult Create()
         {
             CreateSelectLists();
-            var viewModel = new GroupViewModel();
-            viewModel.SetupUsers(_manager.Users);
 
-            return View();
+            var viewModel = new GroupCreateViewModel(_manager.Users);
+
+            return View(viewModel);
         }
 
         // POST: Groups/Create
@@ -86,7 +86,7 @@ namespace WebApplication.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(GroupViewModel obj)
+        public async Task<IActionResult> Create(GroupCreateViewModel obj)
         {
             if (ModelState.IsValid)
             {
@@ -116,12 +116,11 @@ namespace WebApplication.Controllers
                 return NotFound();
             }
 
-            var viewModel = new GroupViewModel
+            var viewModel = new GroupCreateViewModel(_manager.Users, obj.Users.Select(x => x.UserId).ToList())
             {
                 Id = obj.Id,
                 Name = obj.Name
             };
-            viewModel.SetupUsers(_manager.Users, obj.Users.Select(x => x.UserId).ToList());
 
             CreateSelectLists();
 
@@ -201,8 +200,8 @@ namespace WebApplication.Controllers
 
         private void CreateSelectLists()
         {
-            IEnumerable<GroupUserDto> users = _manager.Users.Select(u => new GroupUserDto { UserId = Guid.Parse(u.Id), UserName = u.UserName });
-            ViewData["AllUsers"] = new SelectList(users, "UserId", "UserName");
+            ICollection<UserViewModel> users = _manager.Users.Select(u => new UserViewModel { Id = Guid.Parse(u.Id), UserName = u.UserName }).ToList();
+            ViewData["AllUsers"] = new SelectList(users, "Id", "UserName");
         }
     }
 }

@@ -7,13 +7,14 @@
 namespace MyExpenses.Application.Dtos
 {
     using System;
+    using System.ComponentModel.DataAnnotations;
 
     public class GroupUserDto : DtoBase
     {
+        [Required]
         public GroupDto Group { get; set; }
 
-        public string UserName { get; set; }
-
+        [Required]
         public Guid UserId { get; set; }
     }
 }

@@ -16,12 +16,12 @@ namespace MyExpenses.Domain.Domains
     {
         public GroupDomain()
         {
-            Users = new List<GroupUser>();
+            Users = new List<GroupUserDomain>();
         }
 
         public string Name { get; set; }
 
-        public ICollection<GroupUser> Users { get; set; }
+        public ICollection<GroupUserDomain> Users { get; set; }
 
         public override void Copy(IBase baseObj)
         {

@@ -91,8 +91,8 @@ namespace WebApplication.Controllers
                 if(!_context.Groups.Any(x => x.Users.Any(y => y.Id == userId)))
                 {
                     var group = new GroupDomain { Id = Guid.NewGuid(), Name = "josaeluizfelipeporae" };
-                    var groupUser = new GroupUser { Id = Guid.NewGuid(), UserId = userId, Group = group };
-                    group.Users = new List<GroupUser> { groupUser };
+                    var groupUser = new GroupUserDomain { Id = Guid.NewGuid(), UserId = userId, Group = group };
+                    group.Users = new List<GroupUserDomain> { groupUser };
 
                     newGroup = _context.Groups.Add(group).Entity;
                     _context.SaveChanges();

@@ -1,4 +1,4 @@
-﻿@model WebApplication.Models.Groups.GroupViewModel
+﻿@model WebApplication.Models.Groups.GroupCreateViewModel
 
 @{
     ViewData["Title"] = "Create";
@@ -19,7 +19,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="SelectedUsersId" class="control-label"></label>
-                <select asp-for="SelectedUsersId" class="form-control" asp-items="ViewBag.AllUsers"></select>
+                <select asp-for="SelectedUsersId" class="form-control" asp-items="@Model.AvailableUsersSelectList"></select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />

@@ -7,9 +7,11 @@
 namespace MyExpenses.Application.Dtos
 {
     using System;
+    using System.ComponentModel.DataAnnotations;
 
     public abstract class DtoBase : IDto
     {
+        [Key]
         public Guid Id { get; set; }
     }
 }

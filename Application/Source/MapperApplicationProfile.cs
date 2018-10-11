@@ -19,7 +19,7 @@ namespace MyExpenses.Application
             CreateMap<LabelDomain, LabelDto>().ReverseMap();
             CreateMap<PaymentDomain, PaymentDto>().ReverseMap();
             CreateMap<GroupDomain, GroupDto>().ReverseMap();
-            CreateMap<GroupUser, GroupUserDto>().ReverseMap();
+            CreateMap<GroupUserDomain, GroupUserDto>().ForSourceMember(x => x.LastUpdate, opt => opt.Ignore()).ReverseMap();
         }
     }
 }

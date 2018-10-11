@@ -12,7 +12,7 @@ namespace MyExpenses.Domain.Domains
     using MyExpenses.Domain.IoT;
 
     [Table("GroupUser")]
-    public class GroupUser : DomainBase
+    public class GroupUserDomain : DomainBase
     {
         public GroupDomain Group { get; set; }
 
