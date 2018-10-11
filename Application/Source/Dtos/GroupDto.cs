@@ -11,11 +11,14 @@ namespace MyExpenses.Application.Dtos
 
     public class GroupDto : DtoBase
     {
+        public GroupDto()
+        {
+            Users = new List<GroupUserDto>();
+        }
+
         [Required]
         public string Name { get; set; }
 
         public ICollection<GroupUserDto> Users { get; set; }
-
-        public ICollection<string> AllUsers { get; set; }
     }
 }

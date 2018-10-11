@@ -9,7 +9,6 @@ namespace WebApplication.Controllers
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Reflection.Emit;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Authorization;
@@ -21,7 +20,8 @@ namespace WebApplication.Controllers
     using MyExpenses.Application.AppServices.Interfaces;
     using MyExpenses.Application.Dtos;
     using MyExpenses.Infrastructure;
-    using MyExpenses.Infrastructure.Properties;
+
+    using WebApplication.Models.Groups;
 
     [Authorize]
     public class GroupsController : Controller
@@ -38,11 +38,20 @@ namespace WebApplication.Controllers
         // GET: Groups
         public async Task<IActionResult> Index()
         {
-            //var user = await _manager.FindByIdAsync(User.Identity.Name);
-            //var userId = Guid.Parse(user.Id);
+            var userId = await GetCurrentUserIdAsync();
+            var t = _service.GetAllWithIncludes().ToList();
+            var objs = await _service.GetAllWithIncludes().Where(g => g.Users.Any(u => u.UserId == userId)).ToListAsync();
 
-            var objs = await _service.GetAll().ToListAsync(); //.Where(g => g.Users.Any(u => u.Id == userId)).ToListAsync();
-            return View(objs);
+            var viewModel = new GroupsViewModel
+            {
+                Groups = objs.Select(x => new GroupViewModel
+                {
+                    Id = x.Id,
+                    Name = x.Name
+                }).ToList()
+            };
+
+            return View(viewModel);
         }
 
         // GET: Groups/Details/5
@@ -66,6 +75,9 @@ namespace WebApplication.Controllers
         public IActionResult Create()
         {
             CreateSelectLists();
+            var viewModel = new GroupViewModel();
+            viewModel.SetupUsers(_manager.Users);
+
             return View();
         }
 
@@ -74,11 +86,17 @@ namespace WebApplication.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(GroupDto obj)
+        public async Task<IActionResult> Create(GroupViewModel obj)
         {
             if (ModelState.IsValid)
             {
-                await _service.AddAsync(obj);
+                var dto = new GroupDto
+                {
+                    Name = obj.Name
+                };
+                dto.Users = obj.SelectedUsersId.Select(x => new GroupUserDto { Group = dto, Id = Guid.NewGuid(), UserId = x }).ToList();
+
+                await _service.AddAsync(dto);
                 return RedirectToAction(nameof(Index));
             }
             return View(obj);
@@ -92,17 +110,22 @@ namespace WebApplication.Controllers
                 return NotFound();
             }
 
-            var obj = await _service.GetByIdAsync(id.Value);
+            var obj = await _service.GetByIdWithIncludeAsync(id.Value);
             if (obj == null)
             {
                 return NotFound();
             }
 
-            var users = CreateSelectLists();
-            obj.AllUsers = new List<string>();
-            obj.AllUsers.Add(users.ToList()[1].UserId.ToString());
+            var viewModel = new GroupViewModel
+            {
+                Id = obj.Id,
+                Name = obj.Name
+            };
+            viewModel.SetupUsers(_manager.Users, obj.Users.Select(x => x.UserId).ToList());
 
-            return View(obj);
+            CreateSelectLists();
+
+            return View(viewModel);
         }
 
         // POST: Groups/Edit/5
@@ -172,26 +195,14 @@ namespace WebApplication.Controllers
 
         private async Task<Guid> GetCurrentUserIdAsync()
         {
-            var user = await _manager.FindByIdAsync(User.Identity.Name);
+            var user = await _manager.FindByNameAsync(User.Identity.Name);
             return Guid.Parse(user.Id);
         }
 
-        private IEnumerable<GroupUserDto> CreateSelectLists()
+        private void CreateSelectLists()
         {
             IEnumerable<GroupUserDto> users = _manager.Users.Select(u => new GroupUserDto { UserId = Guid.Parse(u.Id), UserName = u.UserName });
-            
-            //IEnumerable<Payment> payments = _paymentService.Get();
-
-            //Label[] l = { new Label { Id = -1, Name = string.Empty } };
-            //lables = lables.Concat(l).OrderBy(x => x.Id);
-
-            //Payment[] p = { new Payment { Id = -1, Name = string.Empty } };
-            //payments = payments.Concat(p).OrderBy(x => x.Id);
-
-            ViewData["Users"] = new SelectList(users, "UserId", "UserName");
-            //ViewData[Resource.PaymentsViewData] = new SelectList(payments, "Id", "Name", paymentId);
-
-            return users;
+            ViewData["AllUsers"] = new SelectList(users, "UserId", "UserName");
         }
     }
 }

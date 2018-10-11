@@ -18,6 +18,7 @@ namespace MyExpenses.Domain
             CreateMap<LabelDomain, LabelDomain>();
             CreateMap<PaymentDomain, PaymentDomain>();
             CreateMap<GroupDomain, GroupDomain>();
+            CreateMap<GroupUser, GroupUser>();
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MyExpenses.Application.Dtos.GroupDto>
+﻿@model WebApplication.Models.Groups.GroupsViewModel
 
 @{
     ViewData["Title"] = "Index";
@@ -13,13 +13,13 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                @Html.DisplayNameFor(model => model.GroupLabel.Name)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.Groups) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)

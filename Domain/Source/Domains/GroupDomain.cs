@@ -14,6 +14,11 @@ namespace MyExpenses.Domain.Domains
     [Table("Group")]
     public class GroupDomain : DomainBase
     {
+        public GroupDomain()
+        {
+            Users = new List<GroupUser>();
+        }
+
         public string Name { get; set; }
 
         public ICollection<GroupUser> Users { get; set; }
