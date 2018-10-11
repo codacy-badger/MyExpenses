@@ -8,12 +8,9 @@ namespace MyExpenses.Application.AppServices
 {
     using System;
     using System.Linq;
-    using System.Threading;
     using System.Threading.Tasks;
 
     using AutoMapper;
-
-    using Microsoft.EntityFrameworkCore;
 
     using MyExpenses.Application.AppServices.Interfaces;
     using MyExpenses.Application.Dtos;
@@ -33,12 +30,17 @@ namespace MyExpenses.Application.AppServices
 
         public IQueryable<GroupDto> GetAllWithIncludes(Guid userId)
         {
-            return _service.GetAll(x => x.Users).Where(x => x.Users.Any(y => y.UserId == userId)).Select(x => Mapper.Map<GroupDomain, GroupDto>(x));
+            return _service
+                .GetAll(x => x.Users)
+                .Where(x => x.Users.Any(y => y.UserId == userId))
+                .Select(x => Mapper.Map<GroupDomain, GroupDto>(x));
         }
 
-        public async Task<GroupDto> GetByIdWithIncludeAsync(Guid id)
+        public GroupDto GetByIdWithIncludeAsync(Guid id)
         {
-            var obj = await _service.GetAll(x => x.Users).FirstAsync(x => x.Id == id);
+            var obj = _service
+                .GetAll(x => x.Users)
+                .First(x => x.Id == id);
             return Mapper.Map<GroupDomain, GroupDto>(obj);
         }
     }

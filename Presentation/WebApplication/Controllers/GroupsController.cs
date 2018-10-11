@@ -7,7 +7,6 @@
 namespace WebApplication.Controllers
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -16,13 +15,11 @@ namespace WebApplication.Controllers
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.EntityFrameworkCore;
 
     using MyExpenses.Application.AppServices.Interfaces;
     using MyExpenses.Application.Dtos;
 
-    using WebApplication.Models;
     using WebApplication.Models.Groups;
 
     [Authorize]
@@ -41,7 +38,7 @@ namespace WebApplication.Controllers
         public async Task<IActionResult> Index()
         {
             var userId = await GetCurrentUserIdAsync();
-            var objs = await _service.GetAllWithIncludes(userId).ToListAsync();
+            var objs = _service.GetAllWithIncludes(userId).ToList();
             var viewModel = new GroupsViewModel { Groups = objs.Select(Mapper.Map<GroupDto, GroupViewModel>).ToList() };
 
             return View(viewModel);
@@ -101,7 +98,7 @@ namespace WebApplication.Controllers
                 return NotFound();
             }
 
-            var obj = await _service.GetByIdWithIncludeAsync(id.Value);
+            var obj = _service.GetByIdWithIncludeAsync(id.Value);
             if (obj == null)
             {
                 return NotFound();

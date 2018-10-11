@@ -16,6 +16,6 @@ namespace MyExpenses.Application.AppServices.Interfaces
     {
         IQueryable<GroupDto> GetAllWithIncludes(Guid userId);
 
-        Task<GroupDto> GetByIdWithIncludeAsync(Guid id);
+        GroupDto GetByIdWithIncludeAsync(Guid id);
     }
 }
