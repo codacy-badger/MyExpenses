@@ -16,9 +16,9 @@ namespace MyExpenses.Infrastructure
         public MapperInfrastructureProfile()
         {
             CreateMap<ExpenseDomain, ExpenseTable>().ReverseMap();
+            CreateMap<GroupDomain, GroupTable>().ReverseMap();
             CreateMap<LabelDomain, LabelTable>().ReverseMap();
             CreateMap<PaymentDomain, PaymentTable>().ReverseMap();
-            CreateMap<GroupDomain, GroupTable>().ReverseMap();
         }
     }
 }

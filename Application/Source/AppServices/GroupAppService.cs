@@ -22,11 +22,13 @@ namespace MyExpenses.Application.AppServices
     public class GroupAppService : AppServiceBase<GroupDomain, GroupDto>, IGroupAppService
     {
         private readonly IGroupService _service;
+        private readonly IUnitOfWork _unitOfWork;
 
         public GroupAppService(IGroupService service, IUnitOfWork unitOfWork)
             : base(service, unitOfWork)
         {
             _service = service;
+            _unitOfWork = unitOfWork;
         }
 
         public IEnumerable<GroupDto> GetAllWithIncludes(Guid userId)
@@ -38,6 +40,13 @@ namespace MyExpenses.Application.AppServices
         {
             var obj = await _service.GetByIdWithIncludeAsync(groupId);
             return Mapper.Map<GroupDomain, GroupDto>(obj);
+        }
+
+        public void Update(GroupDto obj, ICollection<Guid> users)
+        {
+            _unitOfWork.BeginTransaction();
+            _service.Update(Mapper.Map<GroupDto, GroupDomain>(obj), users);
+            _unitOfWork.Commit();
         }
     }
 }

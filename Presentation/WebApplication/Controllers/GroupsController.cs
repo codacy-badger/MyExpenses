@@ -114,9 +114,7 @@ namespace WebApplication.Controllers
                 try
                 {
                     var dto = Mapper.Map<GroupCreateEditViewModel, GroupDto>(obj);
-                    dto.Users = obj.SelectedUsersId.Select(x => new GroupUserDto { Group = dto, Id = Guid.NewGuid(), UserId = x }).ToList();
-
-                    await _service.UpdateAsync(dto);
+                    _service.Update(dto, obj.SelectedUsersId);
                 }
                 catch (DbUpdateConcurrencyException)
                 {

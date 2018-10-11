@@ -17,5 +17,7 @@ namespace MyExpenses.Application.AppServices.Interfaces
         IEnumerable<GroupDto> GetAllWithIncludes(Guid userId);
 
         Task<GroupDto> GetByIdWithIncludeAsync(Guid groupId);
+
+        void Update(GroupDto obj, ICollection<Guid> users);
     }
 }

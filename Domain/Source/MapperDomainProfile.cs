@@ -15,10 +15,10 @@ namespace MyExpenses.Domain
         public MapperDomainProfile()
         {
             CreateMap<ExpenseDomain, ExpenseDomain>();
-            CreateMap<LabelDomain, LabelDomain>();
-            CreateMap<PaymentDomain, PaymentDomain>();
             CreateMap<GroupDomain, GroupDomain>();
             CreateMap<GroupUserDomain, GroupUserDomain>();
+            CreateMap<LabelDomain, LabelDomain>();
+            CreateMap<PaymentDomain, PaymentDomain>();
         }
     }
 }

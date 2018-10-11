@@ -6,6 +6,7 @@
 namespace MyExpenses.Domain.IoT.Services
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -17,5 +18,7 @@ namespace MyExpenses.Domain.IoT.Services
         IQueryable<GroupDomain> GetAllWithIncludes(Guid userId);
 
         Task<GroupDomain> GetByIdWithIncludeAsync(Guid groupId);
+
+        void Update(GroupDomain obj, ICollection<Guid> users);
     }
 }

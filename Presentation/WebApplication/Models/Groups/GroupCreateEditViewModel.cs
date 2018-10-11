@@ -18,7 +18,7 @@ namespace WebApplication.Models.Groups
         public GroupCreateEditViewModel()
         {
             AvailableUsers = new List<UserViewModel>();
-            SelectedUsers = new List<GroupUserViewModel>();
+            Users = new List<GroupUserViewModel>();
             SelectedUsersId = new List<Guid>();
         }
 
@@ -35,7 +35,7 @@ namespace WebApplication.Models.Groups
 
         public SelectList AvailableUsersSelectList { get; set; }
 
-        public ICollection<GroupUserViewModel> SelectedUsers { get; private set; }
+        public ICollection<GroupUserViewModel> Users { get; private set; }
 
         public ICollection<Guid> SelectedUsersId { get; set; }
 
@@ -46,7 +46,7 @@ namespace WebApplication.Models.Groups
 
             if (selected != null && selected.Any())
             {
-                SelectedUsers = selected;
+                Users = selected;
                 SelectedUsersId = selected.Select(x => x.UserId).ToList();
             }
         }

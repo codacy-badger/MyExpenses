@@ -4,16 +4,15 @@
 *   Github: http://github.com/lfmachadodasilva/MyExpenses
 */
 
-namespace MyExpenses.Domain.Services
+namespace MyExpenses.Infrastructure.Repositories
 {
     using MyExpenses.Domain.Domains;
     using MyExpenses.Domain.IoT.Repositories;
-    using MyExpenses.Domain.IoT.Services;
 
-    public class ExpenseService : ServiceBase<ExpenseDomain>, IExpenseService
+    public class GroupUserRepository : RepositoryBase<GroupUserDomain>, IGroupUserRepository
     {
-        public ExpenseService(IExpenseRepository repository)
-            : base(repository)
+        public GroupUserRepository(MyExpensesContext context)
+            : base(context)
         {
         }
     }

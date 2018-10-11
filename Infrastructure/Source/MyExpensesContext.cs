@@ -9,8 +9,6 @@ namespace MyExpenses.Infrastructure
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
 
-    using MyExpenses.Domain.Domains;
-
     public class MyExpensesContext : IdentityDbContext
     {
         public MyExpensesContext(DbContextOptions<MyExpensesContext> options)
@@ -25,5 +23,7 @@ namespace MyExpenses.Infrastructure
         public virtual DbSet<MyExpenses.Domain.Domains.PaymentDomain> Payments { get; set; }
 
         public virtual DbSet<MyExpenses.Domain.Domains.GroupDomain> Groups { get; set; }
+
+        public virtual DbSet<MyExpenses.Domain.Domains.GroupUserDomain> GroupUsers { get; set; }
     }
 }

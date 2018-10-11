@@ -16,10 +16,10 @@ namespace MyExpenses.Application
         public MapperApplicationProfile()
         {
             CreateMap<ExpenseDomain, ExpenseDto>().ReverseMap();
-            CreateMap<LabelDomain, LabelDto>().ReverseMap();
-            CreateMap<PaymentDomain, PaymentDto>().ReverseMap();
             CreateMap<GroupDomain, GroupDto>().ReverseMap();
             CreateMap<GroupUserDomain, GroupUserDto>().ForSourceMember(x => x.LastUpdate, opt => opt.Ignore()).ReverseMap();
+            CreateMap<LabelDomain, LabelDto>().ReverseMap();
+            CreateMap<PaymentDomain, PaymentDto>().ReverseMap();
         }
     }
 }

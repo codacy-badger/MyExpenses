@@ -16,12 +16,13 @@ namespace MyExpenses.Infrastructure
     {
         public static void Configure(IServiceCollection services)
         {
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
-
             services.AddScoped<IExpenseRepository, ExpensesRepository>();
             services.AddScoped<IGroupRepository, GroupRepository>();
+            services.AddScoped<IGroupUserRepository, GroupUserRepository>();
             services.AddScoped<ILabelRepository, LabelRepository>();
             services.AddScoped<IPaymentRepository, PaymentRepository>();
+            
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
     }
 }
