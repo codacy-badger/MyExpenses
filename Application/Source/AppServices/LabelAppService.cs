@@ -29,14 +29,14 @@ namespace MyExpenses.Application.AppServices
             _service = service;
         }
 
-        public async Task<ICollection<LabelDto>> GetAllByGroupId(Guid groupId)
-        {
-            return await _service
-                .GetAll(x => x.Group.Users)
-                .Where(x => x.Group.Id == groupId)
-                .Select(x => Mapper.Map<LabelDomain, LabelDto>(x))
-                .ToAsyncEnumerable().ToList();
-        }
+        // public async Task<ICollection<LabelDto>> GetAllByGroupId(Guid groupId)
+        // {
+        //     return await _service
+        //         .GetAll(x => x.Group.Users)
+        //         .Where(x => x.Group.Id == groupId)
+        //         .Select(x => Mapper.Map<LabelDomain, LabelDto>(x))
+        //         .ToAsyncEnumerable().ToList();
+        // }
 
         //public ICollection<GroupDto> GetAllGroupsByUserId(Guid userId)
         //{

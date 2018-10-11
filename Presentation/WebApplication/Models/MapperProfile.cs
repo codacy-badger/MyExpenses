@@ -18,6 +18,7 @@ namespace WebApplication.Models
         {
             CreateMap<GroupDto, GroupViewModel>().ReverseMap();
             CreateMap<GroupDto, GroupCreateEditViewModel>().ReverseMap();
+            CreateMap<GroupUserDto, GroupUserViewModel>().ReverseMap();
         }
     }
 }

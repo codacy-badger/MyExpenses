@@ -87,7 +87,8 @@ namespace WebApplication.Controllers
                 return NotFound();
             }
 
-            var viewModel = new GroupCreateEditViewModel(_manager.Users, obj.Users.Select(x => x.UserId).ToList())
+            var users = obj.Users.Select(Mapper.Map<GroupUserDto, GroupUserViewModel>).ToList();
+            var viewModel = new GroupCreateEditViewModel(_manager.Users, users)
             {
                 Id = obj.Id,
                 Name = obj.Name
