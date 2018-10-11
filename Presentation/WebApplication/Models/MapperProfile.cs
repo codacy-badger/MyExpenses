@@ -17,6 +17,7 @@ namespace WebApplication.Models
         public MapperProfile()
         {
             CreateMap<GroupDto, GroupViewModel>().ReverseMap();
+            CreateMap<GroupDto, GroupCreateEditViewModel>().ReverseMap();
         }
     }
 }

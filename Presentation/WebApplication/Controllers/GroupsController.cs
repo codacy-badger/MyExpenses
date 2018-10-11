@@ -44,23 +44,6 @@ namespace WebApplication.Controllers
             return View(viewModel);
         }
 
-        // GET: Groups/Details/5
-        public async Task<IActionResult> Details(Guid? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var groupDomain = await _service.GetByIdAsync(id.Value);
-            if (groupDomain == null)
-            {
-                return NotFound();
-            }
-
-            return View(groupDomain);
-        }
-
         // GET: Groups/Create
         public IActionResult Create()
         {
@@ -98,7 +81,7 @@ namespace WebApplication.Controllers
                 return NotFound();
             }
 
-            var obj = _service.GetByIdWithIncludeAsync(id.Value);
+            var obj = await _service.GetByIdWithIncludeAsync(id.Value);
             if (obj == null)
             {
                 return NotFound();
@@ -118,7 +101,7 @@ namespace WebApplication.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, GroupDto obj)
+        public async Task<IActionResult> Edit(Guid id, GroupCreateEditViewModel obj)
         {
             if (id != obj.Id)
             {
@@ -129,7 +112,10 @@ namespace WebApplication.Controllers
             {
                 try
                 {
-                    await _service.UpdateAsync(obj);
+                    var dto = Mapper.Map<GroupCreateEditViewModel, GroupDto>(obj);
+                    dto.Users = obj.SelectedUsersId.Select(x => new GroupUserDto { Group = dto, Id = Guid.NewGuid(), UserId = x }).ToList();
+
+                    await _service.UpdateAsync(dto);
                 }
                 catch (DbUpdateConcurrencyException)
                 {

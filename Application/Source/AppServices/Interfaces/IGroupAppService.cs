@@ -7,15 +7,15 @@
 namespace MyExpenses.Application.AppServices.Interfaces
 {
     using System;
-    using System.Linq;
+    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     using MyExpenses.Application.Dtos;
 
     public interface IGroupAppService : IAppService<GroupDto>
     {
-        IQueryable<GroupDto> GetAllWithIncludes(Guid userId);
+        IEnumerable<GroupDto> GetAllWithIncludes(Guid userId);
 
-        GroupDto GetByIdWithIncludeAsync(Guid id);
+        Task<GroupDto> GetByIdWithIncludeAsync(Guid groupId);
     }
 }

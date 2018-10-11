@@ -7,6 +7,7 @@
 namespace MyExpenses.Application.AppServices
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -28,19 +29,14 @@ namespace MyExpenses.Application.AppServices
             _service = service;
         }
 
-        public IQueryable<GroupDto> GetAllWithIncludes(Guid userId)
+        public IEnumerable<GroupDto> GetAllWithIncludes(Guid userId)
         {
-            return _service
-                .GetAll(x => x.Users)
-                .Where(x => x.Users.Any(y => y.UserId == userId))
-                .Select(x => Mapper.Map<GroupDomain, GroupDto>(x));
+            return _service.GetAllWithIncludes(userId).Select(Mapper.Map<GroupDomain, GroupDto>);
         }
 
-        public GroupDto GetByIdWithIncludeAsync(Guid id)
+        public async Task<GroupDto> GetByIdWithIncludeAsync(Guid groupId)
         {
-            var obj = _service
-                .GetAll(x => x.Users)
-                .First(x => x.Id == id);
+            var obj = await _service.GetByIdWithIncludeAsync(groupId);
             return Mapper.Map<GroupDomain, GroupDto>(obj);
         }
     }

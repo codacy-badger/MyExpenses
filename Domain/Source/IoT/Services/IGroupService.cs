@@ -5,10 +5,17 @@
 */
 namespace MyExpenses.Domain.IoT.Services
 {
+    using System;
+    using System.Linq;
+    using System.Threading.Tasks;
+
     using MyExpenses.Domain.Domains;
     using MyExpenses.Domain.IoT;
 
     public interface IGroupService : IService<GroupDomain>
     {
+        IQueryable<GroupDomain> GetAllWithIncludes(Guid userId);
+
+        Task<GroupDomain> GetByIdWithIncludeAsync(Guid groupId);
     }
 }
