@@ -18,6 +18,6 @@ namespace MyExpenses.Application.AppServices.Interfaces
 
         Task<GroupDto> GetByIdWithIncludeAsync(Guid groupId);
 
-        void Update(GroupDto obj, ICollection<Guid> users);
+        Task<GroupDto> Update(GroupDto obj, ICollection<Guid> users);
     }
 }

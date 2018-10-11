@@ -61,11 +61,16 @@ namespace WebApplication.Controllers
         {
             if (ModelState.IsValid)
             {
-                var dto = new GroupDto
-                {
-                    Name = obj.Name
-                };
-                dto.Users = obj.SelectedUsersId.Select(x => new GroupUserDto { Group = dto, Id = Guid.NewGuid(), UserId = x }).ToList();
+                var dto = new GroupDto { Name = obj.Name };
+                dto.Users = obj.SelectedUsersId
+                    .Select(x => 
+                        new GroupUserDto
+                        {
+                            Id = Guid.NewGuid(),
+                            Group = dto,
+                            UserId = x
+                        })
+                    .ToList();
 
                 await _service.AddAsync(dto);
                 return RedirectToAction(nameof(Index));
@@ -114,7 +119,7 @@ namespace WebApplication.Controllers
                 try
                 {
                     var dto = Mapper.Map<GroupCreateEditViewModel, GroupDto>(obj);
-                    _service.Update(dto, obj.SelectedUsersId);
+                    await _service.Update(dto, obj.SelectedUsersId);
                 }
                 catch (DbUpdateConcurrencyException)
                 {

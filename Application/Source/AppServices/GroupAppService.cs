@@ -42,11 +42,13 @@ namespace MyExpenses.Application.AppServices
             return Mapper.Map<GroupDomain, GroupDto>(obj);
         }
 
-        public void Update(GroupDto obj, ICollection<Guid> users)
+        public async Task<GroupDto> Update(GroupDto obj, ICollection<Guid> users)
         {
             _unitOfWork.BeginTransaction();
-            _service.Update(Mapper.Map<GroupDto, GroupDomain>(obj), users);
-            _unitOfWork.Commit();
+            var newObj = await _service.Update(Mapper.Map<GroupDto, GroupDomain>(obj), users);
+            await _unitOfWork.CommitAsync();
+
+            return Mapper.Map<GroupDomain, GroupDto>(newObj);
         }
     }
 }

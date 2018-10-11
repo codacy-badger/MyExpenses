@@ -37,23 +37,59 @@ namespace MyExpenses.Domain.Services
             return _repository.GetByIdAsync(groupId, x => x.Users);
         }
 
-        public void Update(GroupDomain obj, ICollection<Guid> newUsers)
+        public async Task<GroupDomain> Update(GroupDomain obj, ICollection<Guid> newUsers)
         {
             // clear just to make sure
             obj.Users.Clear();
 
             // get old user from this group
-            var oldUsers = _repository.GetById(obj.Id, x => x.Users).Users;
+            var oldGroup = await _repository.GetByIdAsync(obj.Id, x => x.Users);
+            var oldUsers = oldGroup.Users;
 
-            // for each new user that do not exist in the old, add
+            var removeTask = Task.Run(() => RemoveGroupUserTask(newUsers, oldUsers, obj, _groupUserRepository));
+            var addTask = Task.Run(() => AddGroupUserTask(newUsers, oldUsers, _groupUserRepository));
+
+            var users = obj.Users as List<GroupUserDomain>;
+            users.AddRange(await removeTask);
+            users.AddRange(await addTask);
+
+            return await _repository.UpdateAsync(obj);
+        }
+
+        private async Task<ICollection<GroupUserDomain>> RemoveGroupUserTask(
+            ICollection<Guid> newUsers,
+            ICollection<GroupUserDomain> oldUsers,
+            GroupDomain obj,
+            IGroupUserRepository groupUserRepository)
+        {
+            var ret = new List<GroupUserDomain>();
+
             foreach (var user in newUsers)
             {
                 if (!oldUsers.Any(y => user == y.UserId))
                 {
-                    var newGroupUser = new GroupUserDomain { Id = Guid.NewGuid(), UserId = user, Group = obj };
-                    obj.Users.Add(_groupUserRepository.Add(newGroupUser));
+                    var groupUser = new GroupUserDomain
+                    {
+                        Id = Guid.NewGuid(),
+                        UserId = user,
+                        Group = obj
+                    };
+
+                    var newGroupUser = await _groupUserRepository.AddAsync(groupUser);
+                    ret.Add(newGroupUser);
                 }
             }
+
+            return ret;
+        }
+
+        private async Task<ICollection<GroupUserDomain>> AddGroupUserTask(
+            ICollection<Guid> newUsers,
+            ICollection<GroupUserDomain> oldUsers,
+            IGroupUserRepository groupUserRepository)
+        {
+            var ret = new List<GroupUserDomain>();
+            var tasks = new List<Task<bool>>();
 
             // for each old user, check if need to remove or maintain
             foreach (var user in oldUsers)
@@ -61,16 +97,16 @@ namespace MyExpenses.Domain.Services
                 if (newUsers.Any(x => x == user.UserId))
                 {
                     // already in
-                    obj.Users.Add(user);
+                    ret.Add(user);
                 }
                 else
                 {
                     // this user do not belong to this group any more
-                    _groupUserRepository.Remove(user.Id);
+                    await _groupUserRepository.RemoveAsync(user.Id);
                 }
             }
 
-            _repository.Update(obj);
+            return ret;
         }
     }
 }
