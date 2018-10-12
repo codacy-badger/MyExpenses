@@ -8,8 +8,8 @@ namespace MyExpenses.Infrastructure
 {
     using Microsoft.Extensions.DependencyInjection;
 
-    using MyExpenses.Domain.IoT;
-    using MyExpenses.Domain.IoT.Repositories;
+    using MyExpenses.Domain.IoC;
+    using MyExpenses.Domain.IoC.Repositories;
     using MyExpenses.Infrastructure.Repositories;
 
     public static class DependencyInjectionInfrastructure

@@ -3,10 +3,11 @@
 *   Author: Luiz Felipe Machado da Silva
 *   Github: http://github.com/lfmachadodasilva/MyExpenses
 */
-
-namespace MyExpenses.Domain.IoT.Repositories
+namespace MyExpenses.Domain.IoC.Services
 {
-    public interface IRepository<TTable> : IService<TTable> where TTable : IBase
+    using MyExpenses.Domain.Domains;
+
+    public interface IPaymentService : IService<PaymentDomain>
     {
     }
 }

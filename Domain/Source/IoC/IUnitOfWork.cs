@@ -4,7 +4,7 @@
 *   Github: http://github.com/lfmachadodasilva/MyExpenses
 */
 
-namespace MyExpenses.Domain.IoT
+namespace MyExpenses.Domain.IoC
 {
     using System.Threading.Tasks;
 

@@ -9,8 +9,8 @@ namespace MyExpenses.Application.AppServices
     using MyExpenses.Application.AppServices.Interfaces;
     using MyExpenses.Application.Dtos;
     using MyExpenses.Domain.Domains;
-    using MyExpenses.Domain.IoT;
-    using MyExpenses.Domain.IoT.Services;
+    using MyExpenses.Domain.IoC;
+    using MyExpenses.Domain.IoC.Services;
 
     public class PaymentAppService : AppServiceBase<PaymentDomain, PaymentDto>, IPaymentAppService
     {

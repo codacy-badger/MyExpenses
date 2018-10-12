@@ -12,7 +12,7 @@ namespace MyExpenses.Application.AppServices
     using AutoMapper;
     using MyExpenses.Application.AppServices.Interfaces;
     using MyExpenses.Application.Dtos;
-    using MyExpenses.Domain.IoT;
+    using MyExpenses.Domain.IoC;
 
     public abstract class AppServiceBase<TDomain, TDto> : IAppService<TDto> where TDomain : IBase where TDto : IDto
     {

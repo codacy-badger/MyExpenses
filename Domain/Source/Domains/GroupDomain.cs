@@ -9,7 +9,7 @@ namespace MyExpenses.Domain.Domains
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations.Schema;
 
-    using MyExpenses.Domain.IoT;    
+    using MyExpenses.Domain.IoC;
 
     [Table("Group")]
     public class GroupDomain : DomainBase

@@ -13,8 +13,8 @@ namespace MyExpenses.Infrastructure.Repositories
 
     using Microsoft.EntityFrameworkCore;
 
-    using MyExpenses.Domain.IoT;
-    using MyExpenses.Domain.IoT.Repositories;
+    using MyExpenses.Domain.IoC;
+    using MyExpenses.Domain.IoC.Repositories;
 
     public class RepositoryBase<TDomain> : IRepository<TDomain> where TDomain : class, IBase
     {

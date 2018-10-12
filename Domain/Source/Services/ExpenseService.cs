@@ -7,8 +7,8 @@
 namespace MyExpenses.Domain.Services
 {
     using MyExpenses.Domain.Domains;
-    using MyExpenses.Domain.IoT.Repositories;
-    using MyExpenses.Domain.IoT.Services;
+    using MyExpenses.Domain.IoC.Repositories;
+    using MyExpenses.Domain.IoC.Services;
 
     public class ExpenseService : ServiceBase<ExpenseDomain>, IExpenseService
     {

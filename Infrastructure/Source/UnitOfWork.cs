@@ -11,7 +11,7 @@ namespace MyExpenses.Infrastructure
 
     using Microsoft.EntityFrameworkCore;
 
-    using MyExpenses.Domain.IoT;
+    using MyExpenses.Domain.IoC;
 
     public class UnitOfWork : IUnitOfWork, IDisposable
     {

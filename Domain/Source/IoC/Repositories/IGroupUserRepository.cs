@@ -4,11 +4,11 @@
 *   Github: http://github.com/lfmachadodasilva/MyExpenses
 */
 
-namespace MyExpenses.Domain.IoT.Repositories
+namespace MyExpenses.Domain.IoC.Repositories
 {
     using MyExpenses.Domain.Domains;
 
-    public interface IExpenseRepository : IRepository<ExpenseDomain>
+    public interface IGroupUserRepository : IRepository<GroupUserDomain>
     {
     }
 }

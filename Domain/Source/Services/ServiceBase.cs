@@ -11,8 +11,8 @@ namespace MyExpenses.Domain.Services
     using System.Linq.Expressions;
     using System.Threading.Tasks;
 
-    using MyExpenses.Domain.IoT;
-    using MyExpenses.Domain.IoT.Repositories;
+    using MyExpenses.Domain.IoC;
+    using MyExpenses.Domain.IoC.Repositories;
 
     public class ServiceBase<TDomain> : IService<TDomain> where TDomain : IBase
     {

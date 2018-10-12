@@ -4,11 +4,9 @@
 *   Github: http://github.com/lfmachadodasilva/MyExpenses
 */
 
-namespace MyExpenses.Domain.IoT.Repositories
+namespace MyExpenses.Domain.IoC.Repositories
 {
-    using MyExpenses.Domain.Domains;
-
-    public interface ILabelRepository : IRepository<LabelDomain>
+    public interface IRepository<TTable> : IService<TTable> where TTable : IBase
     {
     }
 }

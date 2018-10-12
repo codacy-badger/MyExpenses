@@ -3,12 +3,12 @@
 *   Author: Luiz Felipe Machado da Silva
 *   Github: http://github.com/lfmachadodasilva/MyExpenses
 */
-namespace MyExpenses.Domain.IoT.Services
+
+namespace MyExpenses.Domain.IoC.Repositories
 {
     using MyExpenses.Domain.Domains;
-    using MyExpenses.Domain.IoT;
 
-    public interface ILabelService : IService<LabelDomain>
+    public interface ILabelRepository : IRepository<LabelDomain>
     {
     }
 }

@@ -7,7 +7,7 @@
 namespace MyExpenses.Infrastructure.Repositories
 {
     using MyExpenses.Domain.Domains;
-    using MyExpenses.Domain.IoT.Repositories;
+    using MyExpenses.Domain.IoC.Repositories;
 
     public class LabelRepository : RepositoryBase<LabelDomain>, ILabelRepository
     {

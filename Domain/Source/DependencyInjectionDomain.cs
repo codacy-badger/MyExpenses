@@ -8,7 +8,7 @@ namespace MyExpenses.Domain
 {
     using Microsoft.Extensions.DependencyInjection;
 
-    using MyExpenses.Domain.IoT.Services;
+    using MyExpenses.Domain.IoC.Services;
     using MyExpenses.Domain.Services;
 
     public static class DependencyInjectionDomain

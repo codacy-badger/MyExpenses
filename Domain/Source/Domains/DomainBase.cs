@@ -10,7 +10,7 @@ namespace MyExpenses.Domain.Domains
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-    using MyExpenses.Domain.IoT;
+    using MyExpenses.Domain.IoC;
 
     public abstract class DomainBase : IBase
     {

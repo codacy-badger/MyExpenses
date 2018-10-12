@@ -3,7 +3,7 @@
 *   Author: Luiz Felipe Machado da Silva
 *   Github: http://github.com/lfmachadodasilva/MyExpenses
 */
-namespace MyExpenses.Domain.IoT.Services
+namespace MyExpenses.Domain.IoC.Services
 {
     using System;
     using System.Collections.Generic;
@@ -11,7 +11,6 @@ namespace MyExpenses.Domain.IoT.Services
     using System.Threading.Tasks;
 
     using MyExpenses.Domain.Domains;
-    using MyExpenses.Domain.IoT;
 
     public interface IGroupService : IService<GroupDomain>
     {
