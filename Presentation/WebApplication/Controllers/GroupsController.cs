@@ -131,8 +131,7 @@ namespace WebApplication.Controllers
                 {
                     var dto = Mapper.Map<GroupCreateEditViewModel, GroupDto>(obj);
 
-                    var userId = await userIdTask;
-                    obj.SelectedUsersId.Add(userId);
+                    obj.SelectedUsersId.Add(await userIdTask);
 
                     await _service.Update(dto, obj.SelectedUsersId);
                 }
