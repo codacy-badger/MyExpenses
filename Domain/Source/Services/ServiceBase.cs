@@ -32,15 +32,15 @@ namespace MyExpenses.Domain.Services
         #region non-async
 
         /// <inheritdoc />
-        public virtual TDomain Add(TDomain model)
+        public virtual TDomain Add(TDomain obj)
         {
-            return _repository.Add(model);
+            return _repository.Add(obj);
         }
 
         /// <inheritdoc />
-        public virtual TDomain Update(TDomain model)
+        public virtual TDomain Update(TDomain obj)
         {
-            return _repository.Update(model);
+            return _repository.Update(obj);
         }
 
         /// <inheritdoc />
@@ -72,15 +72,15 @@ namespace MyExpenses.Domain.Services
         }
 
         /// <inheritdoc />
-        public Task<TDomain> AddAsync(TDomain model)
+        public Task<TDomain> AddAsync(TDomain obj)
         {
-            return _repository.AddAsync(model);
+            return _repository.AddAsync(obj);
         }
 
         /// <inheritdoc />
-        public Task<TDomain> UpdateAsync(TDomain model)
+        public Task<TDomain> UpdateAsync(TDomain obj)
         {
-            return _repository.UpdateAsync(model);
+            return _repository.UpdateAsync(obj);
         }
 
         #endregion

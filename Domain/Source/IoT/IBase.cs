@@ -15,6 +15,8 @@ namespace MyExpenses.Domain.IoT
         /// </summary>
         Guid Id { get; set; }
 
+        DateTime LastUpdate { get; set; }
+
         void Copy(IBase baseObj);
     }
 }

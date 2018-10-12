@@ -16,7 +16,7 @@ namespace MyExpenses.Infrastructure.Repositories
     using MyExpenses.Domain.IoT;
     using MyExpenses.Domain.IoT.Repositories;
 
-    public class RepositoryBase<TTable> : IRepository<TTable> where TTable : class, IBase
+    public class RepositoryBase<TDomain> : IRepository<TDomain> where TDomain : class, IBase
     {
         private readonly MyExpensesContext _context;
 
@@ -25,9 +25,9 @@ namespace MyExpenses.Infrastructure.Repositories
             _context = context;
         }
 
-        public virtual IQueryable<TTable> GetAll(params Expression<Func<TTable, object>>[] includes)
+        public virtual IQueryable<TDomain> GetAll(params Expression<Func<TDomain, object>>[] includes)
         {
-            IQueryable<TTable> set = _context.Set<TTable>();
+            IQueryable<TDomain> set = _context.Set<TDomain>();
 
             foreach (var include in includes)
                 set = set.Include(include);
@@ -35,9 +35,9 @@ namespace MyExpenses.Infrastructure.Repositories
             return set;
         }
 
-        public virtual TTable GetById(Guid id, params Expression<Func<TTable, object>>[] includes)
+        public virtual TDomain GetById(Guid id, params Expression<Func<TDomain, object>>[] includes)
         {
-            IQueryable<TTable> set = _context.Set<TTable>();
+            IQueryable<TDomain> set = _context.Set<TDomain>();
 
             foreach (var include in includes)
                 set = set.Include(include);
@@ -45,9 +45,9 @@ namespace MyExpenses.Infrastructure.Repositories
             return set.SingleOrDefault(x => x.Id == id);
         }
 
-        public async Task<TTable> GetByIdAsync(Guid id, params Expression<Func<TTable, object>>[] includes)
+        public async Task<TDomain> GetByIdAsync(Guid id, params Expression<Func<TDomain, object>>[] includes)
         {
-            IQueryable<TTable> set = _context.Set<TTable>();
+            IQueryable<TDomain> set = _context.Set<TDomain>();
 
             foreach (var include in includes)
                 set = set.Include(include);
@@ -57,69 +57,75 @@ namespace MyExpenses.Infrastructure.Repositories
 
         public bool Remove(Guid id)
         {
-            TTable model = _context.Set<TTable>().Find(id);
+            TDomain model = _context.Set<TDomain>().Find(id);
             if (model == null)
                 return false;
 
-            return _context.Set<TTable>().Remove(model) != null;
+            return _context.Set<TDomain>().Remove(model) != null;
         }
 
         public async Task<bool> RemoveAsync(Guid id)
         {
-            TTable model = await GetByIdAsync(id);
+            TDomain model = await GetByIdAsync(id);
             if (model == null)
                 return false;
 
-            return _context.Set<TTable>().Remove(model) != null;
+            return _context.Set<TDomain>().Remove(model) != null;
         }
 
-        public TTable Update(TTable model)
+        public TDomain Update(TDomain obj)
         {
-            if (model == null)
+            if (obj == null)
                 return null;
 
-            TTable exisT = _context.Set<TTable>().Find(model.Id);
-            if (exisT == null)
+            TDomain result = _context.Set<TDomain>().Find(obj.Id);
+            if (result == null)
                 return null;
+
+            result.LastUpdate = DateTime.Today;
 
             // copy attributes
-            exisT.Copy(model);
-            return exisT;
+            result.Copy(obj);
+            return result;
         }
 
-        public async Task<TTable> UpdateAsync(TTable model)
+        public async Task<TDomain> UpdateAsync(TDomain obj)
         {
-            if (model == null)
+            if (obj == null)
                 return null;
 
-            TTable existModel = await GetByIdAsync(model.Id);
-            if (existModel == null)
+            TDomain result = await GetByIdAsync(obj.Id);
+            if (result == null)
                 return null;
+
+            result.LastUpdate = DateTime.Today;
 
             // copy attributes
-            existModel.Copy(model);
-            return existModel;
+            result.Copy(obj);
+            return result;
         }
 
-        public TTable Add(TTable model)
+        public TDomain Add(TDomain obj)
         {
-            if (model == null)
+            if (obj == null)
                 return null;
 
-            model.Id = Guid.NewGuid();
+            obj.Id = Guid.NewGuid();
+            obj.LastUpdate = DateTime.Today;
 
-            var newModel = _context.Set<TTable>().Add(model);
+            var newModel = _context.Set<TDomain>().Add(obj);
             return newModel?.Entity;
         }
 
-        public async Task<TTable> AddAsync(TTable model)
+        public async Task<TDomain> AddAsync(TDomain obj)
         {
-            if (model == null)
+            if (obj == null)
                 return null;
 
-            model.Id = Guid.NewGuid();
+            obj.Id = Guid.NewGuid();
+            obj.LastUpdate = DateTime.Today;
 
-            var newModel = await _context.Set<TTable>().AddAsync(model);
+            var newModel = await _context.Set<TDomain>().AddAsync(obj);
             return newModel.Entity;
         }
     }

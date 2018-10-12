@@ -19,6 +19,6 @@ namespace MyExpenses.Domain.IoT.Services
 
         Task<GroupDomain> GetByIdWithIncludeAsync(Guid groupId);
 
-        Task<GroupDomain> Update(GroupDomain obj, ICollection<Guid> users);
+        Task<GroupDomain> Update(GroupDomain obj, ICollection<Guid> newUsersId);
     }
 }

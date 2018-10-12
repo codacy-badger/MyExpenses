@@ -39,7 +39,7 @@ namespace WebApplication.Models.Groups
 
         public ICollection<Guid> SelectedUsersId { get; set; }
 
-        private void SetupUsers(IQueryable<IdentityUser> availables, ICollection<GroupUserViewModel> selected = null)
+        public void SetupUsers(IQueryable<IdentityUser> availables, ICollection<GroupUserViewModel> selected = null)
         {
             AvailableUsers = availables.Select(u => new UserViewModel { Id = Guid.Parse(u.Id), UserName = u.UserName }).ToList();
             AvailableUsersSelectList = new SelectList(AvailableUsers, "Id", "UserName");

@@ -44,17 +44,17 @@ namespace MyExpenses.Domain.IoT
         /// <summary>
         /// Add an object
         /// </summary>
-        /// <param name="model">Object to add</param>
+        /// <param name="obj">Object to add</param>
         /// <returns>Object added</returns>
-        TDomain Add(TDomain model);
-        Task<TDomain> AddAsync(TDomain model);
+        TDomain Add(TDomain obj);
+        Task<TDomain> AddAsync(TDomain obj);
 
         /// <summary>
         /// Update an object
         /// </summary>
-        /// <param name="model">Object to update</param>
+        /// <param name="obj">Object to update</param>
         /// <returns>Object updated</returns>
-        TDomain Update(TDomain model);
-        Task<TDomain> UpdateAsync(TDomain model);
+        TDomain Update(TDomain obj);
+        Task<TDomain> UpdateAsync(TDomain obj);
     }
 }
