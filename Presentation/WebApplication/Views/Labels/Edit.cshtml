@@ -1,4 +1,4 @@
-﻿@model MyExpenses.Domain.Domains.LabelDomain
+﻿@model WebApplication.Models.Labels.LabelViewModel;
 
 @{
     ViewData["Title"] = "Edit";
@@ -18,11 +18,6 @@
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="LastUpdate" class="control-label"></label>
-                <input asp-for="LastUpdate" class="form-control" />
-                <span asp-validation-for="LastUpdate" class="text-danger"></span>
-            </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-default" />
             </div>

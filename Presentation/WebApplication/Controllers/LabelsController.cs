@@ -46,15 +46,30 @@ namespace WebApplication.Controllers
         public async Task<IActionResult> Index()
         {
             var userId = await GetCurrentUserIdAsync();
+
+            var availableGroupsDto = _groupAppService.GetAllWithIncludes(userId);
+            var availableGroupsViewModel = availableGroupsDto.Select(Mapper.Map<GroupDto, GroupViewModel>).ToList();
+            
             var objs = _appService.GetAllWithIncludes(userId).ToList();
             var viewModel = new LabelsViewModel { Labels = objs.Select(Mapper.Map<LabelDto, LabelViewModel>).ToList() };
+
+            viewModel.SetupAvailableGroups(availableGroupsViewModel);
 
             return View(viewModel);
         }
 
         // GET: Labels/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            var userId = await GetCurrentUserIdAsync();
+
+            var availableGroups = _groupAppService.GetAllWithIncludes(userId);
+
+            if (!availableGroups.Any())
+            {
+                return RedirectToAction("Index", "Labels");
+            }
+
             return View();
         }
 

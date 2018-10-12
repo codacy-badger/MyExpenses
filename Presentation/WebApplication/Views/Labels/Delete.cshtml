@@ -1,4 +1,4 @@
-﻿@model MyExpenses.Domain.Domains.LabelDomain
+﻿@model WebApplication.Models.Labels.LabelViewModel;
 
 @{
     ViewData["Title"] = "Delete";
@@ -16,12 +16,6 @@
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.LastUpdate)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.LastUpdate)
         </dd>
     </dl>
     
