@@ -9,10 +9,8 @@ namespace WebApplication.Models.Groups
     using System;
     using System.ComponentModel.DataAnnotations;
 
-    public class GroupUserViewModel
+    public class GroupUserViewModel : ViewModelBase
     {
-        public Guid Id { get; set; }
-
         [Required]
         public GroupViewModel Group { get; set; }
 

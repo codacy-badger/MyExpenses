@@ -11,25 +11,33 @@ namespace WebApplication.Controllers
     using System.Linq;
     using System.Threading.Tasks;
 
+    using AutoMapper;
+
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
 
     using MyExpenses.Application.AppServices.Interfaces;
+    using MyExpenses.Application.Dtos;
     using MyExpenses.Domain.Domains;
     using MyExpenses.Infrastructure;
+
+    using WebApplication.Models.Groups;
+    using WebApplication.Models.Labels;
 
     [Authorize]
     public class LabelsController : Controller
     {
         private readonly ILabelAppService _appService;
+        private readonly IGroupAppService _groupAppService;
         private readonly MyExpensesContext _context;
         private readonly UserManager<IdentityUser> _manager;
 
-        public LabelsController(ILabelAppService appService, MyExpensesContext context, UserManager<IdentityUser> manager)
+        public LabelsController(ILabelAppService appService, IGroupAppService groupAppService, MyExpensesContext context, UserManager<IdentityUser> manager)
         {
             _appService = appService;
+            _groupAppService = groupAppService;
             _context = context;
             _manager = manager;
         }
@@ -37,33 +45,11 @@ namespace WebApplication.Controllers
         // GET: Labels
         public async Task<IActionResult> Index()
         {
-            var currentUser = await _manager.FindByNameAsync(User.Identity.Name);
-            var userId = Guid.Parse(currentUser.Id);
+            var userId = await GetCurrentUserIdAsync();
+            var objs = _appService.GetAllWithIncludes(userId).ToList();
+            var viewModel = new LabelsViewModel { Labels = objs.Select(Mapper.Map<LabelDto, LabelViewModel>).ToList() };
 
-            var objs = _context.Labels
-                           .Include(l => l.Group)
-                           .Include(l => l.Group.Users)
-                           .Where(l => l.Group.Users.Any(u => u.UserId == userId));
-
-            return View(await objs.ToListAsync());
-        }
-
-        // GET: Labels/Details/5
-        public async Task<IActionResult> Details(Guid? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var labelDomain = await _context.Labels
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (labelDomain == null)
-            {
-                return NotFound();
-            }
-
-            return View(labelDomain);
+            return View(viewModel);
         }
 
         // GET: Labels/Create
@@ -77,34 +63,24 @@ namespace WebApplication.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,Id")] LabelDomain labelDomain)
+        public async Task<IActionResult> Create(LabelViewModel obj)
         {
             if (ModelState.IsValid)
             {
-                labelDomain.Id = Guid.NewGuid();
+                var userId = await GetCurrentUserIdAsync();
 
-                var currentUser = await _manager.FindByNameAsync(User.Identity.Name);
-                var userId = Guid.Parse(currentUser.Id);
+                // TODO temporary
+                var firstGroupDto = _groupAppService.GetAllWithIncludes(userId).First();
+                var firstGroupViewModel = Mapper.Map<GroupDto, GroupViewModel>(firstGroupDto);
 
-                var newGroup = new GroupDomain();
+                obj.Group = firstGroupViewModel;
 
-                if(!_context.Groups.Any(x => x.Users.Any(y => y.Id == userId)))
-                {
-                    var group = new GroupDomain { Id = Guid.NewGuid(), Name = "josaeluizfelipeporae" };
-                    var groupUser = new GroupUserDomain { Id = Guid.NewGuid(), UserId = userId, Group = group };
-                    group.Users = new List<GroupUserDomain> { groupUser };
+                var dto = Mapper.Map<LabelViewModel, LabelDto>(obj);
+                await _appService.AddAsync(dto);
 
-                    newGroup = _context.Groups.Add(group).Entity;
-                    _context.SaveChanges();
-                }
-
-                labelDomain.Group = newGroup;
-
-                _context.Add(labelDomain);
-                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(labelDomain);
+            return View(obj);
         }
 
         // GET: Labels/Edit/5
@@ -128,7 +104,7 @@ namespace WebApplication.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Name,Id")] LabelDomain labelDomain)
+        public async Task<IActionResult> Edit(Guid id, LabelDomain labelDomain)
         {
             if (id != labelDomain.Id)
             {
@@ -190,6 +166,12 @@ namespace WebApplication.Controllers
         private bool LabelDomainExists(Guid id)
         {
             return _context.Labels.Any(e => e.Id == id);
+        }
+
+        private async Task<Guid> GetCurrentUserIdAsync()
+        {
+            var user = await _manager.FindByNameAsync(User.Identity.Name);
+            return Guid.Parse(user.Id);
         }
     }
 }

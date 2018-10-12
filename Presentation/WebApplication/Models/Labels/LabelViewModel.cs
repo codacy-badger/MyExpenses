@@ -4,15 +4,18 @@
 *   Github: http://github.com/lfmachadodasilva/MyExpenses
 */
 
-namespace MyExpenses.Application.Dtos
+namespace WebApplication.Models.Labels
 {
+    using System;
     using System.ComponentModel.DataAnnotations;
 
-    public class LabelDto : DtoBase
+    using WebApplication.Models.Groups;
+
+    public class LabelViewModel : ViewModelBase
     {
         [Required]
         public string Name { get; set; }
 
-        public GroupDto Group { get; set; }
+        public GroupViewModel Group { get; set; }
     }
 }

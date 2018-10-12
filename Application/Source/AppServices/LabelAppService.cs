@@ -29,6 +29,11 @@ namespace MyExpenses.Application.AppServices
             _service = service;
         }
 
+        public IEnumerable<LabelDto> GetAllWithIncludes(Guid userId)
+        {
+            return _service.GetAllWithIncludes(userId).Select(Mapper.Map<LabelDomain, LabelDto>);
+        }
+
         // public async Task<ICollection<LabelDto>> GetAllByGroupId(Guid groupId)
         // {
         //     return await _service

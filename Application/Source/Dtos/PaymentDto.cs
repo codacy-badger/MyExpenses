@@ -12,5 +12,7 @@ namespace MyExpenses.Application.Dtos
     {
         [Required]
         public string Name { get; set; }
+
+        public GroupDto Group { get; set; }
     }
 }

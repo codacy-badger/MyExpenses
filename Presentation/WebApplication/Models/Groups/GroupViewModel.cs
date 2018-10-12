@@ -6,12 +6,11 @@
 
 namespace WebApplication.Models.Groups
 {
-    using System;
+    using System.ComponentModel.DataAnnotations;
 
-    public class GroupViewModel
+    public class GroupViewModel : ViewModelBase
     {
-        public Guid Id { get; set; }
-
+        [Required]
         public string Name { get; set; }
     }
 }

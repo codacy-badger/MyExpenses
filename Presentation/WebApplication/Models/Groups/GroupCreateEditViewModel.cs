@@ -13,7 +13,7 @@ namespace WebApplication.Models.Groups
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc.Rendering;
 
-    public class GroupCreateEditViewModel
+    public class GroupCreateEditViewModel : ViewModelBase
     {
         public GroupCreateEditViewModel()
         {
@@ -26,8 +26,6 @@ namespace WebApplication.Models.Groups
         {
             SetupUsers(currentUserId, availables, selected);
         }
-
-        public Guid Id { get; set; }
 
         public string Name { get; set; }
 
