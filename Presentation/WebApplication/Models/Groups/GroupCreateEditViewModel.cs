@@ -22,9 +22,9 @@ namespace WebApplication.Models.Groups
             SelectedUsersId = new List<Guid>();
         }
 
-        public GroupCreateEditViewModel(IQueryable<IdentityUser> availables, ICollection<GroupUserViewModel> selected = null)
+        public GroupCreateEditViewModel(Guid currentUserId, IQueryable<IdentityUser> availables, ICollection<GroupUserViewModel> selected = null)
         {
-            SetupUsers(availables, selected);
+            SetupUsers(currentUserId, availables, selected);
         }
 
         public Guid Id { get; set; }
@@ -39,15 +39,21 @@ namespace WebApplication.Models.Groups
 
         public ICollection<Guid> SelectedUsersId { get; set; }
 
-        public void SetupUsers(IQueryable<IdentityUser> availables, ICollection<GroupUserViewModel> selected = null)
+        public void SetupUsers(Guid currentUserId, IQueryable<IdentityUser> availables, ICollection<GroupUserViewModel> selected = null)
         {
-            AvailableUsers = availables.Select(u => new UserViewModel { Id = Guid.Parse(u.Id), UserName = u.UserName }).ToList();
+            AvailableUsers = availables
+                .Where(x => Guid.Parse(x.Id) != currentUserId) // remove current user from the list
+                .Select(u => new UserViewModel { Id = Guid.Parse(u.Id), UserName = u.UserName })
+                .ToList();
             AvailableUsersSelectList = new SelectList(AvailableUsers, "Id", "UserName");
 
             if (selected != null && selected.Any())
             {
                 Users = selected;
-                SelectedUsersId = selected.Select(x => x.UserId).ToList();
+                SelectedUsersId = selected
+                    .Where(x => x.UserId != currentUserId)
+                    .Select(x => x.UserId)
+                    .ToList();
             }
         }
     }

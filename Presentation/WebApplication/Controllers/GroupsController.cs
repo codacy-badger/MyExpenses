@@ -45,9 +45,10 @@ namespace WebApplication.Controllers
         }
 
         // GET: Groups/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            var viewModel = new GroupCreateEditViewModel(_manager.Users);
+            var userId = await GetCurrentUserIdAsync();
+            var viewModel = new GroupCreateEditViewModel(userId, _manager.Users);
 
             return View(viewModel);
         }
@@ -61,6 +62,10 @@ namespace WebApplication.Controllers
         {
             if (ModelState.IsValid)
             {
+                // add current user
+                var userId = await GetCurrentUserIdAsync();
+                obj.SelectedUsersId.Add(userId);
+
                 var dto = new GroupDto { Name = obj.Name };
                 dto.Users = obj.SelectedUsersId
                     .Select(x => 
@@ -86,6 +91,8 @@ namespace WebApplication.Controllers
                 return NotFound();
             }
 
+            var userIdTask = GetCurrentUserIdAsync();
+
             var obj = await _service.GetByIdWithIncludeAsync(id.Value);
             if (obj == null)
             {
@@ -93,7 +100,9 @@ namespace WebApplication.Controllers
             }
 
             var users = obj.Users.Select(Mapper.Map<GroupUserDto, GroupUserViewModel>).ToList();
-            var viewModel = new GroupCreateEditViewModel(_manager.Users, users)
+
+            var userId = await userIdTask;
+            var viewModel = new GroupCreateEditViewModel(userId, _manager.Users, users)
             {
                 Id = obj.Id,
                 Name = obj.Name
@@ -114,11 +123,17 @@ namespace WebApplication.Controllers
                 return NotFound();
             }
 
+            var userIdTask = GetCurrentUserIdAsync();
+
             if (ModelState.IsValid)
             {
                 try
                 {
                     var dto = Mapper.Map<GroupCreateEditViewModel, GroupDto>(obj);
+
+                    var userId = await userIdTask;
+                    obj.SelectedUsersId.Add(userId);
+
                     await _service.Update(dto, obj.SelectedUsersId);
                 }
                 catch (DbUpdateConcurrencyException)
