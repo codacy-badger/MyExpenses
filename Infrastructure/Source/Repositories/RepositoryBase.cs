@@ -82,7 +82,7 @@ namespace MyExpenses.Infrastructure.Repositories
             if (result == null)
                 return null;
 
-            result.LastUpdate = DateTime.Today;
+            UpdateLastUpdate(obj);
 
             // copy attributes
             result.Copy(obj);
@@ -98,7 +98,7 @@ namespace MyExpenses.Infrastructure.Repositories
             if (result == null)
                 return null;
 
-            result.LastUpdate = DateTime.Today;
+            UpdateLastUpdate(obj);
 
             // copy attributes
             result.Copy(obj);
@@ -111,7 +111,7 @@ namespace MyExpenses.Infrastructure.Repositories
                 return null;
 
             obj.Id = Guid.NewGuid();
-            obj.LastUpdate = DateTime.Today;
+            UpdateLastUpdate(obj);
 
             var newModel = _context.Set<TDomain>().Add(obj);
             return newModel?.Entity;
@@ -123,10 +123,15 @@ namespace MyExpenses.Infrastructure.Repositories
                 return null;
 
             obj.Id = Guid.NewGuid();
-            obj.LastUpdate = DateTime.Today;
+            UpdateLastUpdate(obj);
 
             var newModel = await _context.Set<TDomain>().AddAsync(obj);
-            return newModel.Entity;
+            return newModel?.Entity;
+        }
+
+        private static void UpdateLastUpdate(TDomain obj)
+        {
+            obj.LastUpdate = DateTime.Now;
         }
     }
 }
