@@ -60,25 +60,25 @@ namespace MyExpenses.Domain.Services
         #region async
 
         /// <inheritdoc />
-        public Task<TDomain> GetByIdAsync(Guid id, params Expression<Func<TDomain, object>>[] includes)
+        public virtual Task<TDomain> GetByIdAsync(Guid id, params Expression<Func<TDomain, object>>[] includes)
         {
             return _repository.GetByIdAsync(id, includes);
         }
 
         /// <inheritdoc />
-        public Task<bool> RemoveAsync(Guid id)
+        public virtual Task<bool> RemoveAsync(Guid id)
         {
             return _repository.RemoveAsync(id);
         }
 
         /// <inheritdoc />
-        public Task<TDomain> AddAsync(TDomain obj)
+        public virtual Task<TDomain> AddAsync(TDomain obj)
         {
             return _repository.AddAsync(obj);
         }
 
         /// <inheritdoc />
-        public Task<TDomain> UpdateAsync(TDomain obj)
+        public virtual Task<TDomain> UpdateAsync(TDomain obj)
         {
             return _repository.UpdateAsync(obj);
         }

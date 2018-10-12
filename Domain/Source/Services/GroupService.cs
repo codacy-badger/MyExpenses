@@ -37,6 +37,18 @@ namespace MyExpenses.Domain.Services
             return _repository.GetByIdAsync(groupId, x => x.Users);
         }
 
+        public override async Task<bool>  RemoveAsync(Guid id)
+        {
+            var obj = await _repository.GetByIdAsync(id, x => x.Users);
+
+            foreach (var user in obj.Users)
+            {
+                await _groupUserRepository.RemoveAsync(user.Id);
+            }
+
+            return await _repository.RemoveAsync(id);
+        }
+
         public async Task<GroupDomain> Update(GroupDomain obj, ICollection<Guid> newUsersId)
         {
             // clear just to make sure
