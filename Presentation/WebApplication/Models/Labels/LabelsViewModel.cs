@@ -6,6 +6,7 @@
 
 namespace WebApplication.Models.Labels
 {
+    using System;
     using System.Collections.Generic;
 
     using Microsoft.AspNetCore.Mvc.Rendering;
@@ -19,7 +20,7 @@ namespace WebApplication.Models.Labels
             Labels = new List<LabelViewModel>();  
         }
 
-        public GroupViewModel Group { get; set; }
+        public Guid GroupId { get; set; }
 
         public SelectList AvailableGroupsSelectList { get; set; }
 

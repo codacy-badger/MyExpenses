@@ -22,6 +22,7 @@ namespace WebApplication.Models
             CreateMap<GroupUserDto, GroupUserViewModel>().ReverseMap();
 
             CreateMap<LabelDto, LabelViewModel>().ReverseMap();
+            CreateMap<LabelDto, LabelCreateEditViewModel>().ReverseMap();
         }
     }
 }

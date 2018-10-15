@@ -6,7 +6,6 @@
 
 namespace WebApplication.Models.Labels
 {
-    using System;
     using System.ComponentModel.DataAnnotations;
 
     using WebApplication.Models.Groups;

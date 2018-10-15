@@ -8,6 +8,7 @@ namespace MyExpenses.Domain.Services
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
 
     using MyExpenses.Domain.Domains;
     using MyExpenses.Domain.IoC.Repositories;
@@ -23,11 +24,17 @@ namespace MyExpenses.Domain.Services
             _repository = repository;
         }
 
-        public IEnumerable<LabelDomain> GetAllWithIncludes(Guid userId)
+        public IEnumerable<LabelDomain> GetAllWithIncludes(Guid groupId)
         {
             return _repository
                 .GetAll(x => x.Group.Users)
-                .Where(x => x.Group.Users.Any(y => y.UserId == userId));
+                .Where(x => x.Group.Id == groupId);
+        }
+
+        public async Task<LabelDomain> GetByIdWithIncludes(Guid id)
+        {
+            return await _repository
+                .GetByIdAsync(id, x => x.Group.Users);
         }
     }
 }

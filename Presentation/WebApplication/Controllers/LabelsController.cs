@@ -43,15 +43,29 @@ namespace WebApplication.Controllers
         }
 
         // GET: Labels
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(Guid groupId)
         {
             var userId = await GetCurrentUserIdAsync();
 
+            // groups
             var availableGroupsDto = _groupAppService.GetAllWithIncludes(userId);
             var availableGroupsViewModel = availableGroupsDto.Select(Mapper.Map<GroupDto, GroupViewModel>).ToList();
-            
-            var objs = _appService.GetAllWithIncludes(userId).ToList();
-            var viewModel = new LabelsViewModel { Labels = objs.Select(Mapper.Map<LabelDto, LabelViewModel>).ToList() };
+
+            if (groupId == Guid.Empty || !availableGroupsViewModel.Any(x => x.Id == groupId))
+            {
+                groupId = availableGroupsViewModel.Select(x => x.Id).FirstOrDefault();
+            }
+            else if (availableGroupsViewModel.Any(x => x.Id == groupId))
+            {
+                groupId = availableGroupsViewModel.Select(x => x.Id).FirstOrDefault(x => x == groupId);
+            }
+            else
+            {
+                groupId = Guid.Empty;
+            }
+
+            var objs = _appService.GetAllWithIncludes(groupId).ToList();
+            var viewModel = new LabelsViewModel { Labels = objs.Select(Mapper.Map<LabelDto, LabelViewModel>).ToList(), GroupId = groupId };
 
             viewModel.SetupAvailableGroups(availableGroupsViewModel);
 
@@ -62,15 +76,19 @@ namespace WebApplication.Controllers
         public async Task<IActionResult> Create()
         {
             var userId = await GetCurrentUserIdAsync();
+            var availableGroupsDto = _groupAppService.GetAllWithIncludes(userId).ToList();
 
-            var availableGroups = _groupAppService.GetAllWithIncludes(userId);
-
-            if (!availableGroups.Any())
+            if (!availableGroupsDto.Any())
             {
                 return RedirectToAction("Index", "Labels");
             }
 
-            return View();
+            var availableGroupsViewModel = availableGroupsDto.Select(Mapper.Map<GroupDto, GroupViewModel>).ToList();
+
+            var viewModel = new LabelCreateEditViewModel();
+            viewModel.SetupGroups(availableGroupsViewModel);
+
+            return View(viewModel);
         }
 
         // POST: Labels/Create
@@ -78,19 +96,16 @@ namespace WebApplication.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(LabelViewModel obj)
+        public async Task<IActionResult> Create(LabelCreateEditViewModel obj)
         {
             if (ModelState.IsValid)
             {
-                var userId = await GetCurrentUserIdAsync();
+                var selectedGroupDto = await _groupAppService.GetByIdAsync(obj.SelectedGroupId);
+                var selectedGroupViewModel = Mapper.Map<GroupDto, GroupViewModel>(selectedGroupDto);
 
-                // TODO temporary
-                var firstGroupDto = _groupAppService.GetAllWithIncludes(userId).First();
-                var firstGroupViewModel = Mapper.Map<GroupDto, GroupViewModel>(firstGroupDto);
+                obj.Group = selectedGroupViewModel;
 
-                obj.Group = firstGroupViewModel;
-
-                var dto = Mapper.Map<LabelViewModel, LabelDto>(obj);
+                var dto = Mapper.Map<LabelCreateEditViewModel, LabelDto>(obj);
                 await _appService.AddAsync(dto);
 
                 return RedirectToAction(nameof(Index));
@@ -106,12 +121,27 @@ namespace WebApplication.Controllers
                 return NotFound();
             }
 
-            var labelDomain = await _context.Labels.FindAsync(id);
-            if (labelDomain == null)
+            var labelDto = await _appService.GetByIdWithIncludes(id.Value);
+            if (labelDto == null)
             {
                 return NotFound();
             }
-            return View(labelDomain);
+
+            var userId = await GetCurrentUserIdAsync();
+            var availableGroupsDto = _groupAppService.GetAllWithIncludes(userId).ToList();
+
+            if (!availableGroupsDto.Any())
+            {
+                return RedirectToAction("Index", "Labels");
+            }
+
+            var availableGroupsViewModel = availableGroupsDto.Select(Mapper.Map<GroupDto, GroupViewModel>).ToList();
+
+            var viewModel = Mapper.Map<LabelDto, LabelCreateEditViewModel>(labelDto);
+            viewModel.SetupGroups(availableGroupsViewModel);
+            viewModel.SelectedGroupId = viewModel.Group.Id;
+
+            return View(viewModel);
         }
 
         // POST: Labels/Edit/5
