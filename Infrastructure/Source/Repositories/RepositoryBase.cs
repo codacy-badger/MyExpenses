@@ -45,7 +45,7 @@ namespace MyExpenses.Infrastructure.Repositories
             return set.SingleOrDefault(x => x.Id == id);
         }
 
-        public async Task<TDomain> GetByIdAsync(Guid id, params Expression<Func<TDomain, object>>[] includes)
+        public virtual async Task<TDomain> GetByIdAsync(Guid id, params Expression<Func<TDomain, object>>[] includes)
         {
             IQueryable<TDomain> set = _context.Set<TDomain>();
 
@@ -55,7 +55,7 @@ namespace MyExpenses.Infrastructure.Repositories
             return await set.FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public bool Remove(Guid id)
+        public virtual bool Remove(Guid id)
         {
             TDomain model = _context.Set<TDomain>().Find(id);
             if (model == null)
@@ -64,7 +64,7 @@ namespace MyExpenses.Infrastructure.Repositories
             return _context.Set<TDomain>().Remove(model) != null;
         }
 
-        public async Task<bool> RemoveAsync(Guid id)
+        public virtual async Task<bool> RemoveAsync(Guid id)
         {
             TDomain model = await GetByIdAsync(id);
             if (model == null)
@@ -73,7 +73,7 @@ namespace MyExpenses.Infrastructure.Repositories
             return _context.Set<TDomain>().Remove(model) != null;
         }
 
-        public TDomain Update(TDomain obj)
+        public virtual TDomain Update(TDomain obj)
         {
             if (obj == null)
                 return null;
@@ -89,7 +89,7 @@ namespace MyExpenses.Infrastructure.Repositories
             return result;
         }
 
-        public async Task<TDomain> UpdateAsync(TDomain obj)
+        public virtual async Task<TDomain> UpdateAsync(TDomain obj)
         {
             if (obj == null)
                 return null;
@@ -105,7 +105,7 @@ namespace MyExpenses.Infrastructure.Repositories
             return result;
         }
 
-        public TDomain Add(TDomain obj)
+        public virtual TDomain Add(TDomain obj)
         {
             if (obj == null)
                 return null;
@@ -117,7 +117,7 @@ namespace MyExpenses.Infrastructure.Repositories
             return newModel?.Entity;
         }
 
-        public async Task<TDomain> AddAsync(TDomain obj)
+        public virtual async Task<TDomain> AddAsync(TDomain obj)
         {
             if (obj == null)
                 return null;
@@ -129,7 +129,7 @@ namespace MyExpenses.Infrastructure.Repositories
             return newModel?.Entity;
         }
 
-        private static void UpdateLastUpdate(TDomain obj)
+        protected static void UpdateLastUpdate(TDomain obj)
         {
             obj.LastUpdate = DateTime.Now;
         }

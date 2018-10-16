@@ -17,6 +17,16 @@ namespace WebApplication.Models.Labels
 
     public class LabelCreateEditViewModel : ViewModelBase
     {
+        public LabelCreateEditViewModel()
+        {
+            
+        }
+
+        public LabelCreateEditViewModel(ICollection<GroupViewModel> availableGroups)
+        {
+            SetupGroups(availableGroups);
+        }
+
         [Required]
         public string Name { get; set; }
 

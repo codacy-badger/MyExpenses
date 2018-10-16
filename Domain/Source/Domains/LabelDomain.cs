@@ -22,7 +22,7 @@ namespace MyExpenses.Domain.Domains
         {
             if (baseObj is LabelDomain obj)
             {
-                AutoMapper.Mapper.Map(this, obj);
+                AutoMapper.Mapper.Map(obj, this);
             }
         }
     }

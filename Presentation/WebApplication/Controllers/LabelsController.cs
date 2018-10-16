@@ -7,7 +7,6 @@
 namespace WebApplication.Controllers
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -20,7 +19,6 @@ namespace WebApplication.Controllers
 
     using MyExpenses.Application.AppServices.Interfaces;
     using MyExpenses.Application.Dtos;
-    using MyExpenses.Domain.Domains;
     using MyExpenses.Infrastructure;
 
     using WebApplication.Models.Groups;
@@ -45,7 +43,7 @@ namespace WebApplication.Controllers
         // GET: Labels
         public async Task<IActionResult> Index(Guid groupId)
         {
-            var userId = await GetCurrentUserIdAsync();
+            var userId = await ControlUtil.GetCurrentUserIdAsync(_manager, User.Identity.Name);
 
             // groups
             var availableGroupsDto = _groupAppService.GetAllWithIncludes(userId);
@@ -74,19 +72,15 @@ namespace WebApplication.Controllers
 
         // GET: Labels/Create
         public async Task<IActionResult> Create()
-        {
-            var userId = await GetCurrentUserIdAsync();
-            var availableGroupsDto = _groupAppService.GetAllWithIncludes(userId).ToList();
+        { 
+            var availableGroupsViewModel = await ControlUtil.GetAvailableGroups(_manager, User.Identity.Name, _groupAppService);
 
-            if (!availableGroupsDto.Any())
+            if (!availableGroupsViewModel.Any())
             {
                 return RedirectToAction("Index", "Labels");
             }
 
-            var availableGroupsViewModel = availableGroupsDto.Select(Mapper.Map<GroupDto, GroupViewModel>).ToList();
-
-            var viewModel = new LabelCreateEditViewModel();
-            viewModel.SetupGroups(availableGroupsViewModel);
+            var viewModel = new LabelCreateEditViewModel(availableGroupsViewModel);
 
             return View(viewModel);
         }
@@ -127,15 +121,12 @@ namespace WebApplication.Controllers
                 return NotFound();
             }
 
-            var userId = await GetCurrentUserIdAsync();
-            var availableGroupsDto = _groupAppService.GetAllWithIncludes(userId).ToList();
+            var availableGroupsViewModel = await ControlUtil.GetAvailableGroups(_manager, User.Identity.Name, _groupAppService);
 
-            if (!availableGroupsDto.Any())
+            if (!availableGroupsViewModel.Any())
             {
                 return RedirectToAction("Index", "Labels");
             }
-
-            var availableGroupsViewModel = availableGroupsDto.Select(Mapper.Map<GroupDto, GroupViewModel>).ToList();
 
             var viewModel = Mapper.Map<LabelDto, LabelCreateEditViewModel>(labelDto);
             viewModel.SetupGroups(availableGroupsViewModel);
@@ -149,9 +140,9 @@ namespace WebApplication.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, LabelDomain labelDomain)
+        public async Task<IActionResult> Edit(Guid id, LabelCreateEditViewModel obj)
         {
-            if (id != labelDomain.Id)
+            if (id != obj.Id)
             {
                 return NotFound();
             }
@@ -160,12 +151,17 @@ namespace WebApplication.Controllers
             {
                 try
                 {
-                    _context.Update(labelDomain);
-                    await _context.SaveChangesAsync();
+                    var selectedGroupDto = await _groupAppService.GetByIdAsync(obj.SelectedGroupId);
+                    var selectedGroupViewModel = Mapper.Map<GroupDto, GroupViewModel>(selectedGroupDto);
+
+                    obj.Group = selectedGroupViewModel;
+
+                    var dto = Mapper.Map<LabelCreateEditViewModel, LabelDto>(obj);
+                    await _appService.UpdateAsync(dto);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!LabelDomainExists(labelDomain.Id))
+                    if (!LabelDomainExists(obj.Id))
                     {
                         return NotFound();
                     }
@@ -176,7 +172,7 @@ namespace WebApplication.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(labelDomain);
+            return View(obj);
         }
 
         // GET: Labels/Delete/5
@@ -213,10 +209,19 @@ namespace WebApplication.Controllers
             return _context.Labels.Any(e => e.Id == id);
         }
 
-        private async Task<Guid> GetCurrentUserIdAsync()
-        {
-            var user = await _manager.FindByNameAsync(User.Identity.Name);
-            return Guid.Parse(user.Id);
-        }
+        //private async Task<Guid> GetCurrentUserIdAsync()
+        //{
+        //    var user = await _manager.FindByNameAsync(User.Identity.Name);
+        //    return Guid.Parse(user.Id);
+        //}
+
+        //private async Task<ICollection<GroupViewModel>> GetAvailableGroups()
+        //{
+        //    var userId = await GetCurrentUserIdAsync();
+        //    var availableGroupsDto = _groupAppService.GetAllWithIncludes(userId).ToList();
+        //    var availableGroupsViewModel = availableGroupsDto.Select(Mapper.Map<GroupDto, GroupViewModel>).ToList();
+
+        //    return availableGroupsViewModel;
+        //}
     }
 }

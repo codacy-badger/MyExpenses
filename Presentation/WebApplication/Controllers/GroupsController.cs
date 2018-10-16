@@ -39,6 +39,7 @@ namespace WebApplication.Controllers
         {
             var userId = await GetCurrentUserIdAsync();
             var objs = _service.GetAllWithIncludes(userId).ToList();
+
             var viewModel = new GroupsViewModel { Groups = objs.Select(Mapper.Map<GroupDto, GroupViewModel>).ToList() };
 
             return View(viewModel);
