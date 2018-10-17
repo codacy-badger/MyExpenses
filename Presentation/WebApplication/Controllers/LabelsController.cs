@@ -178,6 +178,8 @@ namespace WebApplication.Controllers
         // GET: Labels/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
+            // TODO lfmachadodasilva
+
             if (id == null)
             {
                 return NotFound();
@@ -198,6 +200,8 @@ namespace WebApplication.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
+            // TODO lfmachadodasilva
+
             var labelDomain = await _context.Labels.FindAsync(id);
             _context.Labels.Remove(labelDomain);
             await _context.SaveChangesAsync();
@@ -208,20 +212,5 @@ namespace WebApplication.Controllers
         {
             return _context.Labels.Any(e => e.Id == id);
         }
-
-        //private async Task<Guid> GetCurrentUserIdAsync()
-        //{
-        //    var user = await _manager.FindByNameAsync(User.Identity.Name);
-        //    return Guid.Parse(user.Id);
-        //}
-
-        //private async Task<ICollection<GroupViewModel>> GetAvailableGroups()
-        //{
-        //    var userId = await GetCurrentUserIdAsync();
-        //    var availableGroupsDto = _groupAppService.GetAllWithIncludes(userId).ToList();
-        //    var availableGroupsViewModel = availableGroupsDto.Select(Mapper.Map<GroupDto, GroupViewModel>).ToList();
-
-        //    return availableGroupsViewModel;
-        //}
     }
 }

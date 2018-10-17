@@ -22,11 +22,13 @@ namespace MyExpenses.Infrastructure
             _context = context;
         }
 
+        /// <inheritdoc />
         public void BeginTransaction()
         {
             // Method intentionally left empty.
         }
 
+        /// <inheritdoc />
         public int Commit()
         {
             try
@@ -45,6 +47,7 @@ namespace MyExpenses.Infrastructure
             }
         }
 
+        /// <inheritdoc />
         public async Task<int> CommitAsync()
         {
             try

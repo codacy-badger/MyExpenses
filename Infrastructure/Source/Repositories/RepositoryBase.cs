@@ -45,14 +45,14 @@ namespace MyExpenses.Infrastructure.Repositories
             return set.SingleOrDefault(x => x.Id == id);
         }
 
-        public virtual async Task<TDomain> GetByIdAsync(Guid id, params Expression<Func<TDomain, object>>[] includes)
+        public virtual Task<TDomain> GetByIdAsync(Guid id, params Expression<Func<TDomain, object>>[] includes)
         {
             IQueryable<TDomain> set = _context.Set<TDomain>();
 
             foreach (var include in includes)
                 set = set.Include(include);
 
-            return await set.FirstOrDefaultAsync(x => x.Id == id);
+            return set.FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public virtual bool Remove(Guid id)
