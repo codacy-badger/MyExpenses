@@ -97,6 +97,7 @@ namespace WebApplication.Controllers
                 var selectedGroupDto = await _groupAppService.GetByIdAsync(obj.SelectedGroupId);
                 var selectedGroupViewModel = Mapper.Map<GroupDto, GroupViewModel>(selectedGroupDto);
 
+                obj.GroupId = selectedGroupViewModel.Id;
                 obj.Group = selectedGroupViewModel;
 
                 var dto = Mapper.Map<LabelCreateEditViewModel, LabelDto>(obj);
@@ -155,6 +156,7 @@ namespace WebApplication.Controllers
                     var selectedGroupViewModel = Mapper.Map<GroupDto, GroupViewModel>(selectedGroupDto);
 
                     obj.Group = selectedGroupViewModel;
+                    obj.GroupId = selectedGroupViewModel.Id;
 
                     var dto = Mapper.Map<LabelCreateEditViewModel, LabelDto>(obj);
                     await _appService.UpdateAsync(dto);

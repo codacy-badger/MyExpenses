@@ -16,6 +16,8 @@ namespace MyExpenses.Domain.Domains
     {
         public string Name { get; set; }
 
+        public Guid? GroupId { get; set; }
+
         public GroupDomain Group { get; set; }
 
         public override void Copy(IBase baseObj)

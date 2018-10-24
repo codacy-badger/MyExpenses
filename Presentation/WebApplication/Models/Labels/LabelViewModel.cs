@@ -6,6 +6,7 @@
 
 namespace WebApplication.Models.Labels
 {
+    using System;
     using System.ComponentModel.DataAnnotations;
 
     using WebApplication.Models.Groups;
@@ -14,6 +15,8 @@ namespace WebApplication.Models.Labels
     {
         [Required]
         public string Name { get; set; }
+
+        public Guid GroupId { get; set; }
 
         public GroupViewModel Group { get; set; }
     }

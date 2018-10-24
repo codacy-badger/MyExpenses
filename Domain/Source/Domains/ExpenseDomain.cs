@@ -22,9 +22,15 @@ namespace MyExpenses.Domain.Domains
 
         public bool IsIncoming { get; set; }
 
+        public Guid? LabelId { get; set; }
+
         public LabelDomain Label { get; set; }
 
+        public Guid? PaymentId { get; set; }
+
         public PaymentDomain Payment { get; set; }
+
+        public Guid? GroupId { get; set; }
 
         public GroupDomain Group { get; set; }
 

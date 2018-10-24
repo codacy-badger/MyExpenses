@@ -6,12 +6,15 @@
 
 namespace MyExpenses.Application.Dtos
 {
+    using System;
     using System.ComponentModel.DataAnnotations;
 
     public class LabelDto : DtoBase
     {
         [Required]
         public string Name { get; set; }
+
+        public Guid GroupId { get; set; }
 
         public GroupDto Group { get; set; }
     }

@@ -30,6 +30,8 @@ namespace WebApplication.Models.Labels
         [Required]
         public string Name { get; set; }
 
+        public Guid GroupId { get; set; }
+
         public GroupViewModel Group { get; set; }
 
         public SelectList AvailableGroupsSelectList { get; set; }
