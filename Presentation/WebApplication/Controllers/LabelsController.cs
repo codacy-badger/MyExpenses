@@ -180,21 +180,20 @@ namespace WebApplication.Controllers
         // GET: Labels/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
-            // TODO lfmachadodasilva
-
             if (id == null)
             {
                 return NotFound();
             }
 
-            var labelDomain = await _context.Labels
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (labelDomain == null)
+            var obj = await _appService.GetByIdAsync(id.Value);
+            if (obj == null)
             {
                 return NotFound();
             }
 
-            return View(labelDomain);
+            var dto = Mapper.Map<LabelDto, LabelViewModel>(obj);
+
+            return View(dto);
         }
 
         // POST: Labels/Delete/5
@@ -202,11 +201,8 @@ namespace WebApplication.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            // TODO lfmachadodasilva
+            await _appService.RemoveAsync(id);
 
-            var labelDomain = await _context.Labels.FindAsync(id);
-            _context.Labels.Remove(labelDomain);
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 

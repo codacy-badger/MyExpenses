@@ -44,7 +44,7 @@ namespace MyExpenses.Domain.Services
         {
             ICollection<Task<ExpenseDomain>> expensesToUpdateTask = new List<Task<ExpenseDomain>>();
 
-            // remove all references from each expense what have this label
+            // remove all references from each expense where have this label
             var expenses = _expenseRepository.GetAll(x => x.Label).Where(x => x.Label.Id == id);
             foreach (ExpenseDomain expense in expenses)
             {
