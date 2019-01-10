@@ -7,7 +7,7 @@ namespace lfmachadodasilva.MyExpenses.Core.Services
 {
     internal class ExpenseService : ServiceBase<ExpenseDto, ExpenseModel>, IExpenseService
     {
-        internal ExpenseService(IExpenseRepository repository, IMapper mapper) : base(repository, mapper)
+        public ExpenseService(IExpenseRepository repository, IUnitOfWork unitOfWork, IMapper mapper) : base(repository, unitOfWork, mapper)
         {
         }
     }

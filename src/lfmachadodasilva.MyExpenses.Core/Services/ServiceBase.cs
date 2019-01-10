@@ -11,11 +11,13 @@ namespace lfmachadodasilva.MyExpenses.Core.Services
     internal abstract class ServiceBase<TDto, TModel> : IService<TDto> where TDto : IDto where TModel : IModel
     {
         private readonly IRepository<TModel> _repository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        protected ServiceBase(IRepository<TModel> repository, IMapper mapper)
+        protected ServiceBase(IRepository<TModel> repository, IUnitOfWork unitOfWork, IMapper mapper)
         {
             _repository = repository;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
 
@@ -26,11 +28,22 @@ namespace lfmachadodasilva.MyExpenses.Core.Services
             return dtos;
         }
 
-        public virtual async Task<TDto> GetById(Guid id)
+        public virtual async Task<TDto> GetByIdAsync(Guid id)
         {
-            var model = await _repository.GetById(id);
+            var model = await _repository.GetByIdAsync(id);
             var dto = _mapper.Map<TModel, TDto>(model);
             return dto;
+        }
+
+        public virtual async Task<TDto> UpdateAsync(TDto dto)
+        {
+            _unitOfWork.BeginTransaction();
+
+            var model = await _repository.UpdateAsync(_mapper.Map<TDto, TModel>(dto));
+
+            await _unitOfWork.CommitAsync();
+
+            return _mapper.Map<TModel, TDto>(model);
         }
     }
 }

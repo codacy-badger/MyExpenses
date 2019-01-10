@@ -10,6 +10,8 @@ namespace lfmachadodasilva.MyExpenses.Core.Repositories
     {
         IEnumerable<TModel> GetAll(params Expression<Func<TModel, object>>[] includes);
 
-        Task<TModel> GetById(Guid id, params Expression<Func<TModel, object>>[] includes);
+        Task<TModel> GetByIdAsync(Guid id, params Expression<Func<TModel, object>>[] includes);
+
+        Task<TModel> UpdateAsync(TModel model);
     }
 }

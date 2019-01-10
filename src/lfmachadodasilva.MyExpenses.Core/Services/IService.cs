@@ -9,6 +9,8 @@ namespace lfmachadodasilva.MyExpenses.Core.Services
     {
         IEnumerable<TDto> GetAll();
 
-        Task<TDto> GetById(Guid id);
+        Task<TDto> GetByIdAsync(Guid id);
+
+        Task<TDto> UpdateAsync(TDto dto);
     }
 }

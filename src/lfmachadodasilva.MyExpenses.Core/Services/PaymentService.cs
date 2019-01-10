@@ -7,7 +7,7 @@ namespace lfmachadodasilva.MyExpenses.Core.Services
 {
     internal class PaymentService : ServiceBase<PaymentDto, PaymentModel>, IPaymentService
     {
-        internal PaymentService(IPaymentRepository repository, IMapper mapper) : base(repository, mapper)
+        public PaymentService(IPaymentRepository repository, IUnitOfWork unitOfWork, IMapper mapper) : base(repository, unitOfWork, mapper)
         {
         }
     }

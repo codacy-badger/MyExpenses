@@ -7,7 +7,7 @@ namespace lfmachadodasilva.MyExpenses.Core.Services
 {
     internal class LabelService : ServiceBase<LabelDto, LabelModel>, ILabelService
     {
-        internal LabelService(ILabelRepository repository, IMapper mapper) : base(repository, mapper)
+        public LabelService(ILabelRepository repository, IUnitOfWork unitOfWork, IMapper mapper) : base(repository, unitOfWork, mapper)
         {
         }
     }
