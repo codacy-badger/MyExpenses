@@ -21,7 +21,7 @@ namespace lfmachadodasilva.MyExpenses.Core.Services
 
         public virtual IEnumerable<TDto> GetAll()
         {
-            var models = _repository.Get();
+            var models = _repository.GetAll();
             var dtos = _mapper.Map<IEnumerable<TModel>, IEnumerable<TDto>>(models);
             return dtos;
         }
