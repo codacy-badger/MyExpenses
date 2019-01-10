@@ -1,19 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using lfmachadodasilva.MyExpenses.Core.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace lfmachadodasilva.MyExpenses.Core.Repositories
 {
-    internal class RepositoryBase<TModel> : IRepository<TModel> where TModel : IModel
+    internal class RepositoryBase<TModel> : IRepository<TModel> where TModel : class, IModel
     {
-        public IEnumerable<TModel> Get()
+        private readonly MyExpensesContext _context;
+
+        public RepositoryBase(MyExpensesContext context)
         {
-            throw new System.NotImplementedException();
+            _context = context;
         }
 
-        public TModel GetById(Guid Id)
+        public virtual IEnumerable<TModel> Get()
         {
-            throw new NotImplementedException();
+            IQueryable<TModel> models = _context.Set<TModel>();
+            return models;
+        }
+
+        public virtual Task<TModel> GetById(Guid id)
+        {
+            IQueryable<TModel> models = _context.Set<TModel>();
+            return models.FirstOrDefaultAsync(x => x.Id == id);
         }
     }
 }

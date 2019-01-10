@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AutoMapper;
 using lfmachadodasilva.MyExpenses.Core.Models;
 using lfmachadodasilva.MyExpenses.Core.Models.Dtos;
@@ -18,16 +19,16 @@ namespace lfmachadodasilva.MyExpenses.Core.Services
             _mapper = mapper;
         }
 
-        public IEnumerable<TDto> GetAll()
+        public virtual IEnumerable<TDto> GetAll()
         {
             var models = _repository.Get();
             var dtos = _mapper.Map<IEnumerable<TModel>, IEnumerable<TDto>>(models);
             return dtos;
         }
 
-        public TDto GetById(Guid id)
+        public virtual async Task<TDto> GetById(Guid id)
         {
-            var model = _repository.GetById(id);
+            var model = await _repository.GetById(id);
             var dto = _mapper.Map<TModel, TDto>(model);
             return dto;
         }

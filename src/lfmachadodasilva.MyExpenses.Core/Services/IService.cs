@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using lfmachadodasilva.MyExpenses.Core.Models.Dtos;
 
 namespace lfmachadodasilva.MyExpenses.Core.Services
@@ -8,6 +9,6 @@ namespace lfmachadodasilva.MyExpenses.Core.Services
     {
         IEnumerable<TDto> GetAll();
 
-        TDto GetById(Guid id);
+        Task<TDto> GetById(Guid id);
     }
 }

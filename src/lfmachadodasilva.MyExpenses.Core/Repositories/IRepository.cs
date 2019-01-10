@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using lfmachadodasilva.MyExpenses.Core.Models;
 
 namespace lfmachadodasilva.MyExpenses.Core.Repositories
@@ -8,6 +9,6 @@ namespace lfmachadodasilva.MyExpenses.Core.Repositories
     {
         IEnumerable<TModel> Get();
 
-        TModel GetById(Guid Id);
+        Task<TModel> GetById(Guid id);
     }
 }
