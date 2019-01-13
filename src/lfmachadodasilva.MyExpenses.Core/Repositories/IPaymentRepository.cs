@@ -2,7 +2,7 @@
 
 namespace lfmachadodasilva.MyExpenses.Core.Repositories
 {
-    internal interface IPaymentRepository : IRepository<PaymentModel>
+    public interface IPaymentRepository : IRepository<PaymentModel>
     {
     }
 }

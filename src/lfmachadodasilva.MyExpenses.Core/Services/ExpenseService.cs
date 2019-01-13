@@ -9,7 +9,7 @@ using lfmachadodasilva.MyExpenses.Core.Repositories;
 
 namespace lfmachadodasilva.MyExpenses.Core.Services
 {
-    internal class ExpenseService : ServiceBase<ExpenseDto, ExpenseModel>, IExpenseService
+    public class ExpenseService : ServiceBase<ExpenseDto, ExpenseModel>, IExpenseService
     {
         private readonly IExpenseRepository _repository;
         private readonly IMapper _mapper;

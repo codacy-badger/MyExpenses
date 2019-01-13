@@ -1,9 +1,11 @@
-﻿using lfmachadodasilva.MyExpenses.Core.Models;
+﻿using System;
+using lfmachadodasilva.MyExpenses.Core.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace lfmachadodasilva.MyExpenses.Core
 {
-    internal class MyExpensesContext : DbContext
+    public class MyExpensesContext : IdentityDbContext
     {
         public MyExpensesContext(DbContextOptions<MyExpensesContext> options)
             : base(options)
@@ -29,5 +31,7 @@ namespace lfmachadodasilva.MyExpenses.Core
         public DbSet<PaymentModel> Payments { get; set; }
 
         public DbSet<GroupModel> Groups { get; set; }
+
+        public DbSet<UserGroupModel> UserGroup { get; set; }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace lfmachadodasilva.MyExpenses.Core.Models
 {
-    internal interface IModel
+    public interface IModel
     {
         Guid Id { get; set; }
     }

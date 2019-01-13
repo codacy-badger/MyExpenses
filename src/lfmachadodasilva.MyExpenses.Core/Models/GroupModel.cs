@@ -1,7 +1,11 @@
-﻿namespace lfmachadodasilva.MyExpenses.Core.Models
+﻿using System.Collections.Generic;
+
+namespace lfmachadodasilva.MyExpenses.Core.Models
 {
-    internal class GroupModel : ModelBase
+    public class GroupModel : ModelBase
     {
-        internal string Name { get; set; }
+        public string Name { get; set; }
+
+        public IEnumerable<UserGroupModel> Users { get; set; }
     }
 }

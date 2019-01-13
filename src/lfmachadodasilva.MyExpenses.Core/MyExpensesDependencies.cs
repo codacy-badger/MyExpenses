@@ -2,6 +2,7 @@
 using AutoMapper;
 using lfmachadodasilva.MyExpenses.Core.Repositories;
 using lfmachadodasilva.MyExpenses.Core.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -29,21 +30,24 @@ namespace lfmachadodasilva.MyExpenses.Core
             services.TryAddTransient<IUnitOfWork, UnitOfWork>();
 
             // AutoMapper
-            services.AddAutoMapper(cfg => cfg.AddProfile<MyExpensesProfile>());
-
-            return services;
+            return services
+                .AddAutoMapper(cfg => cfg.AddProfile<MyExpensesProfile>());
         }
 
         public static IServiceCollection AddMyExpensesContextInMemory(this IServiceCollection services)
         {
-            services.AddDbContext<MyExpensesContext>(options => options.UseInMemoryDatabase(Guid.NewGuid().ToString()));
-            return services;
+            return services
+                .AddDbContext<MyExpensesContext>(options => 
+                    options.UseInMemoryDatabase(Guid.NewGuid().ToString()));
         }
 
-        public static IServiceCollection AddMyExpensesContext(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddMyExpensesContext(
+            this IServiceCollection services,
+            IConfiguration configuration)
         {
-            services.AddDbContext<MyExpensesContext>(options => options.UseSqlite(configuration.GetConnectionString("MyExpensesConnection")));
-            return services;
+            return services
+                .AddDbContext<MyExpensesContext>(options =>
+                    options.UseSqlite(configuration.GetConnectionString("DefaultConnection")));
         }
     }
 }

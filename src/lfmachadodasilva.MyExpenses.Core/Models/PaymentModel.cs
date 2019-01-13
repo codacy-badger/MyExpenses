@@ -2,7 +2,7 @@
 
 namespace lfmachadodasilva.MyExpenses.Core.Models
 {
-    internal class PaymentModel : ModelBase
+    public class PaymentModel : ModelBase
     {
         public string Name { get; set; }
 

@@ -2,18 +2,18 @@
 
 namespace lfmachadodasilva.MyExpenses.Core.Models
 {
-    internal class ExpenseModel : ModelBase
+    public class ExpenseModel : ModelBase
     {
-        internal string Name { get; set; }
+        public string Name { get; set; }
 
-        internal DateTime Date { get; set; }
+        public DateTime Date { get; set; }
 
-        internal decimal Value { get; set; }
+        public decimal Value { get; set; }
 
-        internal LabelModel Label { get; set; }
+        public LabelModel Label { get; set; }
 
-        internal PaymentModel Payment { get; set; }
+        public PaymentModel Payment { get; set; }
 
-        internal GroupModel Group { get; set; }
+        public GroupModel Group { get; set; }
     }
 }

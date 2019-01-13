@@ -1,6 +1,5 @@
 ﻿using lfmachadodasilva.MyExpenses.Core;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace lfmachadodasilva.MyExpenses.IntegrationTests
 {

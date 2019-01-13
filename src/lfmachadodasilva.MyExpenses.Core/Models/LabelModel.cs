@@ -2,7 +2,7 @@
 
 namespace lfmachadodasilva.MyExpenses.Core.Models
 {
-    internal class LabelModel : ModelBase
+    public class LabelModel : ModelBase
     {
         public string Name { get; set; }
 
