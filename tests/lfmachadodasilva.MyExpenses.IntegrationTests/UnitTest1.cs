@@ -1,6 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace lfmachadodasilva.MyExpenses.IntegrationTests
+namespace lfmachadodasilva.MyExpenses.UnitTest
 {
     [TestClass]
     internal class UnitTest1
