@@ -53,5 +53,24 @@ namespace lfmachadodasilva.MyExpenses.Core.Repositories
             _mapper.Map(model, existModel);
             return existModel;
         }
+
+        public async Task<TModel> AddAsync(TModel model)
+        {
+            if (model == null)
+                return null;
+
+            var models = _context.Set<TModel>();
+            var newModel = await models.AddAsync(model);
+            return newModel.Entity;
+        }
+
+        public async Task<bool> RemoveAsync(Guid id)
+        {
+            TModel model = await GetByIdAsync(id);
+            if (model == null)
+                return false;
+
+            return _context.Remove(model) != null;
+        }
     }
 }

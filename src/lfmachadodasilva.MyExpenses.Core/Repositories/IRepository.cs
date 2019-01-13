@@ -13,5 +13,9 @@ namespace lfmachadodasilva.MyExpenses.Core.Repositories
         Task<TModel> GetByIdAsync(Guid id, params Expression<Func<TModel, object>>[] includes);
 
         Task<TModel> UpdateAsync(TModel model);
+
+        Task<TModel> AddAsync(TModel model);
+
+        Task<bool> RemoveAsync(Guid id);
     }
 }

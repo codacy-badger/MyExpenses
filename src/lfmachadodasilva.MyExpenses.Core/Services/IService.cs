@@ -12,5 +12,9 @@ namespace lfmachadodasilva.MyExpenses.Core.Services
         Task<TDto> GetByIdAsync(Guid id);
 
         Task<TDto> UpdateAsync(TDto dto);
+
+        Task<TDto> AddAsync(TDto model);
+
+        Task<bool> RemoveAsync(Guid id);
     }
 }

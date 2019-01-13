@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using lfmachadodasilva.MyExpenses.Core.Models;
@@ -44,6 +45,22 @@ namespace lfmachadodasilva.MyExpenses.Core.Services
             await _unitOfWork.CommitAsync();
 
             return _mapper.Map<TModel, TDto>(model);
+        }
+
+        public virtual async Task<TDto> AddAsync(TDto dto)
+        {
+            _unitOfWork.BeginTransaction();
+
+            var model = await _repository.UpdateAsync(_mapper.Map<TDto, TModel>(dto));
+
+            await _unitOfWork.CommitAsync();
+
+            return _mapper.Map<TModel, TDto>(model);
+        }
+
+        public virtual Task<bool> RemoveAsync(Guid id)
+        {
+            return _repository.RemoveAsync(id);
         }
     }
 }
