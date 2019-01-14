@@ -25,7 +25,7 @@ namespace lfmachadodasilva.MyExpenses.Core.Services
             var models = _repository
                 .GetAll(x => x.Users)
                 .Where(x => x.Users
-                    .Any(y => y.User.Equals(userId)));
+                    .Any(y => y.UserId.Equals(userId)));
             return _mapper.Map<IEnumerable<GroupModel>, IEnumerable<GroupDto>>(models);
         }
     }

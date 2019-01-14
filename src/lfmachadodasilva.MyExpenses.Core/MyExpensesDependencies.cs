@@ -45,9 +45,18 @@ namespace lfmachadodasilva.MyExpenses.Core
             this IServiceCollection services,
             IConfiguration configuration)
         {
+            var migrationAssembly = configuration.GetSection("MigrationAssembly").Value;
+            var connection = configuration.GetConnectionString("DefaultConnection");
+
             return services
                 .AddDbContext<MyExpensesContext>(options =>
-                    options.UseSqlite(configuration.GetConnectionString("DefaultConnection")));
+                    options.UseSqlite(connection,
+                        x => x.MigrationsAssembly(migrationAssembly)));
+        }
+
+        public static void AddIdentityBuilder(this IdentityBuilder identityBuilder)
+        {
+            identityBuilder.AddEntityFrameworkStores<MyExpensesContext>();
         }
     }
 }

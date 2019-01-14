@@ -1,13 +1,9 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using lfmachadodasilva.MyExpenses.WebApplication.Data;
 using lfmachadodasilva.MyExpenses.WebApplication.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using lfmachadodasilva.MyExpenses.Core.Services;
-using Microsoft.AspNetCore.Identity;
 using lfmachadodasilva.MyExpenses.WebApplication.Services;
 using System.Collections.Generic;
 
@@ -19,18 +15,15 @@ namespace lfmachadodasilva.MyExpenses.WebApplication.Controllers
         private readonly ILabelService _labelService;
         private readonly IGroupService _groupService;
         private readonly IUserService _userService;
-        private readonly ApplicationDbContext _context;
 
         public LabelController(
             ILabelService labelService,
             IGroupService groupService,
-            IUserService userService,
-            ApplicationDbContext context)
+            IUserService userService)
         {
             _labelService = labelService;
             _groupService = groupService;
             _userService = userService;
-            _context = context;
         }
 
         // GET: Label

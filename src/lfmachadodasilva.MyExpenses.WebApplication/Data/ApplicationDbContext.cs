@@ -1,13 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
-using lfmachadodasilva.MyExpenses.Core;
-
-namespace lfmachadodasilva.MyExpenses.WebApplication.Data
+﻿namespace lfmachadodasilva.MyExpenses.WebApplication.Data
 {
-    public class ApplicationDbContext : MyExpensesContext
+    public class ApplicationDbContext// : IdentityDbContext
     {
-        public ApplicationDbContext(DbContextOptions<MyExpensesContext> options)
-            : base(options)
-        {
-        }
+        //public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        //    : base(options)
+        //{
+        //}
     }
 }
