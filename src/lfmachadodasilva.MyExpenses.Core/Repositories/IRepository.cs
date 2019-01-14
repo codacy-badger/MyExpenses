@@ -6,7 +6,7 @@ using lfmachadodasilva.MyExpenses.Core.Models;
 
 namespace lfmachadodasilva.MyExpenses.Core.Repositories
 {
-    public interface IRepository<TModel> where TModel : IModel
+    internal interface IRepository<TModel> where TModel : IModel
     {
         IEnumerable<TModel> GetAll(params Expression<Func<TModel, object>>[] includes);
 

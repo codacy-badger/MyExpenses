@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using lfmachadodasilva.MyExpenses.Core.Models;
@@ -9,7 +8,7 @@ using lfmachadodasilva.MyExpenses.Core.Repositories;
 
 namespace lfmachadodasilva.MyExpenses.Core.Services
 {
-    public abstract class ServiceBase<TDto, TModel> : IService<TDto> where TDto : IDto where TModel : IModel
+    internal abstract class ServiceBase<TDto, TModel> : IService<TDto> where TDto : IDto where TModel : IModel
     {
         private readonly IRepository<TModel> _repository;
         private readonly IUnitOfWork _unitOfWork;

@@ -2,7 +2,7 @@
 
 namespace lfmachadodasilva.MyExpenses.Core
 {
-    public class UnitOfWork : IUnitOfWork
+    internal class UnitOfWork : IUnitOfWork
     {
         private readonly MyExpensesContext _context;
 

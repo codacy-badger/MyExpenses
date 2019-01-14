@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace lfmachadodasilva.MyExpenses.Core.Repositories
 {
-    public class RepositoryBase<TModel> : IRepository<TModel> where TModel : class, IModel
+    internal class RepositoryBase<TModel> : IRepository<TModel> where TModel : class, IModel
     {
         private readonly MyExpensesContext _context;
         private readonly IMapper _mapper;

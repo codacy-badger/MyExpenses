@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace lfmachadodasilva.MyExpenses.Core.Models
 {
     [Table(ModelUtility.LabelTable)]
-    public class LabelModel : ModelBase
+    internal class LabelModel : ModelBase
     {
         public string Name { get; set; }
 

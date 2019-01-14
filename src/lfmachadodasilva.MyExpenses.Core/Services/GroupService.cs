@@ -8,7 +8,7 @@ using lfmachadodasilva.MyExpenses.Core.Repositories;
 
 namespace lfmachadodasilva.MyExpenses.Core.Services
 {
-    public class GroupService : ServiceBase<GroupDto, GroupModel>, IGroupService
+    internal class GroupService : ServiceBase<GroupDto, GroupModel>, IGroupService
     {
         private readonly IGroupRepository _repository;
         private readonly IMapper _mapper;

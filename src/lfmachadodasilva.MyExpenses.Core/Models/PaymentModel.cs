@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace lfmachadodasilva.MyExpenses.Core.Models
 {
     [Table(ModelUtility.PaymentTable)]
-    public class PaymentModel : ModelBase
+    internal class PaymentModel : ModelBase
     {
         public string Name { get; set; }
 

@@ -5,7 +5,7 @@ using lfmachadodasilva.MyExpenses.Core.Repositories;
 
 namespace lfmachadodasilva.MyExpenses.Core.Services
 {
-    public class PaymentService : ServiceBase<PaymentDto, PaymentModel>, IPaymentService
+    internal class PaymentService : ServiceBase<PaymentDto, PaymentModel>, IPaymentService
     {
         public PaymentService(IPaymentRepository repository, IUnitOfWork unitOfWork, IMapper mapper) :
             base(repository, unitOfWork, mapper)

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace lfmachadodasilva.MyExpenses.Core
 {
-    public class MyExpensesContext : IdentityDbContext
+    internal class MyExpensesContext : IdentityDbContext
     {
         public MyExpensesContext(DbContextOptions<MyExpensesContext> options)
             : base(options)

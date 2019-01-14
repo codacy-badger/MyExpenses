@@ -9,7 +9,7 @@ using lfmachadodasilva.MyExpenses.Core.Repositories;
 
 namespace lfmachadodasilva.MyExpenses.Core.Services
 {
-    public class LabelService : ServiceBase<LabelDto, LabelModel>, ILabelService
+    internal class LabelService : ServiceBase<LabelDto, LabelModel>, ILabelService
     {
         private readonly ILabelRepository _repository;
         private readonly IMapper _mapper;
