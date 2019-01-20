@@ -68,3 +68,21 @@ notifications:
   on_build_success: false
   on_build_failure: true
   on_build_status_changed: true
+
+#---------------------------------#
+#       tests configuration       #
+#---------------------------------#
+
+# scripts to run before tests
+before_test:
+ - choco install opencover.portable
+ - choco install codecov
+
+# to run your custom scripts instead of automatic tests
+  test_script:
+  - dotnet test -c %CONFIGURATION%
+  - OpenCover.Console.exe -register:user -target:"C:/Program Files/dotnet/dotnet.exe" -targetargs:"test /p:DebugType=full Domain/Test" -output:"TestResult.xml" -oldstyle
+
+# scripts to run after tests
+after_test:
+ - codecov -f "TestResult.xml" -t 81c4ac46-b5bc-4d0d-8c4f-4de04812e6e3
