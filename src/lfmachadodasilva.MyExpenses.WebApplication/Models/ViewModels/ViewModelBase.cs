@@ -5,7 +5,7 @@ namespace lfmachadodasilva.MyExpenses.WebApplication.Models.ViewModels
 {
     public class ViewModelBase<TViewModel> where TViewModel : IViewModel
     {
-        public TViewModel Empty { get; set; } = default(TViewModel);
+        public virtual TViewModel Empty { get; } = default(TViewModel);
 
         public IEnumerable<TViewModel> Items { get; set; }
     }

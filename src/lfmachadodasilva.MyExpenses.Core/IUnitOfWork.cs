@@ -2,7 +2,7 @@
 
 namespace lfmachadodasilva.MyExpenses.Core
 {
-    internal interface IUnitOfWork
+    public interface IUnitOfWork
     {
         /// <summary>
         /// Begin transaction

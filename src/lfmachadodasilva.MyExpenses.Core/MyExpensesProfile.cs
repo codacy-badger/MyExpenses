@@ -4,7 +4,7 @@ using lfmachadodasilva.MyExpenses.Core.Models.Dtos;
 
 namespace lfmachadodasilva.MyExpenses.Core
 {
-    class MyExpensesProfile : Profile
+    public class MyExpensesProfile : Profile
     {
         public MyExpensesProfile()
         {

@@ -8,7 +8,7 @@ using lfmachadodasilva.MyExpenses.Core.Repositories;
 
 namespace lfmachadodasilva.MyExpenses.Core.Services
 {
-    internal abstract class ServiceBase<TDto, TModel> : IService<TDto> where TDto : IDto where TModel : IModel
+    public abstract class ServiceBase<TDto, TModel> : IService<TDto> where TDto : IDto where TModel : IModel
     {
         private readonly IRepository<TModel> _repository;
         private readonly IUnitOfWork _unitOfWork;

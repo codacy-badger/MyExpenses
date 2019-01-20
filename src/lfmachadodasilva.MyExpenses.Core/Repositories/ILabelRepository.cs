@@ -2,7 +2,7 @@
 
 namespace lfmachadodasilva.MyExpenses.Core.Repositories
 {
-    internal interface ILabelRepository : IRepository<LabelModel>
+    public interface ILabelRepository : IRepository<LabelModel>
     {
     }
 }
