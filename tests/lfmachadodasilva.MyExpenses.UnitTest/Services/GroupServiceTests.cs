@@ -43,7 +43,7 @@ namespace lfmachadodasilva.MyExpenses.UnitTest.Services
                 .Returns(new List<GroupModel>());
 
             // act
-            var actual = _groupService.GetAll(userId);
+            var actual = _groupService.GetAllByUser(userId);
 
             // assert
             actual.Should().BeEmpty();
@@ -81,7 +81,7 @@ namespace lfmachadodasilva.MyExpenses.UnitTest.Services
                 .Returns(new List<GroupModel> { group });
 
             // act
-            var actual = _groupService.GetAll(userId);
+            var actual = _groupService.GetAllByUser(userId);
 
             // assert
             var expected = new List<GroupDto>

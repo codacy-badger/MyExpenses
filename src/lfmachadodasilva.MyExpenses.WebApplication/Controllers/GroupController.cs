@@ -1,9 +1,11 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using lfmachadodasilva.MyExpenses.WebApplication.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace lfmachadodasilva.MyExpenses.WebApplication.Controllers
 {
+    [Authorize]
     public class GroupController : Controller
     {
         private readonly IGroupWebService _groupWebService;
@@ -19,7 +21,7 @@ namespace lfmachadodasilva.MyExpenses.WebApplication.Controllers
         public async Task<IActionResult> Index()
         {
             var userId = await _userService.GetUserIdAsync(User.Identity.Name);
-            var groups = _groupWebService.GetAllByUser(userId);
+            var groups = _groupWebService.GetAllByUserAsync(userId);
 
             return Ok(groups);
         }

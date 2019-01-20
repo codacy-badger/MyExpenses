@@ -10,7 +10,9 @@ namespace lfmachadodasilva.MyExpenses.WebApplication.Services
 {
     public interface IGroupWebService
     {
-        Task<GroupsViewModel> GetAllByUser(Guid userId);
+        Task<GroupsViewModel> GetAllByUserAsync(Guid userId);
+
+        Task<GroupViewModel> GetByIdAsync(Guid groupId);
     }
 
     public class GroupWebService : IGroupWebService
@@ -24,11 +26,11 @@ namespace lfmachadodasilva.MyExpenses.WebApplication.Services
             _mapper = mapper;
         }
 
-        public Task<GroupsViewModel> GetAllByUser(Guid userId)
+        public Task<GroupsViewModel> GetAllByUserAsync(Guid userId)
         {
             return Task.Run(() => {
 
-                var dtos = _groupService.GetAll(userId);
+                var dtos = _groupService.GetAllByUser(userId);
                 var groups = new GroupsViewModel
                 {
                     Items = _mapper.Map<IEnumerable<GroupDto>, IEnumerable<GroupViewModel>>(dtos)
@@ -36,6 +38,12 @@ namespace lfmachadodasilva.MyExpenses.WebApplication.Services
 
                 return groups;
             });
+        }
+
+        public async Task<GroupViewModel> GetByIdAsync(Guid groupId)
+        {
+            var dto = await _groupService.GetByIdAsync(groupId);
+            return _mapper.Map<GroupDto, GroupViewModel>(dto);
         }
     }
 }

@@ -6,6 +6,6 @@ namespace lfmachadodasilva.MyExpenses.Core.Services
 {
     public interface IGroupService : IService<GroupDto>
     {
-        IEnumerable<GroupDto> GetAll(Guid userId);
+        IEnumerable<GroupDto> GetAllByUser(Guid userId);
     }
 }

@@ -40,11 +40,11 @@ namespace lfmachadodasilva.MyExpenses.UnitTest.Services
             // arrange
             Guid userId = Guid.NewGuid();
             _groupService
-                .Setup(x => x.GetAll(userId))
+                .Setup(x => x.GetAllByUser(userId))
                 .Returns(new List<GroupDto>());
 
             // act
-            var actual = await _groupWebService.GetAllByUser(userId);
+            var actual = await _groupWebService.GetAllByUserAsync(userId);
 
             // assert
             var expected = new GroupsViewModel();
@@ -76,11 +76,11 @@ namespace lfmachadodasilva.MyExpenses.UnitTest.Services
                 }
             };
             _groupService
-                .Setup(x => x.GetAll(It.IsAny<Guid>()))
+                .Setup(x => x.GetAllByUser(It.IsAny<Guid>()))
                 .Returns(groups);
 
             // act
-            var actual = await _groupWebService.GetAllByUser(userId);
+            var actual = await _groupWebService.GetAllByUserAsync(userId);
 
             // assert
             var expected = new GroupsViewModel
@@ -104,6 +104,83 @@ namespace lfmachadodasilva.MyExpenses.UnitTest.Services
             };
 
             actual.Should().BeEquivalentTo(expected);
+        }
+
+        [TestMethod]
+        public async Task GroupWebService_GetByIdAsync_WithInvalidId_ShouldBeNull()
+        {
+            // arrange
+            Guid groupId = Guid.NewGuid();
+            _groupService
+                .Setup(x => x.GetByIdAsync(groupId))
+                .ReturnsAsync(default(GroupDto));
+
+            // act
+            var actual = await _groupWebService.GetByIdAsync(groupId);
+
+            // assert
+            actual.Should().BeNull();
+        }
+
+        [TestMethod]
+        public async Task GroupWebService_GetByIdAsync_WithValidId_ShouldReturnViewModel()
+        {
+            // arrange
+            Guid groupId = Guid.NewGuid();
+            var groupName = "GroupName";
+            var user1Id = Guid.NewGuid();
+            var user1Name = "UserName1";
+            var user2Id = Guid.NewGuid();
+            var user2Name = "UserName2";
+
+            _groupService
+                .Setup(x => x.GetByIdAsync(groupId))
+                .ReturnsAsync(new GroupDto
+                {
+                    Id = groupId,
+                    Name = groupName,
+                    Users = new List<UserDto>
+                    {
+                        new UserDto
+                        {
+                            Id = user1Id,
+                            Name = user1Name
+                        }
+                    }
+                });
+
+            // act
+            var actual = await _groupWebService.GetByIdAsync(groupId);
+
+            // assert
+            var expected = new GroupViewModel
+            {
+                Id = groupId,
+                Name = groupName,
+                Users = new List<UserViewModel>
+                {
+                    new UserViewModel
+                    {
+                        Id = user1Id,
+                        Name = user1Name
+                    }
+                },
+
+                AllUsers = new List<UserViewModel>
+                {
+                    new UserViewModel
+                    {
+                        Id = user1Id,
+                        Name = user1Name
+                    },
+                    new UserViewModel
+                    {
+                        Id = user2Id,
+                        Name = user2Name
+                    }
+                }
+            };
+            actual.Should().Equals(expected);
         }
     }
 }
