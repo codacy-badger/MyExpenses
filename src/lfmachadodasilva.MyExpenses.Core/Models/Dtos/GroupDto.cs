@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace lfmachadodasilva.MyExpenses.Core.Models.Dtos
 {
@@ -7,6 +6,6 @@ namespace lfmachadodasilva.MyExpenses.Core.Models.Dtos
     {
         public string Name { get; set; }
 
-        public IEnumerable<Guid> Users { get; set; }
+        public IEnumerable<UserDto> Users { get; set; }
     }
 }

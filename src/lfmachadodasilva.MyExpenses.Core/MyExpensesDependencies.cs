@@ -50,7 +50,7 @@ namespace lfmachadodasilva.MyExpenses.Core
 
             return services
                 .AddDbContext<MyExpensesContext>(options =>
-                    options.UseSqlite(connection,
+                    options.UseSqlServer(connection,
                         x => x.MigrationsAssembly(migrationAssembly)));
         }
 

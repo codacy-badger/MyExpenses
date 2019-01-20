@@ -6,6 +6,7 @@ using FluentAssertions;
 using lfmachadodasilva.MyExpenses.Core;
 using lfmachadodasilva.MyExpenses.Core.Models.Dtos;
 using lfmachadodasilva.MyExpenses.Core.Services;
+using lfmachadodasilva.MyExpenses.WebApplication;
 using lfmachadodasilva.MyExpenses.WebApplication.Models.ViewModels;
 using lfmachadodasilva.MyExpenses.WebApplication.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -22,7 +23,13 @@ namespace lfmachadodasilva.MyExpenses.UnitTest.Services
         public GroupWebServiceTests()
         {
             _groupService = new Mock<IGroupService>();
-            var mapper = new MapperConfiguration(cfg => cfg.AddProfile<MyExpensesProfile>()).CreateMapper();
+            var mapper = new MapperConfiguration(
+                cfg =>
+                {
+                    cfg.AddProfile<MyExpensesProfile>();
+                    cfg.AddProfile<WebAppMyExpensesProfile>();
+                }
+                ).CreateMapper();
 
             _groupWebService = new GroupWebService(_groupService.Object, mapper);
         }
@@ -42,6 +49,61 @@ namespace lfmachadodasilva.MyExpenses.UnitTest.Services
             // assert
             var expected = new GroupsViewModel();
             actual.Should().Equals(expected);
+        }
+
+        [TestMethod]
+        public async Task GroupWebService_GetAllByUser_ShouldReturnViewModel()
+        {
+            // arrange
+            var userId = Guid.NewGuid();
+            var userName = "UserName";
+            var groupId = Guid.NewGuid();
+            var groupName = "GroupName";
+            var groups = new List<GroupDto>
+            {
+                new GroupDto
+                {
+                    Id = groupId,
+                    Name = groupName,
+                    Users = new List<UserDto>
+                    {
+                        new UserDto
+                        {
+                            Id = userId,
+                            Name = userName
+                        }
+                    }
+                }
+            };
+            _groupService
+                .Setup(x => x.GetAll(It.IsAny<Guid>()))
+                .Returns(groups);
+
+            // act
+            var actual = await _groupWebService.GetAllByUser(userId);
+
+            // assert
+            var expected = new GroupsViewModel
+            {
+                Items = new List<GroupViewModel>
+                {
+                    new GroupViewModel
+                    {
+                        Id = groupId,
+                        Name = groupName,
+                        Users = new List<UserViewModel>
+                        {
+                            new UserViewModel
+                            {
+                                Id = userId,
+                                Name = userName
+                            }
+                        }
+                    }
+                }
+            };
+
+            actual.Should().BeEquivalentTo(expected);
         }
     }
 }

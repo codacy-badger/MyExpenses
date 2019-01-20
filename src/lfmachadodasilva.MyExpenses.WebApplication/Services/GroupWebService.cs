@@ -34,7 +34,7 @@ namespace lfmachadodasilva.MyExpenses.WebApplication.Services
                     Items = _mapper.Map<IEnumerable<GroupDto>, IEnumerable<GroupViewModel>>(dtos)
                 };
 
-                return new GroupsViewModel();
+                return groups;
             });
         }
     }

@@ -12,6 +12,8 @@ namespace lfmachadodasilva.MyExpenses.WebApplication.Models.ViewModels
     {
         public string Name { get; set; }
 
+        public IEnumerable<UserViewModel> Users { get; set; }
+
         public IEnumerable<UserViewModel> AllUsers { get; set; }
 
         public IEnumerable<UserViewModel> SelectedUsers { get; set; }

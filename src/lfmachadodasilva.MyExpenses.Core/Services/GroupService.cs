@@ -22,10 +22,18 @@ namespace lfmachadodasilva.MyExpenses.Core.Services
 
         public IEnumerable<GroupDto> GetAll(Guid userId)
         {
-            var models = _repository
-                .GetAll(x => x.Users)
-                .Where(x => x.Users
-                    .Any(y => y.User.Id.Equals(userId)));
+            var models = _repository.GetAll(x => x.Users);
+            var modelsByUser =
+                models.Where(x => x.Users
+                    .Any(y => y.User.Id.Equals(userId.ToString())));
+
+            //models.Select(x => new GroupDto
+            //{
+            //    Id = x.Id,
+            //    Name = x.Name,
+            //    Users = x.GetUsers
+            //});
+
             return _mapper.Map<IEnumerable<GroupModel>, IEnumerable<GroupDto>>(models);
         }
     }
