@@ -34,25 +34,25 @@ namespace lfmachadodasilva.MyExpenses.Core
                 .AddAutoMapper(cfg => cfg.AddProfile<MyExpensesProfile>());
         }
 
-        public static IServiceCollection AddMyExpensesContextInMemory(this IServiceCollection services)
-        {
-            return services
-                .AddDbContext<MyExpensesContext>(options => 
-                    options.UseInMemoryDatabase(Guid.NewGuid().ToString()));
-        }
+        //public static IServiceCollection AddMyExpensesContextInMemory(this IServiceCollection services)
+        //{
+        //    return services
+        //        .AddDbContext<MyExpensesContext>(options => 
+        //            options.UseInMemoryDatabase(Guid.NewGuid().ToString()));
+        //}
 
-        public static IServiceCollection AddMyExpensesContext(
-            this IServiceCollection services,
-            IConfiguration configuration)
-        {
-            var migrationAssembly = configuration.GetSection("MigrationAssembly").Value;
-            var connection = configuration.GetConnectionString("DefaultConnection");
+        //public static IServiceCollection AddMyExpensesContext(
+        //    this IServiceCollection services,
+        //    IConfiguration configuration)
+        //{
+        //    var migrationAssembly = configuration.GetSection("MigrationAssembly").Value;
+        //    var connection = configuration.GetConnectionString("DefaultConnection");
 
-            return services
-                .AddDbContext<MyExpensesContext>(options =>
-                    options.UseSqlServer(connection,
-                        x => x.MigrationsAssembly(migrationAssembly)));
-        }
+        //    return services
+        //        .AddDbContext<MyExpensesContext>(options =>
+        //            options.UseSqlServer(connection,
+        //                x => x.MigrationsAssembly(migrationAssembly)));
+        //}
 
         public static void AddIdentityBuilder(this IdentityBuilder identityBuilder)
         {

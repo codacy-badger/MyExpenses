@@ -41,9 +41,17 @@ namespace lfmachadodasilva.MyExpenses.WebApplication
                     options.MinimumSameSitePolicy = SameSiteMode.None;
                 })
                 .AddMyExpenses()
-                .AddMyExpensesContext(Configuration)
+                //.AddMyExpensesContext(Configuration)
                 .AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            var migrationAssembly = configuration.GetSection("MigrationAssembly").Value;
+            var connection = configuration.GetConnectionString("DefaultConnection");
+
+            return services
+                .AddDbContext<MyExpensesContext>(options =>
+                    options.UseSqlServer(connection,
+                        x => x.MigrationsAssembly(migrationAssembly)));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
