@@ -68,8 +68,8 @@ namespace lfmachadodasilva.MyExpenses.UnitTest.Services
                 Group = group,
                 User = new UserModel
                 {
-                    Id = userId.ToString(),
-                    UserName = userName
+                    Id = userId,
+                    Name = userName
                 }
             };
 

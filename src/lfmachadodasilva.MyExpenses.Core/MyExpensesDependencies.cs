@@ -1,8 +1,6 @@
-﻿using System;
-using AutoMapper;
+﻿using AutoMapper;
 using lfmachadodasilva.MyExpenses.Core.Repositories;
 using lfmachadodasilva.MyExpenses.Core.Services;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,7 +10,7 @@ namespace lfmachadodasilva.MyExpenses.Core
 {
     public static class MyExpensesDependencies
     {
-        public static IServiceCollection AddMyExpenses(this IServiceCollection services)
+        public static IServiceCollection AddMyExpensesCore(this IServiceCollection services, IConfiguration configuration)
         {
             // Repositories
             services.TryAddTransient<IExpenseRepository, ExpenseRepository>();
@@ -29,34 +27,16 @@ namespace lfmachadodasilva.MyExpenses.Core
             // General
             services.TryAddTransient<IUnitOfWork, UnitOfWork>();
 
-            // AutoMapper
+            var migrationAssembly = configuration.GetSection("MigrationAssembly").Value;
+            var connection = configuration.GetConnectionString("DefaultConnection");
+
             return services
-                .AddAutoMapper(cfg => cfg.AddProfile<MyExpensesProfile>());
-        }
+                .AddDbContext<MyExpensesContext>(options =>
+                    options.UseSqlServer(connection,
+                        x => x.MigrationsAssembly(migrationAssembly)));
 
-        //public static IServiceCollection AddMyExpensesContextInMemory(this IServiceCollection services)
-        //{
-        //    return services
-        //        .AddDbContext<MyExpensesContext>(options => 
-        //            options.UseInMemoryDatabase(Guid.NewGuid().ToString()));
-        //}
-
-        //public static IServiceCollection AddMyExpensesContext(
-        //    this IServiceCollection services,
-        //    IConfiguration configuration)
-        //{
-        //    var migrationAssembly = configuration.GetSection("MigrationAssembly").Value;
-        //    var connection = configuration.GetConnectionString("DefaultConnection");
-
-        //    return services
-        //        .AddDbContext<MyExpensesContext>(options =>
-        //            options.UseSqlServer(connection,
-        //                x => x.MigrationsAssembly(migrationAssembly)));
-        //}
-
-        public static void AddIdentityBuilder(this IdentityBuilder identityBuilder)
-        {
-            identityBuilder.AddEntityFrameworkStores<MyExpensesContext>();
+            // AutoMapper
+            return services.AddAutoMapper(cfg => cfg.AddProfile<MyExpensesProfile>());
         }
     }
 }

@@ -1,11 +1,11 @@
 ﻿using System;
 using lfmachadodasilva.MyExpenses.Core.Models;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+//using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace lfmachadodasilva.MyExpenses.Core
 {
-    public class MyExpensesContext : IdentityDbContext
+    public class MyExpensesContext : DbContext
     {
         public MyExpensesContext(DbContextOptions<MyExpensesContext> options)
             : base(options)

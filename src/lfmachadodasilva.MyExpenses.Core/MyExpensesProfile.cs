@@ -14,9 +14,7 @@ namespace lfmachadodasilva.MyExpenses.Core
                 .ReverseMap();
             CreateMap<LabelModel, LabelDto>().ReverseMap();
             CreateMap<PaymentModel, PaymentDto>().ReverseMap();
-            CreateMap<UserModel, UserDto>()
-                .ForMember(x => x.Name, y => y.MapFrom(x => x.UserName))
-                .ReverseMap();
+            CreateMap<UserModel, UserDto>().ReverseMap();
         }
     }
 }
