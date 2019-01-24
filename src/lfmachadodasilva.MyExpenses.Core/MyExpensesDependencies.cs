@@ -30,7 +30,7 @@ namespace lfmachadodasilva.MyExpenses.Core
             var migrationAssembly = configuration.GetSection("MigrationAssembly").Value;
             var connection = configuration.GetConnectionString("DefaultConnection");
 
-            return services
+            services
                 .AddDbContext<MyExpensesContext>(options =>
                     options.UseSqlServer(connection,
                         x => x.MigrationsAssembly(migrationAssembly)));

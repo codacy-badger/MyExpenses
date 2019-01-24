@@ -50,7 +50,7 @@ namespace lfmachadodasilva.MyExpenses.Core.Services
         {
             _unitOfWork.BeginTransaction();
 
-            var model = await _repository.UpdateAsync(_mapper.Map<TDto, TModel>(dto));
+            var model = await _repository.AddAsync(_mapper.Map<TDto, TModel>(dto));
 
             await _unitOfWork.CommitAsync();
 
