@@ -6,23 +6,9 @@ using AutoMapper;
 using lfmachadodasilva.MyExpenses.Core.Models.Dtos;
 using lfmachadodasilva.MyExpenses.Core.Services;
 using lfmachadodasilva.MyExpenses.WebApplication.Models;
-using Microsoft.AspNetCore.Identity;
 
 namespace lfmachadodasilva.MyExpenses.WebApplication.Services
 {
-    public interface IGroupAppService
-    {
-        Task<GroupsViewModel> GetAllAsync();
-
-        Task<GroupViewModel> AddAsync(GroupViewModel groupViewModel);
-
-        GroupViewModel GetByIdAsync(Guid groupId);
-
-        GroupViewModel UpdateAsync(GroupViewModel groupViewModel);
-
-        GroupViewModel RemoveAsync(Guid groupId);
-    }
-
     public class GroupAppService : IGroupAppService
     {
         private readonly IGroupService _groupService;
@@ -54,6 +40,16 @@ namespace lfmachadodasilva.MyExpenses.WebApplication.Services
                     }
 
                     return new GroupsViewModel { Items = groupViewModel };
+                });
+        }
+
+        public Task<GroupViewModel> GetEmpty()
+        {
+            return Task.Run(
+                () =>
+                {
+                    var viewModel = new GroupViewModel(_userAppService.GetAll(), new List<Guid>());
+                    return viewModel;
                 });
         }
 

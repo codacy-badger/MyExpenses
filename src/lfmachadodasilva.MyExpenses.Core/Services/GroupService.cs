@@ -40,7 +40,7 @@ namespace lfmachadodasilva.MyExpenses.Core.Services
             // get all groups that have userId
             var models = _repository
                 .GetAll(x => x.Users)
-                .Where(x => x.Users.Any(y => y.User.Id.Equals(userId.ToString())));
+                .Where(x => x.Users.Any(y => y.User.Id.Equals(userId)));
 
             return _mapper.Map<IEnumerable<GroupModel>, IEnumerable<GroupDto>>(models);
         }

@@ -30,28 +30,11 @@ namespace lfmachadodasilva.MyExpenses.WebApplication.Controllers
             return View(viewModels);
         }
 
-        // GET: Group/Details/5
-        public async Task<IActionResult> Details(Guid? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var groupDto = await _context.GroupDto
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (groupDto == null)
-            {
-                return NotFound();
-            }
-
-            return View(groupDto);
-        }
-
         // GET: Group/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            return View();
+            var viewModel = await _groupAppService.GetEmpty();
+            return View(viewModel);
         }
 
         // POST: Group/Create

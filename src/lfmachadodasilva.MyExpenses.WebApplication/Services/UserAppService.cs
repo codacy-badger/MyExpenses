@@ -1,19 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using lfmachadodasilva.MyExpenses.WebApplication.Models;
 using Microsoft.AspNetCore.Identity;
 
 namespace lfmachadodasilva.MyExpenses.WebApplication.Services
 {
-    public interface IUserAppService
-    {
-        IEnumerable<UserViewModel> GetAll();
-
-        IEnumerable<UserViewModel> GetAll(IEnumerable<Guid> usersId);
-    }
-
     public class UserAppService : IUserAppService
     {
         private readonly UserManager<IdentityUser> _userManager;
