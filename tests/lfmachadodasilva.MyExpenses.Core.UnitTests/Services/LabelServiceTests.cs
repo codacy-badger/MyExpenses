@@ -7,6 +7,7 @@ using AutoFixture;
 using AutoMapper;
 using FluentAssertions;
 using lfmachadodasilva.MyExpenses.Core.Models;
+using lfmachadodasilva.MyExpenses.Core.Models.Dtos;
 using lfmachadodasilva.MyExpenses.Core.Repositories;
 using lfmachadodasilva.MyExpenses.Core.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -89,16 +90,16 @@ namespace lfmachadodasilva.MyExpenses.Core.UnitTest.Services
             var actual = await _labelService.Get(groupId, month, year);
 
             // assert
-            actual.Should().NotBeNullOrEmpty();
-            actual.Should().HaveCount(2);
-            Assert.IsFalse(
-                actual.Any(l => !l.Group.Id.Equals(groupId)), 
-                $"Should not have any label with group different from {groupId}.");
-            Assert.IsFalse(
-                actual.Any(l => 
-                    l.Expenses.Any(
-                        e => !e.Date.Month.Equals(month) && !e.Date.Year.Equals(year))),
-                $"Should not have any expenses out of the range {month}/{year}.");
+            actual
+                .Should().NotBeNullOrEmpty();
+            actual
+                .Should().OnlyContain(
+                    x => x.Group.Id.Equals(groupId), 
+                    $"Should not have any label with group different from {groupId}.");
+            actual
+                .Should().OnlyContain(
+                    l => l.Expenses.All(e => !e.Date.Month.Equals(month) && !e.Date.Year.Equals(year)),
+                    $"Should not have any expenses out of the range {month}/{year}.");
         }
     }
 }
