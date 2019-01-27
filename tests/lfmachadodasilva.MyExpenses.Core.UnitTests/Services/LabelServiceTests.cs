@@ -98,7 +98,7 @@ namespace lfmachadodasilva.MyExpenses.Core.UnitTest.Services
                     $"Should not have any label with group different from {groupId}.");
             actual
                 .Should().OnlyContain(
-                    l => l.Expenses.All(e => !e.Date.Month.Equals(month) && !e.Date.Year.Equals(year)),
+                    l => l.Expenses.All(e => e.Date.Month.Equals(month) && e.Date.Year.Equals(year)),
                     $"Should not have any expenses out of the range {month}/{year}.");
         }
     }

@@ -16,7 +16,23 @@ namespace lfmachadodasilva.MyExpenses.Core.UnitTest.Services
 {
     public class ServiceBaseTests<TDto> where TDto : IDto
     {
-        protected IService<TDto> _service;
+        protected IService<TDto> Service;
+        protected Mock<IUnitOfWork> UnitOfWorkMock;
+        protected IMapper Mapper;
+
+        [TestInitialize]
+        public void ServiceBaseTests_TestInitialize()
+        {
+            UnitOfWorkMock = new Mock<IUnitOfWork>();
+            Mapper = new MapperConfiguration(cfg => cfg.AddProfile<MyExpensesProfile>()).CreateMapper();
+        }
+
+        [TestCleanup]
+        public void ServiceBaseTests_TestCleanup()
+        {
+            UnitOfWorkMock = null;
+            Mapper = null;
+        }
 
         [TestMethod]
         public void ServiceBase_GetAll_ShouldReturnData()
@@ -24,7 +40,7 @@ namespace lfmachadodasilva.MyExpenses.Core.UnitTest.Services
             // arrange
 
             // act
-            var actual = _service.GetAll();
+            var actual = Service.GetAll();
 
             // assert
             actual.Should().NotBeNullOrEmpty();
@@ -36,7 +52,7 @@ namespace lfmachadodasilva.MyExpenses.Core.UnitTest.Services
             // arrange
 
             // act
-            var actual = await _service.GetByIdAsync(Guid.NewGuid());
+            var actual = await Service.GetByIdAsync(Guid.NewGuid());
 
             // assert
             actual.Should().BeNull();
@@ -46,14 +62,14 @@ namespace lfmachadodasilva.MyExpenses.Core.UnitTest.Services
         public async Task ServiceBase_GetByIdAsync_WithValidId_ShouldReturnData()
         {
             // arrange
-            var id = _service.GetAll().Select(x => x.Id).FirstOrDefault();
+            var id = Service.GetAll().Select(x => x.Id).FirstOrDefault();
 
             // act
-            var actual = await _service.GetByIdAsync(id);
+            var actual = await Service.GetByIdAsync(id);
 
             // assert
             actual
-                .Should().NotBeNull().Should();
+                .Should().NotBeNull();
             actual.Id.Should().Be(id);
         }
     }
@@ -62,13 +78,12 @@ namespace lfmachadodasilva.MyExpenses.Core.UnitTest.Services
     public class ExpenseServiceTests : ServiceBaseTests<ExpenseDto>
     {
         private Mock<IExpenseRepository> _expenseRepositoryMock;
-        private Mock<IUnitOfWork> _unitOfWorkMock;
         private IMapper _mapper;
 
         private Fixture _fixture;
 
         [TestInitialize]
-        public void TestInitialize()
+        public void ExpenseServiceTests_TestInitialize()
         {
             _fixture = new Fixture();
 
@@ -77,8 +92,6 @@ namespace lfmachadodasilva.MyExpenses.Core.UnitTest.Services
             _fixture.Behaviors.Add(new OmitOnRecursionBehavior());
 
             _expenseRepositoryMock = new Mock<IExpenseRepository>();
-            _unitOfWorkMock = new Mock<IUnitOfWork>();
-            _mapper = new MapperConfiguration(cfg => cfg.AddProfile<MyExpensesProfile>()).CreateMapper();
 
             var objs = _fixture.CreateMany<ExpenseModel>();
 
@@ -93,15 +106,13 @@ namespace lfmachadodasilva.MyExpenses.Core.UnitTest.Services
                     .ReturnsAsync(obj);
             }
             
-            _service = new ExpenseService(_expenseRepositoryMock.Object, _unitOfWorkMock.Object, _mapper);
+            Service = new ExpenseService(_expenseRepositoryMock.Object, UnitOfWorkMock.Object, Mapper);
         }
 
         [TestCleanup]
-        public void TestCleanup()
+        public void ExpenseServiceTests_TestCleanup()
         {
             _expenseRepositoryMock = null;
-            _unitOfWorkMock = null;
-            _mapper = null;
         }
     }
 }
