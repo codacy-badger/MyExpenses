@@ -78,7 +78,6 @@ namespace lfmachadodasilva.MyExpenses.Core.UnitTest.Services
     public class ExpenseServiceTests : ServiceBaseTests<ExpenseDto>
     {
         private Mock<IExpenseRepository> _expenseRepositoryMock;
-        private IMapper _mapper;
 
         private Fixture _fixture;
 
