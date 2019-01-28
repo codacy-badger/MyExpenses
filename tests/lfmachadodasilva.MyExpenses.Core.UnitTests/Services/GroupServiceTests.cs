@@ -60,15 +60,15 @@ namespace lfmachadodasilva.MyExpenses.UnitTest.Services
             {
                 Id = groupId,
                 Name = groupName,
+                Users = new List<UserGroupModel>
+                {
+                    new UserGroupModel
+                    {
+                        GroupId = groupId,
+                        UserId = userId
+                    }
+                }
             };
-
-            var userGroup = new UserGroupModel
-            {
-                GroupId = groupId,
-                UserId = userId
-            };
-
-            group.Users = new List<UserGroupModel> { userGroup };
 
             _groupRepositoryMock
                 .Setup(x => x.GetAll(y => y.Users))
