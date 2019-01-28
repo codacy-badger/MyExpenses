@@ -4,14 +4,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace lfmachadodasilva.MyExpenses.Core.Models
 {
-    public class UserModel : ModelBase// : IdentityUser
-    {
-        public string Name { get; set; }
-        //[NotMapped]
-        //public Guid IdGuid
-        //{
-        //    get => Guid.Parse(Id);
-        //    set => Id = this.ToString();
-        //}
-    }
+    //public class UserModel : ModelBase// : IdentityUser
+    //{
+    //    public string Name { get; set; }
+    //    //[NotMapped]
+    //    //public Guid IdGuid
+    //    //{
+    //    //    get => Guid.Parse(Id);
+    //    //    set => Id = this.ToString();
+    //    //}
+    //}
 }

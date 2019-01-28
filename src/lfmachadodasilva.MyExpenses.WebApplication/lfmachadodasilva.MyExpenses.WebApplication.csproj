@@ -16,4 +16,8 @@
     <ProjectReference Include="..\lfmachadodasilva.MyExpenses.Core\lfmachadodasilva.MyExpenses.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>

@@ -9,12 +9,10 @@ namespace lfmachadodasilva.MyExpenses.Core
         public MyExpensesProfile()
         {
             CreateMap<ExpenseModel, ExpenseDto>().ReverseMap();
-            CreateMap<GroupModel, GroupDto>()
-                .ForMember(x => x.Users, y => y.MapFrom(x => x.GetUsers))
-                .ReverseMap();
+            CreateMap<GroupModel, GroupDto>().ReverseMap();
             CreateMap<LabelModel, LabelDto>().ReverseMap();
             CreateMap<PaymentModel, PaymentDto>().ReverseMap();
-            CreateMap<UserModel, UserDto>().ReverseMap();
+            //CreateMap<UserModel, UserDto>().ReverseMap();
         }
     }
 }

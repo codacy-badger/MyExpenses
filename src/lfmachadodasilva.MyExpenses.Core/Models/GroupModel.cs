@@ -13,7 +13,7 @@ namespace lfmachadodasilva.MyExpenses.Core.Models
 
         public IEnumerable<UserGroupModel> Users { get; set; }
 
-        [NotMapped]
-        public IEnumerable<UserModel> GetUsers => Users.Select(x => x.User);
+        //[NotMapped]
+        //public IEnumerable<UserModel> GetUsers => Users.Select(x => x.User);
     }
 }

@@ -53,7 +53,6 @@ namespace lfmachadodasilva.MyExpenses.UnitTest.Services
         {
             // arrange
             var userId = Guid.NewGuid();
-            var userName = "UserName";
             var groupId = Guid.NewGuid();
             var groupName = "GroupName";
 
@@ -65,12 +64,8 @@ namespace lfmachadodasilva.MyExpenses.UnitTest.Services
 
             var userGroup = new UserGroupModel
             {
-                Group = group,
-                User = new UserModel
-                {
-                    Id = userId,
-                    Name = userName
-                }
+                GroupId = groupId,
+                UserId = userId
             };
 
             group.Users = new List<UserGroupModel> { userGroup };
@@ -93,8 +88,7 @@ namespace lfmachadodasilva.MyExpenses.UnitTest.Services
                     {
                         new UserDto
                         {
-                            Id = userId,
-                            Name = userName
+                            Id = userId
                         }
                     }
                 }

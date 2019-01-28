@@ -40,7 +40,7 @@ namespace lfmachadodasilva.MyExpenses.Core.Services
             // get all groups that have userId
             var models = _repository
                 .GetAll(x => x.Users)
-                .Where(x => x.Users.Any(y => y.User.Id.Equals(userId)));
+                .Where(x => x.Users.Any(y => y.UserId.Equals(userId)));
 
             return _mapper.Map<IEnumerable<GroupModel>, IEnumerable<GroupDto>>(models);
         }
@@ -48,7 +48,7 @@ namespace lfmachadodasilva.MyExpenses.Core.Services
         public override async Task<GroupDto> AddAsync(GroupDto dto)
         {
             var model = _mapper.Map<GroupDto, GroupModel>(dto);
-            model.Users = dto.Users.Select(x => new UserGroupModel { Id = x.Id, Group = model });
+            //model.Users = dto.Users.Select(x => new UserGroupModel { Id = x.Id, GroupId = model });
 
             return _mapper.Map<GroupModel, GroupDto>(await _repository.AddAsync(model));
         }
