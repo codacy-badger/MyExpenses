@@ -1,3 +1,2 @@
-cd ..
-cd src\\lfmachadodasilva.MyExpenses.WebApplicationsh
-dotnet ef migrations add InitialCreate
+dotnet ef migrations add InitialCreate --project ..\src\lfmachadodasilva.MyExpenses.WebApplication --context MyExpensesContext
+dotnet ef migrations add InitialCreate --project ..\src\lfmachadodasilva.MyExpenses.WebApplication --context ApplicationDbContext

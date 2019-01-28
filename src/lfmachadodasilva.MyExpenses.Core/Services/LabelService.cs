@@ -25,15 +25,27 @@ namespace lfmachadodasilva.MyExpenses.Core.Services
         {
             return Task.Run<IEnumerable<LabelDto>>(() =>
             {
+                //var models = _repository
+                //    .GetAll(
+                //        x => x.Group, 
+                //        x => x.Expenses.Where(y => 
+                //            y.Date.Month.Equals(month) &&
+                //            y.Date.Year.Equals(year)))
+                //    .Where(x =>
+                //        x.Group.Id.Equals(groupdId))
+                //    .ToList();
+
                 var models = _repository
-                    .GetAll(
-                        x => x.Group, 
-                        x => x.Expenses.Where(y => 
-                            y.Date.Month.Equals(month) &&
-                            y.Date.Year.Equals(year)))
-                    .Where(x =>
-                        x.Group.Id.Equals(groupdId))
-                    .ToList();
+                    .GetAll(x => x.Expenses, y => y.Group)
+                        .Where(x => x.Group.Id.Equals(groupdId))
+                    .Select(l =>
+                    {
+                        l.Expenses = l.Expenses
+                        .Where(e => 
+                            e.Date.Month.Equals(month) && 
+                            e.Date.Year.Equals(year));
+                        return l;
+                    });
 
                 return _mapper.Map<IEnumerable<LabelModel>, IEnumerable<LabelDto>>(models);
             });
