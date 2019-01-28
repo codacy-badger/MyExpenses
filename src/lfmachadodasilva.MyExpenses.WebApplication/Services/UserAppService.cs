@@ -17,9 +17,13 @@ namespace lfmachadodasilva.MyExpenses.WebApplication.Services
 
         public IEnumerable<UserViewModel> GetAll(IEnumerable<Guid> usersId)
         {
-            return from user in _userManager.Users
-                   join id in usersId on user.Id equals usersId.ToString()
-                   select new UserViewModel { Id = id, Name = user.UserName };
+            return _userManager.Users.Join(usersId,
+                a => a.Id,
+                b => b.ToString(),
+                (a, b) => new UserViewModel { Id = b, Name = a.UserName });
+            //return from a in _userManager.Users
+            //       join b in usersId on a.Id equals b
+            //       select new UserViewModel { Id = b, Name = a.UserName };
         }
 
         public IEnumerable<UserViewModel> GetAll()

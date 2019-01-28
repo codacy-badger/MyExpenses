@@ -46,11 +46,7 @@ namespace lfmachadodasilva.MyExpenses.WebApplication.Controllers
         {
             if (ModelState.IsValid)
             {
-                //groupDto.Id = Guid.NewGuid();
-                //_context.Add(groupDto);
-                //await _context.SaveChangesAsync();
                 await _groupAppService.AddAsync(groupViewModel);
-
                 return RedirectToAction(nameof(Index));
             }
             return View(groupViewModel);

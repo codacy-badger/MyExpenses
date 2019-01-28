@@ -36,7 +36,7 @@ namespace lfmachadodasilva.MyExpenses.Core
                         x => x.MigrationsAssembly(migrationAssembly)));
 
             // AutoMapper
-            return services.AddAutoMapper(cfg => cfg.AddProfile<MyExpensesProfile>());
+            return services;//.AddAutoMapper(cfg => cfg.AddProfile<MyExpensesProfile>());
         }
     }
 }

@@ -15,6 +15,9 @@ using Microsoft.Extensions.DependencyInjection;
 using lfmachadodasilva.MyExpenses.Core;
 using lfmachadodasilva.MyExpenses.Core.Services;
 using lfmachadodasilva.MyExpenses.WebApplication.Services;
+using AutoMapper;
+using lfmachadodasilva.MyExpenses.Core.Models.Dtos;
+using lfmachadodasilva.MyExpenses.WebApplication.Models;
 
 namespace lfmachadodasilva.MyExpenses.WebApplication
 {
@@ -47,7 +50,16 @@ namespace lfmachadodasilva.MyExpenses.WebApplication
             services.AddTransient<IGroupAppService, GroupAppService>();
             services.AddTransient<IUserAppService, UserAppService>();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services
+                .AddAutoMapper(cfg =>
+                {
+                    cfg.CreateMap<GroupDto, GroupViewModel>().ReverseMap();
+                    cfg.CreateMap<UserDto, UserViewModel>().ReverseMap();
+
+                    cfg.AddProfile<MyExpensesProfile>();
+                })
+                .AddMvc()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

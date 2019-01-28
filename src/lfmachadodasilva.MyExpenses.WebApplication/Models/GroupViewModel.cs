@@ -14,26 +14,22 @@ namespace lfmachadodasilva.MyExpenses.WebApplication.Models
         public string UsersNames => Users.Any() ? string.Join(", ", Users.Select(x => x.Name).ToList()) : string.Empty;
 
         public SelectList AllUsersNames { get; set; }
+        public IEnumerable<UserViewModel> AllUsers { get; set; }
 
         public IEnumerable<Guid> SelectedUsersId { get; set; }
 
         public GroupViewModel()
         {
-            
         }
 
         public GroupViewModel(IEnumerable<UserViewModel> allUsers, IEnumerable<Guid> selectedUsersId)
         {
-            var availableUsers = allUsers
+            AllUsers = allUsers
                 //.Where(x => Guid.Parse(x.Id) != currentUserId) // remove current user from the list
                 .Select(u => new UserViewModel { Id = u.Id, Name = u.Name })
                 .ToList();
-            AllUsersNames = new SelectList(availableUsers, "Id", "UserName");
-
-            if (selectedUsersId != null && selectedUsersId.Any())
-            {
-                SelectedUsersId = selectedUsersId;
-            }
+            AllUsersNames = new SelectList(AllUsers, "Id", "Name");
+            SelectedUsersId = selectedUsersId;
         }
     }
 }

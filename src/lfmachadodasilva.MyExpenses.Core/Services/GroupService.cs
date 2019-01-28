@@ -45,6 +45,14 @@ namespace lfmachadodasilva.MyExpenses.Core.Services
             return _mapper.Map<IEnumerable<GroupModel>, IEnumerable<GroupDto>>(models);
         }
 
+        public override async Task<GroupDto> AddAsync(GroupDto dto)
+        {
+            var model = _mapper.Map<GroupDto, GroupModel>(dto);
+            model.Users = dto.Users.Select(x => new UserGroupModel { Id = x.Id, Group = model });
+
+            return _mapper.Map<GroupModel, GroupDto>(await _repository.AddAsync(model));
+        }
+
         public override async Task<GroupDto> GetByIdAsync(Guid userId)
         {
             var model = await _repository.GetByIdAsync(userId, x => x.Users);

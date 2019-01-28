@@ -55,6 +55,8 @@ namespace lfmachadodasilva.MyExpenses.WebApplication.Services
 
         public async Task<GroupViewModel> AddAsync(GroupViewModel groupViewModel)
         {
+            groupViewModel.Users = _userAppService.GetAll(groupViewModel.SelectedUsersId);
+
             var groupDto = _mapper.Map<GroupViewModel, GroupDto>(groupViewModel);
             return _mapper.Map<GroupDto, GroupViewModel>(await _groupService.AddAsync(groupDto));
         }

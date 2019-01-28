@@ -1,2 +1,2 @@
-dotnet ef database update --project ..\src\lfmachadodasilva.MyExpenses.WebApplication --context MyExpensesContext
-dotnet ef database update --project ..\src\lfmachadodasilva.MyExpenses.WebApplication --context ApplicationDbContext
+dotnet ef database update --project ..\\src\\lfmachadodasilva.MyExpenses.WebApplication --context MyExpensesContext
+dotnet ef database update --project ..\\src\\lfmachadodasilva.MyExpenses.WebApplication --context ApplicationDbContext

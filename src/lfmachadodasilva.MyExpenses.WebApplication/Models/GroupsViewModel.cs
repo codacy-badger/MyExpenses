@@ -1,6 +1,6 @@
 ﻿namespace lfmachadodasilva.MyExpenses.WebApplication.Models
 {
-    public class GroupsViewModel// : ViewModelsBase<GroupViewModel>
+    public class GroupsViewModel : ViewModelsBase<GroupViewModel>
     {
     }
 }
