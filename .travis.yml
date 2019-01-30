@@ -1,0 +1,9 @@
+language: csharp
+solution: lfmachadodasilva.MyExpenses.sln
+
+mono: none
+dotnet: 2.1.502
+script:
+ - dotnet restore
+ - dotnet build /p:Configuration=Release
+ - dotnet test
