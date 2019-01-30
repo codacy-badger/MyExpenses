@@ -5,5 +5,10 @@ mono: none
 dotnet: 2.1.502
 script:
  - dotnet restore
- - dotnet build /p:Configuration=Release
- - dotnet test
+ 
+jobs:
+  include:
+    - stage: building
+      script: dotnet build /p:Configuration=Release
+    - stage: unit-testing
+      script: dotnet test
