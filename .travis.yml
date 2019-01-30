@@ -10,7 +10,7 @@ jobs:
   include:
     - stage: build
       script: dotnet build /p:Configuration=Release
-    - stage: unit test
+    - stage: unittest
       script: dotnet test
-    - stage: integration test
+    - stage: integrationtest
       script: dotnet test
