@@ -37,7 +37,7 @@ platform:
 
 before_build:
  - nuget restore
- - appveyor-retry dotnet restore -v Minimal
+ - appveyor-retry dotnet restore
 
 build_script:
   - dotnet build -c %CONFIGURATION% --version-suffix %LABEL%
